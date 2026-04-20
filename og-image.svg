@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- paper -->
+  <rect width="1200" height="630" fill="#fcfbf8"/>
+
+  <!-- subtle rule at top -->
+  <line x1="80" y1="80" x2="1120" y2="80" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="80" y1="550" x2="1120" y2="550" stroke="#d1d5db" stroke-width="1"/>
+
+  <!-- top-left: label -->
+  <text x="80" y="60" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="14" fill="#6b7280" letter-spacing="4">KAIROS LAB  ·  MANIFESTO</text>
+
+  <!-- top-right: year -->
+  <text x="1120" y="60" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="14" fill="#6b7280" letter-spacing="2" text-anchor="end">2026 — 2030</text>
+
+  <!-- main mark (left) -->
+  <g transform="translate(90, 190)">
+    <path d="M 76 30 L 30 30 L 30 230 L 76 230" stroke="#1a1a1a" stroke-width="10" fill="none" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path d="M 184 30 L 230 30 L 230 230 L 184 230" stroke="#1a1a1a" stroke-width="10" fill="none" stroke-linecap="square" stroke-linejoin="miter"/>
+    <rect x="105" y="105" width="50" height="50" fill="#7C3AED"/>
+  </g>
+
+  <!-- title -->
+  <text x="430" y="260" font-family="'EB Garamond', 'Times New Roman', serif" font-size="110" font-weight="700" fill="#1a1a1a" letter-spacing="-2">Covenant</text>
+
+  <!-- tagline line 1 -->
+  <text x="430" y="320" font-family="'EB Garamond', serif" font-size="28" font-style="italic" fill="#3d3d3d">where cryptographic guarantees</text>
+  <text x="430" y="358" font-family="'EB Garamond', serif" font-size="28" font-style="italic" fill="#3d3d3d">become language primitives</text>
+
+  <!-- horizontal rule under title block -->
+  <line x1="430" y1="400" x2="1080" y2="400" stroke="#7C3AED" stroke-width="2"/>
+
+  <!-- feature row -->
+  <text x="430" y="445" font-family="'Inter', sans-serif" font-size="18" font-weight="500" fill="#6b7280" letter-spacing="2">POST-QUANTUM  ·  FHE  ·  ZK  ·  AMNESIA</text>
+
+  <!-- bottom rule with author info -->
+  <text x="80" y="590" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="13" fill="#6b7280" letter-spacing="1">covenant-lang.org</text>
+  <text x="1120" y="590" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="13" fill="#7C3AED" letter-spacing="1" text-anchor="end">@Valisthea</text>
+</svg>

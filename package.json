@@ -1,0 +1,32 @@
+{
+  "name": "covenant-lang",
+  "version": "2.0.0",
+  "description": "Covenant smart contract language — where cryptographic guarantees become language primitives. Manifesto and specification site.",
+  "homepage": "https://covenant-lang.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Valisthea/covenant-lang.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Valisthea/covenant-lang/issues"
+  },
+  "author": "Kairos Lab (@Valisthea)",
+  "license": "SEE LICENSE IN LICENSE-APACHE.txt AND LICENSE-CC0.txt",
+  "private": false,
+  "keywords": [
+    "smart-contracts",
+    "language",
+    "cryptography",
+    "post-quantum",
+    "fhe",
+    "zero-knowledge",
+    "ethereum",
+    "styx",
+    "kairos-lab"
+  ],
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site — no build required'",
+    "deploy": "vercel --prod"
+  }
+}
