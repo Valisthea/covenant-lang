@@ -692,6 +692,74 @@ figcaption {
   .roles { grid-template-columns: 1fr; }
   .phase { grid-template-columns: 1fr; gap: 12px; }
 }
+
+/* ========================================================== */
+/*  Status block                                                */
+/* ========================================================== */
+
+.status-block {
+  background: var(--accent-faint);
+  border-left: 2px solid var(--accent);
+  padding: 32px 36px;
+  margin: 0 0 72px;
+}
+
+.status-label {
+  font-family: var(--mono);
+  font-size: 8.5pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.status-headline {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 20pt;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 18px;
+  letter-spacing: -0.005em;
+}
+
+.status-body {
+  font-family: var(--serif);
+  font-size: 12pt;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+}
+
+.status-artifact {
+  font-family: var(--mono);
+  font-size: 9.5pt;
+  color: var(--ink);
+  background: var(--paper-pure);
+  padding: 14px 18px;
+  border: 1px solid var(--rule);
+  margin-bottom: 6px;
+  word-break: break-all;
+}
+
+.status-artifact a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-soft);
+}
+
+.status-artifact a:hover {
+  border-bottom-color: var(--accent);
+}
+
+.status-meta {
+  font-family: var(--mono);
+  font-size: 8pt;
+  color: var(--ink-mute);
+  letter-spacing: 0.05em;
+  margin-top: 14px;
+}
 </style>
 </head>
 <body>
@@ -709,7 +777,7 @@ figcaption {
 
   <div class="cover-top">
     <span>Kairos Lab · Project Document</span>
-    <span>v2.0 · April 2026</span>
+    <span>v2.1 · April 2026 · V0.1 shipped</span>
   </div>
 
   <div class="cover-center">
@@ -726,7 +794,8 @@ figcaption {
     <div class="cover-accent-bar"></div>
     <p class="cover-description">
       A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library.
-      This document presents the project's vision, design principles, realistic roadmap, and invitation to contribute.
+      Version 0.1 Basics is live — the first public Covenant contract has deployed on Ethereum Sepolia.
+      This document presents the project's vision, design principles, current state, and invitation to contribute.
     </p>
   </div>
 
@@ -756,8 +825,31 @@ figcaption {
 <div class="preamble">
   <div class="preamble-label">Preamble</div>
   <p>
-    This document presents Covenant, a smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Covenant is a long-term project of Kairos Lab. Its first usable release is planned 24 to 36 months out, and its construction requires a team of technical contributors we are currently forming. We actively seek collaborators and institutional support. The present document sets out the vision, design principles, realistic roadmap, and invitation to join the effort.
+    This document presents Covenant, a smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Covenant is a long-term project of Kairos Lab. Version 0.1 Basics shipped in April 2026 with the first public contract deployed on Ethereum Sepolia. The road to a fully production-grade release (V1) and formal verification (V1.5) remains 18 to 24 months out, and its construction requires a team of technical contributors we are currently forming. We actively seek collaborators and institutional support. The present document sets out the vision, design principles, current state, and invitation to join the effort.
   </p>
+</div>
+
+<!-- ============================================================ -->
+<!--  Status block                                                 -->
+<!-- ============================================================ -->
+
+<div class="status-block">
+  <div class="status-label">Status · April 2026</div>
+  <p class="status-headline">
+    V0.1 Basics — the compiler produces deployable bytecode.
+  </p>
+  <p class="status-body">
+    The first public Covenant contract is live on Ethereum Sepolia: an ERC-20 synthesized end-to-end from a four-line declarative source,
+    recognized as a token by Etherscan's automatic tracker, decoded by ethers.js without modification, and transferable via Metamask.
+    The compiler passes 500+ tests across 18 crates. V0.1 is a research release — unaudited, experimental,
+    for demonstration of the language's semantics, not for production value.
+  </p>
+  <div class="status-artifact">
+    First deployment: <a href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133</a>
+  </div>
+  <div class="status-meta">
+    CHAIN · SEPOLIA    ·    COMPILER · v0.1.0-basics    ·    SOURCE · 4 lines of Covenant    ·    BYTECODE · 969 bytes runtime
+  </div>
 </div>
 
 <!-- SECTION 1 -->
@@ -1176,47 +1268,71 @@ figcaption {
 </p>
 
 <p>
-  This roadmap is presented with honesty about the real timescale. The dates are not commitments; they are reference milestones that will shift based on team size, funding, and adoption signals.
+  The roadmap has begun. The design phase is complete. V0.1 Basics shipped in April 2026 with the first public deployment on Ethereum Sepolia. The remaining phases extend over the next 24–36 months, contingent on team formation and funding. The dates are not commitments; they are reference milestones that will shift based on team size, funding, and adoption signals.
 </p>
 
 <div class="phase">
   <div class="phase-meta">
     <span class="phase-name">Design</span>
-    <span class="phase-dates">2026</span>
+    <span class="phase-dates">2025 – early 2026</span>
   </div>
   <div class="phase-body">
     <p>
-      Drafting of the formal language specification (BNF grammar, operational semantics, typing rules), progressive publication of technical documents, formation of the founding team, recruitment of first contributors, discussions with partner chains and foundations for grants.
+      Specs V0 complete, 8 normative documents published, Styx ERCs drafted and officially registered on the Ethereum repository. Formal language specification (BNF grammar, operational semantics, typing rules) published under CC0.
     </p>
     <p>
-      No compiler code produced during this phase — the effort focuses entirely on design correctness. Deliverable: public V0 specification of the language, technical team formed, first partnership commitments.
+      <strong>Status: complete.</strong>
     </p>
   </div>
 </div>
 
 <div class="phase">
   <div class="phase-meta">
-    <span class="phase-name">V0 Implementation</span>
-    <span class="phase-dates">2027 – 2028</span>
+    <span class="phase-name">V0.1 Basics</span>
+    <span class="phase-dates">April 2026 — shipped</span>
   </div>
   <div class="phase-body">
     <p>
-      Reference compiler covering the language core: parser, type checker, intermediate IR, codegen to standard Solidity for EVM chains. First FHE runtime integrated via Zama fhEVM or equivalent backend. CLI, minimal stdlib, integration tests. First demonstration deployment: a set of simple Covenant contracts deployed on Base Sepolia.
+      5 reference contracts compile end-to-end. First public ERC-20 deployed on Ethereum Sepolia at <a href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">0x6C79…7133</a>, recognized by Etherscan Token Tracker, decoded by ethers.js, transferable via Metamask. Compiler at tag <code>v0.1.0-basics</code>, 500+ tests across 18 crates.
     </p>
     <p>
-      At this stage, the language is not yet production-ready for high-value use cases, but is usable by sophisticated early adopters.
+      Research release — unaudited, experimental, not for production value. A working compiler contributors can inspect, critique, extend, and port.
     </p>
   </div>
 </div>
 
 <div class="phase">
   <div class="phase-meta">
-    <span class="phase-name">V1 Expansion</span>
-    <span class="phase-dates">2028 – 2029</span>
+    <span class="phase-name">V0.2 Intermediate</span>
+    <span class="phase-dates">2026 – 2027</span>
   </div>
   <div class="phase-body">
     <p>
-      Expansion of the language surface to cover the functional equivalent of modern Solidity: full inheritance, interfaces, libraries, classical DeFi patterns, serious gas optimization. Native Aster Chain integration. Web playground, complete documentation, second independent security audit of the compiler.
+      fhEVM-class support: private DAO, sealed auction, encrypted token, time-locked vault. First FHE runtime integrated via Zama fhEVM or equivalent backend. Usable by sophisticated early adopters.
+    </p>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-meta">
+    <span class="phase-name">V0.3 Advanced</span>
+    <span class="phase-dates">2027</span>
+  </div>
+  <div class="phase-body">
+    <p>
+      Cryptographic amnesia, bridges, ZK selective disclosure, reputation primitives. Full surface coverage of the Styx stdlib. Native Aster Chain integration with defense-in-depth privacy.
+    </p>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-meta">
+    <span class="phase-name">V1.0 GA</span>
+    <span class="phase-dates">2028</span>
+  </div>
+  <div class="phase-body">
+    <p>
+      Feature completeness, external audit Phase C, CLI + LSP + IDE support. Expansion to full Solidity feature parity: inheritance, interfaces, libraries, classical DeFi patterns, gas optimization. Web playground, complete documentation.
     </p>
     <p>
       Adoption target: five to ten pilot protocols in production, with published case studies.
@@ -1226,21 +1342,18 @@ figcaption {
 
 <div class="phase">
   <div class="phase-meta">
-    <span class="phase-name">V2 Maturity</span>
-    <span class="phase-dates">2029 – 2030</span>
+    <span class="phase-name">V1.5 Formal</span>
+    <span class="phase-dates">2028 – 2029</span>
   </div>
   <div class="phase-body">
     <p>
-      Standardization of the language via a public RFC process (analogous to Rust's), stabilized community governance, third-party tooling ecosystem, annual conference, bug bounty program on the compiler.
-    </p>
-    <p>
-      The aim of V2 is not to add massive features but to graduate from project to established language.
+      Coq/Lean formal verification artifacts, CL5 conformance achievement. Standardization via a public RFC process (analogous to Rust's), stabilized community governance, bug bounty program on the compiler.
     </p>
   </div>
 </div>
 
 <p style="margin-top: 28px;">
-  This roadmap is ambitious and requires resources Kairos Lab does not possess alone today. It becomes achievable to the extent that the team forms and funding follows. That is precisely why this document is published — to make the effort visible and invite the right people to contribute.
+  This roadmap is ambitious and requires resources Kairos Lab does not possess alone today. V0.1 demonstrates that execution is real. It becomes fully achievable to the extent that the team forms and funding follows. That is precisely why this document is published — to make the effort visible and invite the right people to contribute.
 </p>
 </section>
 
@@ -1249,7 +1362,7 @@ figcaption {
 <h2><span class="h2-num">08</span>Team and recruitment</h2>
 
 <p>
-  Covenant requires a technical team to be built, and Kairos Lab is actively recruiting.
+  Covenant requires a technical team to be built, and Kairos Lab is actively recruiting. With the compiler at tag <code>v0.1.0-basics</code> and the first contract live on Ethereum Sepolia, contributors now join a project with a working artifact, not only a specification.
 </p>
 
 <p>
@@ -1317,7 +1430,7 @@ figcaption {
 <h2><span class="h2-num">10</span>Invitation</h2>
 
 <p>
-  Covenant is neither a product nor a startup. It is a software infrastructure project whose value to the Web3 ecosystem depends entirely on who builds it and who deploys it in production.
+  Covenant is neither a product nor a startup. It is a software infrastructure project whose value to the Web3 ecosystem depends entirely on who builds it and who deploys it in production. With V0.1 Basics shipped, contributors now have a working compiler to inspect, critique, extend, and port, rather than a specification alone.
 </p>
 
 <p>
@@ -1341,11 +1454,12 @@ figcaption {
   <div>
     <strong>Author</strong>
     Kairos Lab · <a href="https://x.com/Valisthea">@Valisthea</a><br>
-    Published April 2026 · Version 2.0
+    Published April 2026 · Version 2.1 · V0.1 Basics
   </div>
   <div>
     <strong>Related</strong>
     <a href="https://styx-website.vercel.app">Styx Protocol</a><br>
+    <a href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">First deployment</a><br>
     Ethereum Magicians thread forthcoming
   </div>
 </div>

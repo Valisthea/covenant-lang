@@ -6,9 +6,13 @@ A smart contract language designed for cryptographic agility, with [Styx Protoco
 
 ---
 
-## Project status
+## Current state — V0.1 Basics (April 2026)
 
-Covenant is in **design phase** (2026). The first usable release (V0) is planned for 2027–2028. This repository currently hosts the project manifesto and will evolve into the language specification and compiler implementation.
+- 5 reference contracts compile end-to-end
+- First public deployment on Ethereum Sepolia: [0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133](https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133)
+- ERC-20 synthesis validated via Etherscan Token Tracker and ethers.js
+- Compiler at tag `v0.1.0-basics`
+- Research release, unaudited, not for production value
 
 Read the full manifesto: **[covenant-lang.org](https://covenant-lang.org)**
 
@@ -33,10 +37,12 @@ Covenant compiles against four Ethereum ERCs that form its native stdlib:
 
 | Phase | When | Milestone |
 |---|---|---|
-| Design | 2026 | Spec V0, team formation, grant applications |
-| V0 | 2027 – 2028 | Parser, type checker, codegen → Solidity, first deploy on Base Sepolia |
-| V1 | 2028 – 2029 | Full Solidity feature parity, native Aster Chain integration, independent audit |
-| V2 | 2029 – 2030 | RFC process, community governance, stable ecosystem |
+| Design | 2025 – early 2026 | Specs V0 complete, 8 normative docs published, Styx ERCs drafted |
+| **V0.1 Basics** | **April 2026 (shipped)** | **5 examples compile end-to-end; first ERC-20 deployed on Sepolia** |
+| V0.2 Intermediate | 2026 – 2027 | fhEVM-class support: private DAO, sealed auction, encrypted token, time-locked vault |
+| V0.3 Advanced | 2027 | Cryptographic amnesia, bridges, ZK selective disclosure, reputation primitives |
+| V1.0 GA | 2028 | Feature completeness, external audit Phase C, CLI + LSP + IDE support |
+| V1.5 Formal | 2028 – 2029 | Coq/Lean formal verification artifacts, CL5 conformance achievement |
 
 Dates are reference milestones, not commitments. They will move with team size and funding.
 
@@ -48,6 +54,8 @@ Covenant is open-source (Apache 2.0 for compiler, CC0 for spec) and seeks contri
 - **Cryptographers** — FHE (TFHE preferred) to validate primitive semantics
 - **ZK engineers** — IVC systems (Nova, Protostar) for the verification layer
 - **Tooling engineers** — LSP, formatter, docs generator, web playground
+
+With V0.1 shipped, contributors can inspect, critique, extend, and port a working compiler — not just a specification.
 
 Initial engagements can be part-time, consulting, or grant-funded open-source contributions.
 
@@ -72,6 +80,7 @@ No VC, no token, no private raise. Funding comes from three channels:
 
 - [Styx Protocol](https://styx-website.vercel.app) — the four ERCs that form Covenant's stdlib
 - [Aster Chain](https://asterdex.com) — primary deployment target with native encrypted execution
+- [First deployment](https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133) — Sepolia Coin (COIN) on Ethereum Sepolia
 
 ---
 

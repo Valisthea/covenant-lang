@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covenant — A Kairos Lab project</title>
+    <meta name="description" content="Declarative smart contract language with native FHE, ZK, PQ, and cryptographic amnesia. V0.1 Basics shipped April 2026.">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://kairos-lab.org/covenant">
+
+    <!-- OG / Twitter card -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kairos-lab.org/covenant">
+    <meta property="og:title" content="Covenant — A Kairos Lab project">
+    <meta property="og:description" content="Declarative smart contract language with native FHE, ZK, PQ, and cryptographic amnesia.">
+    <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Valisthea">
+
+    <!-- Fonts : same as manifesto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+    :root {
+        --ink: #1a1a1a;
+        --ink-soft: #3d3d3d;
+        --ink-mute: #6b7280;
+        --ink-faint: #9ca3af;
+        --rule: #d1d5db;
+        --paper: #fcfbf8;
+        --accent: #7C3AED;
+        --accent-faint: #faf7ff;
+        --accent-soft: #a78bfa;
+
+        --serif: 'EB Garamond', 'Times New Roman', serif;
+        --sans: 'Inter', -apple-system, sans-serif;
+        --mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+        min-height: 100vh;
+        background: var(--paper);
+        font-family: var(--serif);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 24px;
+    }
+
+    .landing {
+        max-width: 520px;
+        width: 100%;
+        padding: 56px 48px;
+        background: var(--paper);
+        border: 1px solid var(--rule);
+        border-top: 3px solid var(--accent);
+    }
+
+    .landing-title {
+        font-family: var(--serif);
+        font-size: 48pt;
+        font-weight: 400;
+        line-height: 1.0;
+        letter-spacing: -0.02em;
+        margin-bottom: 20px;
+        color: var(--ink);
+    }
+
+    .landing-tagline {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 14pt;
+        line-height: 1.4;
+        color: var(--ink-soft);
+        margin-bottom: 36px;
+        max-width: 440px;
+    }
+
+    .landing-accent-bar {
+        width: 48px;
+        height: 2px;
+        background: var(--accent);
+        margin-bottom: 28px;
+    }
+
+    .landing-row {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 12px;
+        font-family: var(--mono);
+        font-size: 9pt;
+        color: var(--ink-soft);
+    }
+
+    .landing-row-label {
+        font-size: 7.5pt;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        min-width: 80px;
+    }
+
+    .landing-row-value {
+        flex: 1;
+        color: var(--ink);
+        word-break: break-all;
+    }
+
+    .landing-row-value a {
+        color: var(--accent);
+        text-decoration: none;
+        border-bottom: 1px solid var(--accent-soft);
+    }
+
+    .landing-row-value a:hover {
+        border-bottom-color: var(--accent);
+    }
+
+    .landing-cta {
+        margin-top: 32px;
+        padding-top: 28px;
+        border-top: 1px solid var(--rule);
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 13pt;
+        color: var(--ink-soft);
+        line-height: 1.5;
+    }
+
+    .landing-footer {
+        margin-top: 36px;
+        font-family: var(--mono);
+        font-size: 8pt;
+        color: var(--ink-mute);
+        letter-spacing: 0.08em;
+    }
+
+    .landing-footer a {
+        color: var(--ink-mute);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--ink-faint);
+    }
+
+    .landing-footer a:hover {
+        color: var(--ink);
+    }
+
+    @media (max-width: 520px) {
+        .landing {
+            padding: 40px 28px;
+        }
+        .landing-title {
+            font-size: 36pt;
+        }
+        .landing-tagline {
+            font-size: 12pt;
+        }
+        .landing-row {
+            flex-direction: column;
+            gap: 4px;
+        }
+        .landing-row-label {
+            min-width: auto;
+        }
+    }
+    </style>
+</head>
+<body>
+    <main class="landing">
+        <h1 class="landing-title">Covenant</h1>
+        <p class="landing-tagline">
+            Declarative smart contract language with native FHE, ZK, PQ, and cryptographic amnesia.
+        </p>
+        <div class="landing-accent-bar"></div>
+
+        <div class="landing-row">
+            <span class="landing-row-label">Status</span>
+            <span class="landing-row-value">V0.1 Basics · April 2026</span>
+        </div>
+
+        <div class="landing-row">
+            <span class="landing-row-label">First deploy</span>
+            <span class="landing-row-value">
+                <a href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">Sepolia Coin (COIN)</a>
+            </span>
+        </div>
+
+        <div class="landing-row">
+            <span class="landing-row-label">Manifesto</span>
+            <span class="landing-row-value">
+                <a href="https://covenant-lang.org" target="_blank" rel="noopener">covenant-lang.org</a>
+            </span>
+        </div>
+
+        <p class="landing-cta">
+            Watch this space. Private until V1.0.
+        </p>
+
+        <p class="landing-footer">
+            A <a href="https://kairos-lab.org" target="_blank" rel="noopener">Kairos Lab</a> project
+        </p>
+    </main>
+</body>
+</html>
