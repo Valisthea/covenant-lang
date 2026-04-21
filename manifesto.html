@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Covenant — Manifesto</title>
+<meta name="description" content="The full Covenant language manifesto: type system, architecture, roadmap, and the argument for cryptographic agility as a language primitive.">
+<meta name="author" content="Kairos Lab">
+<link rel="canonical" href="https://covenant-lang.org/manifesto">
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="alternate icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="alternate icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/favicon.svg" color="#7C3AED">
+<meta name="theme-color" content="#7C3AED">
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://covenant-lang.org/manifesto">
+<meta property="og:site_name" content="Covenant">
+<meta property="og:title" content="Covenant — Manifesto">
+<meta property="og:description" content="The full Covenant language manifesto: type system, architecture, roadmap, and the argument for cryptographic agility as a language primitive.">
+<meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@Valisthea">
+<meta name="twitter:title" content="Covenant — Manifesto">
+<meta name="twitter:description" content="The full Covenant language manifesto: type system, architecture, roadmap, and the argument for cryptographic agility as a language primitive.">
+<meta name="twitter:image" content="https://covenant-lang.org/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────────
+   TOKENS
+   ───────────────────────────────────────────── */
+:root {
+  --ink:          #1a1a1a;
+  --ink-soft:     #3d3d3d;
+  --ink-mute:     #6b7280;
+  --ink-faint:    #9ca3af;
+  --rule:         #d1d5db;
+  --rule-faint:   #e5e7eb;
+  --paper:        #fcfbf8;
+  --paper-pure:   #ffffff;
+  --accent:       #7C3AED;
+  --accent-faint: #faf7ff;
+  --accent-soft:  #a78bfa;
+  --cyan:         #0891b2;
+  --blue:         #2563eb;
+  --green:        #059669;
+  --header-h:     56px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'EB Garamond', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   PROGRESS + HEADER
+   ───────────────────────────────────────────── */
+#progress {
+  position: fixed; top: 0; left: 0; height: 2px;
+  width: 0; background: var(--accent); z-index: 2000;
+  transition: width 80ms linear;
+}
+
+#site-header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: rgba(252,251,248,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule-faint);
+  display: flex; align-items: center;
+  padding: 0 48px;
+  z-index: 1000;
+  transition: border-color 0.3s ease;
+}
+#site-header.scrolled { border-bottom-color: var(--rule); }
+
+.header-brand {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--ink); flex-shrink: 0;
+}
+.header-brand-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10pt; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.header-doc-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-left: 16px; margin-left: 16px;
+  border-left: 1px solid var(--rule);
+}
+.header-spacer { flex: 1; }
+nav.header-nav { display: flex; align-items: center; gap: 28px; }
+.nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.5pt; color: var(--ink-mute);
+  text-decoration: none; transition: color 0.15s ease;
+}
+.nav-link:hover { color: var(--ink); }
+.nav-back {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-mute); text-decoration: none;
+  transition: color 0.15s ease;
+}
+.nav-back:hover { color: var(--ink); }
+
+/* ─────────────────────────────────────────────
+   COVER
+   ───────────────────────────────────────────── */
+#cover {
+  min-height: 100vh;
+  padding-top: var(--header-h);
+  max-width: 720px; margin: 0 auto;
+  padding-left: 56px; padding-right: 56px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+}
+
+.cover-topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 0 12px;
+  border-bottom: 1px solid var(--ink);
+}
+.cover-topbar span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.cover-center {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; padding: 80px 0 60px;
+}
+
+.cover-mark {
+  display: flex; flex-direction: column;
+  align-items: flex-start; gap: 6px;
+  margin-bottom: 36px;
+  opacity: 0; animation: fadeIn 0.4s ease forwards 0.1s;
+}
+.cover-mark-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+h1.cover-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 88pt; font-weight: 400;
+  line-height: 0.95; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 20px;
+}
+h1.cover-title .letter { display: inline-block; opacity: 0; }
+
+.cover-subtitle {
+  font-family: 'EB Garamond', serif;
+  font-size: 15pt; font-style: italic;
+  color: var(--ink-soft); line-height: 1.4; margin-bottom: 28px;
+  opacity: 0; animation: fadeUp 0.4s ease forwards 1.3s;
+}
+.cover-bar {
+  width: 0; height: 2px; background: var(--accent);
+  margin-bottom: 28px; transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.cover-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 11pt; color: var(--ink-soft);
+  line-height: 1.65; max-width: 540px;
+  opacity: 0; animation: fadeUp 0.4s ease forwards 1.6s;
+}
+
+.cover-footer {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid var(--ink);
+  padding: 16px 0 40px;
+  opacity: 0; animation: fadeIn 0.4s ease forwards 1.9s;
+}
+.cover-footer-col { padding: 0 16px 0 0; }
+.cover-footer-col:first-child { padding-left: 0; }
+.cover-footer-col:not(:last-child) { border-right: 1px solid var(--rule); margin-right: 16px; }
+.cover-footer-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 8pt;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); display: block; margin-bottom: 4px;
+}
+.cover-footer-value {
+  font-family: 'EB Garamond', serif; font-size: 10pt;
+  color: var(--ink-soft); display: block;
+}
+
+/* ─────────────────────────────────────────────
+   LAYOUT
+   ───────────────────────────────────────────── */
+.page {
+  max-width: 720px; margin: 0 auto;
+  padding: 80px 56px 120px;
+}
+
+section.doc-section {
+  border-top: 1px solid var(--ink);
+  padding-top: 56px; margin-bottom: 72px;
+}
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10pt; font-weight: 500;
+  color: var(--accent); display: block; margin-bottom: 6px;
+}
+
+h2.section-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 26pt; font-weight: 500;
+  line-height: 1.15; color: var(--ink);
+  margin-bottom: 28px;
+}
+
+h3.sub-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 15pt; font-weight: 600; font-style: italic;
+  color: var(--ink); margin: 32px 0 10px;
+}
+
+.body-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 12pt; line-height: 1.65;
+  color: var(--ink-soft); text-align: justify;
+  hyphens: auto; margin-bottom: 14px;
+}
+
+.lead-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 13pt; font-style: italic;
+  line-height: 1.6; color: var(--ink-soft); margin-bottom: 20px;
+}
+
+/* ─────────────────────────────────────────────
+   SPECIAL BLOCKS
+   ───────────────────────────────────────────── */
+.preamble-block {
+  border-left: 2px solid var(--accent);
+  padding: 16px 0 16px 24px; margin-top: 8px;
+}
+.preamble-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); display: block; margin-bottom: 10px;
+}
+.preamble-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 12.5pt; font-style: italic;
+  line-height: 1.7; color: var(--ink-soft);
+}
+
+.assertion {
+  border-left: 2px solid var(--ink-mute);
+  padding: 14px 0 14px 24px; margin: 28px 0;
+}
+.assertion-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); display: block; margin-bottom: 8px;
+}
+.assertion-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 12pt; font-style: italic;
+  color: var(--ink); line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────────
+   CODE BLOCKS
+   ───────────────────────────────────────────── */
+.code-wrapper { position: relative; margin: 24px 0; }
+.code-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 6px; display: block;
+}
+pre.code {
+  background: var(--paper-pure);
+  border: 1px solid var(--rule-faint);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px 16px 48px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt; line-height: 1.6;
+  color: var(--ink-soft); overflow-x: auto;
+  counter-reset: line;
+}
+.copy-btn {
+  position: absolute; top: 8px; right: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); background: none;
+  border: 1px solid var(--rule-faint);
+  padding: 3px 8px; cursor: pointer;
+  opacity: 0; transition: opacity 0.15s;
+}
+.code-wrapper:hover .copy-btn,
+.code-wrapper:focus-within .copy-btn { opacity: 1; }
+.copy-btn:hover { background: var(--accent-faint); }
+
+.kw  { color: var(--accent); font-weight: 500; }
+.ty  { color: var(--cyan); }
+.fn  { color: var(--blue); }
+.st  { color: var(--green); }
+.cm  { color: var(--ink-faint); font-style: italic; }
+.cv  { color: var(--accent-soft); font-style: italic; }
+
+/* ─────────────────────────────────────────────
+   ARCH DIAGRAM
+   ───────────────────────────────────────────── */
+.arch-diagram {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; border: 2px solid var(--ink); margin: 32px 0;
+}
+.arch-q {
+  border: 1px solid var(--rule);
+  padding: 24px 20px; cursor: pointer;
+  background: var(--paper); outline: none;
+  transition: background 0.2s ease;
+}
+.arch-q:hover, .arch-q:focus { background: var(--accent-faint); }
+.arch-q:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .arch-q:hover, .arch-q:focus { transform: scale(1.02); z-index: 2; box-shadow: 0 4px 24px rgba(124,58,237,0.08); }
+}
+.arch-q-name { font-family:'JetBrains Mono',monospace; font-size:12pt; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink); display:block; margin-bottom:4px; }
+.arch-q-italic { font-family:'EB Garamond',serif; font-size:11pt; font-style:italic; color:var(--ink-mute); display:block; margin-bottom:10px; }
+.arch-q-desc { font-family:'Inter',sans-serif; font-size:10pt; color:var(--ink-soft); line-height:1.5; margin-bottom:14px; }
+.arch-q-icon { margin-bottom:16px; }
+
+.arch-expansion { border-top:1px solid var(--rule); padding:24px 0; display:none; }
+.arch-expansion.open { display:block; }
+.arch-exp-inner { background:var(--accent-faint); border:1px solid var(--rule-faint); border-left:3px solid var(--accent); padding:20px 24px; }
+.arch-exp-title { font-family:'JetBrains Mono',monospace; font-size:9pt; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; display:flex; align-items:center; gap:12px; }
+.arch-exp-close { margin-left:auto; background:none; border:none; font-family:'JetBrains Mono',monospace; font-size:8pt; color:var(--ink-faint); cursor:pointer; letter-spacing:0.08em; text-transform:uppercase; padding:2px 6px; }
+.arch-exp-close:hover { color:var(--ink); }
+.arch-exp-text { font-family:'EB Garamond',serif; font-size:12pt; line-height:1.65; color:var(--ink-soft); text-align:justify; }
+
+/* ─────────────────────────────────────────────
+   ROADMAP
+   ───────────────────────────────────────────── */
+.roadmap-grid { display:grid; grid-template-columns:140px 1fr; margin-top:16px; }
+.roadmap-phase { padding:20px 16px 20px 0; border-top:1px solid var(--rule-faint); }
+.roadmap-phase-name { font-family:'JetBrains Mono',monospace; font-size:8.5pt; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:4px; }
+.roadmap-phase-date { font-family:'JetBrains Mono',monospace; font-size:8pt; color:var(--ink-faint); display:block; margin-bottom:4px; }
+.rs { font-family:'JetBrains Mono',monospace; font-size:7.5pt; letter-spacing:0.08em; text-transform:uppercase; display:block; }
+.rs-shipped  { color:var(--green); }
+.rs-progress { color:var(--accent); }
+.rs-planned  { color:var(--ink-faint); }
+.roadmap-content { padding:20px 0 20px 24px; border-top:1px solid var(--rule-faint); border-left:2px solid var(--rule-faint); }
+.roadmap-content.current { border-left:2px solid var(--accent); animation:pulseBorder 2s ease-in-out infinite; }
+@keyframes pulseBorder { 0%,100%{border-left-color:rgba(124,58,237,0.3)}50%{border-left-color:rgba(124,58,237,1)} }
+.roadmap-content-title { font-family:'EB Garamond',serif; font-size:13pt; font-weight:600; color:var(--ink); margin-bottom:6px; display:block; }
+.roadmap-content-text { font-family:'EB Garamond',serif; font-size:11.5pt; line-height:1.6; color:var(--ink-soft); }
+
+/* ─────────────────────────────────────────────
+   ROLES
+   ───────────────────────────────────────────── */
+.roles-grid { display:grid; grid-template-columns:1fr 1fr; margin-top:24px; border:1px solid var(--rule-faint); }
+.role-card { padding:20px 24px; border:1px solid var(--rule-faint); background:var(--paper); transition:background 0.2s ease; }
+.role-card:hover, .role-card:focus { background:var(--accent-faint); outline:2px solid var(--accent); outline-offset:-2px; }
+.role-card-title { font-family:'EB Garamond',serif; font-size:13pt; font-style:italic; font-weight:600; color:var(--ink); display:block; margin-bottom:8px; }
+.role-card-desc { font-family:'Inter',sans-serif; font-size:10pt; color:var(--ink-soft); line-height:1.55; }
+
+/* ─────────────────────────────────────────────
+   CONTACT / FOOTER
+   ───────────────────────────────────────────── */
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin:16px 0 40px; }
+.contact-label { font-family:'JetBrains Mono',monospace; font-size:8pt; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:12px; }
+.contact-entry { font-family:'EB Garamond',serif; font-size:12pt; color:var(--ink-soft); margin-bottom:4px; }
+.contact-entry a { color:var(--accent); text-decoration:none; }
+.contact-entry a:hover { text-decoration:underline; }
+.doc-closing { font-family:'EB Garamond',serif; font-size:11pt; font-style:italic; color:var(--ink-mute); text-align:center; border-top:1px solid var(--rule-faint); padding-top:24px; margin-top:24px; }
+
+/* ─────────────────────────────────────────────
+   LICENSE DIAGRAM
+   ───────────────────────────────────────────── */
+.license-diagram { margin:24px 0; padding:24px; background:var(--paper-pure); border:1px solid var(--rule-faint); }
+
+/* ─────────────────────────────────────────────
+   REVEAL
+   ───────────────────────────────────────────── */
+.reveal { opacity:0; transform:translateY(4px); transition:opacity 0.3s ease, transform 0.3s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─────────────────────────────────────────────
+   INLINE CODE
+   ───────────────────────────────────────────── */
+code { font-family:'JetBrains Mono',monospace; font-size:0.88em; background:var(--paper-pure); border:1px solid var(--rule-faint); padding:1px 5px; color:var(--ink-soft); }
+
+/* ─────────────────────────────────────────────
+   FOCUS
+   ───────────────────────────────────────────── */
+a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+/* ─────────────────────────────────────────────
+   SITE FOOTER
+   ───────────────────────────────────────────── */
+#site-footer { border-top:1px solid var(--ink); padding:48px 0 40px; }
+.footer-inner { max-width:720px; margin:0 auto; padding:0 56px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px; }
+.footer-brand { display:flex; flex-direction:column; gap:12px; }
+.footer-brand-row { display:flex; align-items:center; gap:8px; }
+.footer-brand-name { font-family:'JetBrains Mono',monospace; font-size:10pt; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink); }
+.footer-by { font-family:'Inter',sans-serif; font-size:9pt; color:var(--ink-faint); }
+.footer-tagline { font-family:'EB Garamond',serif; font-size:11pt; font-style:italic; color:var(--ink-mute); line-height:1.5; }
+.footer-col-title { font-family:'JetBrains Mono',monospace; font-size:7.5pt; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:14px; }
+.footer-link { font-family:'Inter',sans-serif; font-size:10pt; color:var(--ink-soft); text-decoration:none; display:block; margin-bottom:6px; transition:color 0.15s ease; }
+.footer-link:hover { color:var(--accent); }
+.footer-link-mono { font-family:'JetBrains Mono',monospace; font-size:8.5pt; color:var(--ink-mute); text-decoration:none; display:block; margin-bottom:6px; word-break:break-all; transition:color 0.15s ease; }
+.footer-link-mono:hover { color:var(--accent); }
+.footer-bottom { max-width:720px; margin:36px auto 0; padding:20px 56px 0; border-top:1px solid var(--rule-faint); display:flex; justify-content:space-between; align-items:center; }
+.footer-closing { font-family:'EB Garamond',serif; font-size:11pt; font-style:italic; color:var(--ink-mute); }
+.footer-license { font-family:'JetBrains Mono',monospace; font-size:7.5pt; color:var(--ink-faint); letter-spacing:0.06em; }
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE + PRINT
+   ───────────────────────────────────────────── */
+@media (max-width:700px) {
+  .page, #cover { padding-left:24px; padding-right:24px; }
+  h1.cover-title { font-size:52pt; }
+  .arch-diagram, .roles-grid, .contact-grid, .footer-inner { grid-template-columns:1fr; }
+  .roadmap-grid { grid-template-columns:80px 1fr; }
+  #site-header { padding:0 24px; }
+  .footer-bottom { flex-direction:column; gap:8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration:0.001ms!important; transition-duration:0.001ms!important; }
+  .reveal { opacity:1; transform:none; }
+  h1.cover-title .letter { opacity:1; }
+  .cover-mark,.cover-subtitle,.cover-desc,.cover-footer { opacity:1; animation:none; }
+}
+@media print {
+  #progress,#site-header { display:none; }
+  body { padding-top:0; color:#000; background:#fff; }
+  .page,#cover { max-width:100%; padding:0; }
+  #cover { min-height:auto; }
+  section.doc-section { page-break-inside:avoid; }
+  .arch-expansion { display:none!important; }
+  a { color:#000; text-decoration:none; }
+  a[href]::after { content:" (" attr(href) ")"; font-size:8pt; color:#666; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <a href="index.html" class="header-brand" aria-label="Covenant — back to landing">
+    <svg width="28" height="28" viewBox="0 0 96 96" aria-hidden="true">
+      <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+      <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+      <rect x="40" y="40" width="16" height="16" fill="#7C3AED"/>
+    </svg>
+    <span class="header-brand-name">Covenant</span>
+    <span class="header-doc-label">Manifesto</span>
+  </a>
+  <div class="header-spacer"></div>
+  <nav class="header-nav" aria-label="Document navigation">
+    <a href="#section-02" class="nav-link">Why</a>
+    <a href="#architecture" class="nav-link">Architecture</a>
+    <a href="#section-05" class="nav-link">Roadmap</a>
+    <a href="#section-08" class="nav-link">Contribute</a>
+    <a href="index.html" class="nav-back">← Home</a>
+  </nav>
+</header>
+
+<!-- COVER -->
+<header id="cover" role="banner">
+  <div class="cover-topbar" aria-label="Document header">
+    <span>KAIROS LAB · PROJECT DOCUMENT</span>
+    <span>v2.1 · APRIL 2026 · V0.1 SHIPPED</span>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-mark">
+      <svg width="48" height="48" viewBox="0 0 96 96" aria-label="Covenant logo" role="img">
+        <title>Covenant</title>
+        <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+        <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+        <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="cover-square" style="animation:squarePulse 4s ease-in-out infinite"/>
+      </svg>
+      <style>@keyframes squarePulse{0%,100%{opacity:1;transform:scale(1) rotate(0deg)}33%{opacity:.85;transform:scale(1.12) rotate(3deg)}66%{opacity:.92;transform:scale(.9) rotate(-2deg)}}</style>
+      <span class="cover-mark-label">Covenant</span>
+    </div>
+
+    <h1 class="cover-title" id="cover-title" aria-label="Covenant"></h1>
+    <p class="cover-subtitle">where cryptographic guarantees become language primitives</p>
+    <div class="cover-bar" id="cover-bar" aria-hidden="true"></div>
+    <p class="cover-desc">A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Version 0.1 Basics is live — the first public Covenant contract has deployed on Ethereum Sepolia.</p>
+  </div>
+
+  <footer class="cover-footer" aria-label="Document metadata">
+    <div class="cover-footer-col"><span class="cover-footer-label">Author</span><span class="cover-footer-value">Kairos Lab</span></div>
+    <div class="cover-footer-col"><span class="cover-footer-label">Specification</span><span class="cover-footer-value">CC0-1.0 · Open</span></div>
+    <div class="cover-footer-col"><span class="cover-footer-label">Compiler</span><span class="cover-footer-value">Apache-2.0 · Rust</span></div>
+  </footer>
+</header>
+
+<!-- MAIN DOCUMENT -->
+<main class="page" id="main-content">
+
+  <!-- 01 — PREAMBLE -->
+  <section class="doc-section" id="section-01" aria-labelledby="s01-title">
+    <div class="reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title" id="s01-title">Preamble</h2>
+    </div>
+    <div class="preamble-block reveal">
+      <span class="preamble-label">Preamble</span>
+      <p class="preamble-text">Covenant is a smart contract language in active development. Version 0.1 Basics shipped April 2026; the first public contract is deployed on Ethereum Sepolia. This document describes the language design, its cryptographic substrate, and the roadmap to production readiness. The specifications herein are published under CC0-1.0; the compiler is Apache-2.0. We write in the present tense where implementations exist, and in the conditional where they are planned. The reader is invited to distinguish the two.</p>
+    </div>
+  </section>
+
+  <!-- 02 — WHY -->
+  <section class="doc-section" id="section-02" aria-labelledby="s02-title">
+    <div class="reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title" id="s02-title">Why a declarative language for cryptography</h2>
+    </div>
+
+    <p class="body-text reveal">A senior Solidity engineer who wishes to deploy a contract with fully homomorphic computation, post-quantum signature verification, and selective disclosure of state must, today, assemble four or more independent libraries, each with its own ABI conventions, gas models, and key serialization formats. The integration code is not checked by any compiler. The bugs live at the joints.</p>
+
+    <p class="body-text reveal">This is not merely inconvenient. It is a structural failure of the toolchain. When a developer writes <code>fhe.decrypt(pk, ciphertext)</code> after a <code>zkVerify(proof, publicInputs)</code>, the compiler does not know whether the key used for FHE encryption is the same key identity that the ZK proof asserts. It cannot know, because these primitives are not part of the language; they are external calls. The composition is the developer's responsibility, and the developer is fallible.</p>
+
+    <p class="body-text reveal">Covenant treats FHE, post-quantum signatures, ZK proofs, and cryptographic amnesia as first-class language primitives. The compiler reasons about key identities, data flows, and privacy invariants across all four layers simultaneously. An operation that would violate a privacy guarantee fails at compile time, not at runtime — not in production, not in an audit, not in a postmortem.</p>
+
+    <div class="assertion reveal">
+      <span class="assertion-label">Assertion</span>
+      <p class="assertion-text">"The class of integration bugs that arise from composing independent cryptographic libraries does not exist in Covenant. These bugs cannot be written, because the composition is expressed in the type system."</p>
+    </div>
+
+    <div class="code-wrapper reveal">
+      <span class="code-label">// Covenant: compiler-enforced primitives</span>
+      <pre class="code" id="main-code-block" aria-label="Covenant private vote example"><span class="kw">fn</span> <span class="fn">process_private_vote</span>(
+    <span class="ty">vote</span>:  <span class="kw">fhe&lt;u256&gt;</span>,       <span class="cm">// FHE-encrypted ballot</span>
+    <span class="ty">voter</span>: <span class="kw">identity&lt;pq&gt;</span>    <span class="cm">// post-quantum identity</span>
+) <span class="kw">-&gt;</span> <span class="ty">amnesia</span> {
+    <span class="cv">// @non_reentrant        auto-injected by compiler</span>
+    <span class="cv">// privacy flow          verified: fhe → pq → zk consistent</span>
+    <span class="cv">// compiled to           2,847 bytes</span>
+
+    <span class="kw">let</span> <span class="ty">cleartext</span> = <span class="fn">decrypt</span>(vote, voter.key);  <span class="cm">// key identity enforced</span>
+    self.<span class="fn">tally</span>(cleartext);
+
+} <span class="cm">// scope exit: amnesia auto-triggered, ciphertext destroyed, proven on-chain</span></pre>
+      <button class="copy-btn" data-target="main-code-block" aria-label="Copy code">COPY</button>
+    </div>
+  </section>
+
+  <!-- 03 — ARCHITECTURE -->
+  <section class="doc-section" id="architecture" aria-labelledby="s03-title">
+    <div class="reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title" id="s03-title">Architecture: four cryptographic layers</h2>
+    </div>
+
+    <p class="body-text reveal">Styx Protocol is Covenant's native standard library — the substrate on which every Covenant contract runs. It is not a dependency to be imported. It is the runtime. Styx defines four named cryptographic layers, each responsible for a distinct class of guarantee. A Covenant contract may use any subset; the compiler verifies that compositions are sound.</p>
+
+    <p class="body-text reveal">The four layers are not independent modules. OBLIVION can trigger termination of keys held by FORTRESS. VEIL's homomorphic computations may be verified by PRISM without decrypting. FORTRESS provides the identity substrate for all three. These interactions are the reason a language-level approach is necessary: no library-level API can express them.</p>
+
+    <!-- Interactive architecture diagram -->
+    <div class="arch-diagram reveal" role="grid" aria-label="Styx Protocol: four cryptographic layers" id="arch-grid">
+
+      <div class="arch-q" role="gridcell" tabindex="0" id="aq-fortress"
+           aria-expanded="false" aria-label="FORTRESS. Press Enter to expand."
+           onclick="toggleArch('fortress')" onkeydown="archKey(event,'fortress')">
+        <div class="arch-q-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="6" y="14" width="20" height="14" stroke="#1a1a1a" stroke-width="1.5"/>
+            <path d="M 10 14 L 10 10 Q 10 4 16 4 Q 22 4 22 10 L 22 14" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="21" r="2.5" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <span class="arch-q-name">FORTRESS</span>
+        <span class="arch-q-italic">Post-quantum key infrastructure</span>
+        <p class="arch-q-desc">CRYSTALS-Kyber-1024 key encapsulation · Dilithium-5 signatures</p>
+      </div>
+
+      <div class="arch-q" role="gridcell" tabindex="0" id="aq-veil"
+           aria-expanded="false" aria-label="VEIL. Press Enter to expand."
+           onclick="toggleArch('veil')" onkeydown="archKey(event,'veil')">
+        <div class="arch-q-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M 4 16 Q 16 4 28 16 Q 16 28 4 16 Z" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="16" r="4" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="16" r="1.5" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <span class="arch-q-name">VEIL</span>
+        <span class="arch-q-italic">Fully homomorphic blind computation</span>
+        <p class="arch-q-desc">TFHE via tfhe-rs · operate on encrypted data without decryption</p>
+      </div>
+
+      <div class="arch-q" role="gridcell" tabindex="0" id="aq-prism"
+           aria-expanded="false" aria-label="PRISM. Press Enter to expand."
+           onclick="toggleArch('prism')" onkeydown="archKey(event,'prism')">
+        <div class="arch-q-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <polygon points="16,4 28,24 4,24" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+            <line x1="16" y1="4" x2="16" y2="24" stroke="#7C3AED" stroke-width="1" stroke-dasharray="2,2"/>
+            <line x1="4" y1="24" x2="28" y2="24" stroke="#1a1a1a" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span class="arch-q-name">PRISM</span>
+        <span class="arch-q-italic">Zero-knowledge recursive verification</span>
+        <p class="arch-q-desc">Nova IVC folding · Halo2 SNARK · selective state disclosure</p>
+      </div>
+
+      <div class="arch-q" role="gridcell" tabindex="0" id="aq-oblivion"
+           aria-expanded="false" aria-label="OBLIVION. Press Enter to expand."
+           onclick="toggleArch('oblivion')" onkeydown="archKey(event,'oblivion')">
+        <div class="arch-q-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="8" y="8" width="16" height="16" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <rect x="11" y="11" width="10" height="10" stroke="#9ca3af" stroke-width="1" stroke-dasharray="2,2"/>
+            <rect x="14" y="14" width="4" height="4" fill="#7C3AED" opacity="0.4"/>
+          </svg>
+        </div>
+        <span class="arch-q-name">OBLIVION</span>
+        <span class="arch-q-italic">Cryptographic amnesia</span>
+        <p class="arch-q-desc">Shamir SSS · Wesolowski VDF · ZK destruction proofs</p>
+      </div>
+
+    </div>
+
+    <!-- Expansion area -->
+    <div class="arch-expansion" id="arch-expansion" role="region" aria-live="polite">
+      <div class="arch-exp-inner">
+        <div class="arch-exp-title">
+          <span id="arch-exp-name"></span>
+          <button class="arch-exp-close" onclick="closeArch()" aria-label="Close">ESC / CLOSE</button>
+        </div>
+        <p class="arch-exp-text" id="arch-exp-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — WHAT SHIPS -->
+  <section class="doc-section" id="section-04" aria-labelledby="s04-title">
+    <div class="reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title" id="s04-title">What ships today</h2>
+    </div>
+    <p class="lead-text reveal">Version 0.1 Basics shipped April 2026. The first public Covenant contract is live on Ethereum Sepolia.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--rule);margin:28px 0;" class="reveal" role="list">
+      <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
+        <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Compiler</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">Rust · ~15,000 lines</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">GA · V0.1</span>
+        <a style="font-family:'JetBrains Mono',monospace;font-size:8.5pt;color:var(--accent);text-decoration:none;display:block;margin-top:8px;" href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener">github.com/Valisthea/covenant-lang</a>
+      </div>
+      <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
+        <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">First Deployment</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">Sepolia Coin contract</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:8pt;color:var(--ink-mute);word-break:break-all;display:block;margin-bottom:6px;">0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133</span>
+        <a style="font-family:'JetBrains Mono',monospace;font-size:8.5pt;color:var(--accent);text-decoration:none;" href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">sepolia.etherscan.io ↗</a>
+      </div>
+      <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
+        <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Codex</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">20 working examples · 4 tiers</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">V0.4 · COMPLETE</span>
+      </div>
+      <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
+        <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Tooling</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">CLI + LSP + Security Linter</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--rule);color:var(--ink-mute);padding:2px 8px;">V0.5 · V0.6 IN PROGRESS</span>
+        <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">810+ tests · 21+ detectors · VS Code extension</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 — ROADMAP -->
+  <section class="doc-section" id="section-05" aria-labelledby="s05-title">
+    <div class="reveal">
+      <span class="section-num">05</span>
+      <h2 class="section-title" id="s05-title">Trajectory</h2>
+    </div>
+    <p class="body-text reveal">What follows is the public roadmap. Shipped phases are marked accordingly. The current phase is distinguished by a live indicator on the left margin.</p>
+
+    <div class="roadmap-grid" aria-label="Project roadmap">
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.1 BASICS</span><span class="roadmap-phase-date">April 2026</span><span class="rs rs-shipped">Shipped</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Core language and first deployment</span><p class="roadmap-content-text">The Covenant compiler ships in Rust. Core language semantics are implemented and tested. The first public contract deploys on Ethereum Sepolia.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.2–0.4 CODEX</span><span class="roadmap-phase-date">Q2 2026</span><span class="rs rs-shipped">Shipped</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Twenty canonical examples, four tiers</span><p class="roadmap-content-text">The Codex establishes the Covenant idiom across Basics, Intermediate, Advanced, and Edge Cases. Each example is tested and annotated.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.5 CLI</span><span class="roadmap-phase-date">Q2 2026</span><span class="rs rs-shipped">Shipped</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Command-line toolchain</span><p class="roadmap-content-text">The CLI provides compile, check, deploy, and test subcommands. 810+ tests cover the full language surface. Minimal and composable by design.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.6 LSP + LINTER</span><span class="roadmap-phase-date">Q2–Q3 2026</span><span class="rs rs-progress">In Progress</span></div>
+      <div class="roadmap-content current reveal"><span class="roadmap-content-title">Language server and security analysis</span><p class="roadmap-content-text">LSP implementation brings Covenant to VS Code and any LSP-compatible editor. The security linter ships with 21+ detectors covering the most common classes of cryptographic misuse. This is the current active phase.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.7 SECURITY</span><span class="roadmap-phase-date">Q3 2026</span><span class="rs rs-planned">Planned</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Security primitives, tiers 1 and 2</span><p class="roadmap-content-text">Implementation of the full security primitive set from Doc 16: tier 1 (access control, reentrancy, overflow) and tier 2 (flash loan resistance, oracle manipulation). Language-level, not library-level.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V1.0 PRODUCTION</span><span class="roadmap-phase-date">Q1 2027</span><span class="rs rs-planned">Planned</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Post-external-audit release</span><p class="roadmap-content-text">V1.0 follows a full external security audit of compiler and runtime. Semantic versioning guarantee takes effect: no breaking changes without a major version increment.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V1.5 FORMAL</span><span class="roadmap-phase-date">Q3 2027</span><span class="rs rs-planned">Planned</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Formal verification artifacts</span><p class="roadmap-content-text">Coq and Lean proofs of the Covenant type system's key invariants. A mechanically verified proof that the privacy flow checker is sound relative to the operational semantics. We state the goal here as a public commitment.</p></div>
+    </div>
+  </section>
+
+  <!-- 06 — POSITIONING -->
+  <section class="doc-section" id="section-06" aria-labelledby="s06-title">
+    <div class="reveal">
+      <span class="section-num">06</span>
+      <h2 class="section-title" id="s06-title">Why Covenant is not another smart contract language</h2>
+    </div>
+    <p class="body-text reveal">The question arises. A number of projects have occupied adjacent positions. The distinctions are not trivial.</p>
+    <div class="reveal">
+      <p class="body-text"><span style="font-weight:700;">Not another Solidity fork.</span> Solidity is the runtime we target. Covenant compiles to EVM bytecode via the same backend. But Covenant is not a dialect of Solidity, nor a superset, nor a compatibility layer. It is a different language with a different type system and different compiler semantics.</p>
+      <p class="body-text"><span style="font-weight:700;">Not an FHE-specific DSL.</span> fhEVM and its contemporaries specialize in fully homomorphic computation. They solve one problem well. Covenant treats FHE as one primitive among four: post-quantum key infrastructure, fully homomorphic computation, zero-knowledge verification, and cryptographic amnesia. The integration between these four layers is where the most dangerous bugs live.</p>
+      <p class="body-text"><span style="font-weight:700;">Not a research toy.</span> A contract runs on Sepolia today. The CLI accepts input and produces bytecode. The linter catches bugs in real Covenant code. The VS Code extension syntax-highlights and autocompletes. This is not a paper describing a language that might one day be implemented. It is working infrastructure.</p>
+    </div>
+  </section>
+
+  <!-- 07 — HOW TO READ -->
+  <section class="doc-section" id="section-07" aria-labelledby="s07-title">
+    <div class="reveal">
+      <span class="section-num">07</span>
+      <h2 class="section-title" id="s07-title">How to read this document</h2>
+    </div>
+    <p class="body-text reveal">This site is both a project document and a living specification. The sections on language design and architecture are normative: any deviation between the compiler and this document is a compiler bug. The roadmap sections are informative: they describe our intentions, which are subject to revision.</p>
+    <p class="body-text reveal">The specifications published here are released under <strong>CC0-1.0</strong>. You may use them, fork them, implement them independently, and publish derivative work without attribution. The compiler implementation is released under <strong>Apache-2.0</strong>.</p>
+
+    <div class="license-diagram reveal" aria-label="License structure" role="img">
+      <svg width="100%" height="120" viewBox="0 0 560 120" xmlns="http://www.w3.org/2000/svg">
+        <title>License structure: CC0-1.0 specifications and Apache-2.0 compiler both flow into user contracts</title>
+        <rect x="20" y="30" width="140" height="56" fill="#fcfbf8" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="90" y="50" font-family="JetBrains Mono" font-size="9" fill="#6b7280" text-anchor="middle" letter-spacing="0.08em">SPECIFICATIONS</text>
+        <text x="90" y="66" font-family="JetBrains Mono" font-size="8" fill="#7C3AED" text-anchor="middle">CC0-1.0</text>
+        <text x="90" y="78" font-family="JetBrains Mono" font-size="7" fill="#9ca3af" text-anchor="middle">No restrictions</text>
+        <rect x="180" y="30" width="140" height="56" fill="#fcfbf8" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="250" y="50" font-family="JetBrains Mono" font-size="9" fill="#6b7280" text-anchor="middle" letter-spacing="0.08em">COMPILER</text>
+        <text x="250" y="66" font-family="JetBrains Mono" font-size="8" fill="#7C3AED" text-anchor="middle">Apache-2.0</text>
+        <text x="250" y="78" font-family="JetBrains Mono" font-size="7" fill="#9ca3af" text-anchor="middle">Permissive, patent grant</text>
+        <line x1="90" y1="86" x2="370" y2="86" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="250" y1="86" x2="370" y2="86" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="370" y1="86" x2="370" y2="58" stroke="#d1d5db" stroke-width="1"/>
+        <polygon points="366,62 370,54 374,62" fill="#9ca3af"/>
+        <rect x="380" y="30" width="160" height="56" fill="#faf7ff" stroke="#7C3AED" stroke-width="1.5"/>
+        <text x="460" y="50" font-family="JetBrains Mono" font-size="9" fill="#7C3AED" text-anchor="middle" letter-spacing="0.08em">USER CONTRACTS</text>
+        <text x="460" y="66" font-family="JetBrains Mono" font-size="8" fill="#6b7280" text-anchor="middle">Any license</text>
+        <text x="460" y="78" font-family="JetBrains Mono" font-size="7" fill="#9ca3af" text-anchor="middle">You own your code</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 08 — CONTRIBUTE -->
+  <section class="doc-section" id="section-08" aria-labelledby="s08-title">
+    <div class="reveal">
+      <span class="section-num">08</span>
+      <h2 class="section-title" id="s08-title">Invitation to contribute</h2>
+    </div>
+    <p class="body-text reveal">Covenant is early. We have a working compiler, a deployed contract, a test suite, and a roadmap. We are selectively seeking collaborators in four areas.</p>
+    <div class="roles-grid reveal" role="list">
+      <div class="role-card" role="listitem" tabindex="0"><span class="role-card-title">Compiler engineers</span><p class="role-card-desc">Rust engineers with experience in type systems, compiler backends, or formal semantics. Particularly interested in MIR-style intermediate representations or incremental compilation.</p></div>
+      <div class="role-card" role="listitem" tabindex="0"><span class="role-card-title">Protocol cryptographers</span><p class="role-card-desc">Cryptographers with depth in lattice-based post-quantum constructions, FHE schemes, or recursive SNARK proof systems. The Styx Protocol interface definitions are open; formal critique is welcome.</p></div>
+      <div class="role-card" role="listitem" tabindex="0"><span class="role-card-title">Security researchers</span><p class="role-card-desc">Smart contract auditors who can stress-test the language semantics — the privacy flow checker, the reentrancy model, the amnesia scope rules. Break it before it ships.</p></div>
+      <div class="role-card" role="listitem" tabindex="0"><span class="role-card-title">Formal verification specialists</span><p class="role-card-desc">Mathematicians working in Coq, Lean, or Isabelle interested in mechanizing the Covenant type system soundness proof. The longest-horizon contribution; also the most consequential.</p></div>
+    </div>
+  </section>
+
+  <!-- 09 — CONTACT -->
+  <section class="doc-section" id="section-09" aria-labelledby="s09-title">
+    <div class="reveal">
+      <span class="section-num">09</span>
+      <h2 class="section-title" id="s09-title">Contact</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div>
+        <span class="contact-label">Contact</span>
+        <p class="contact-entry"><a href="mailto:covenant@kairos-lab.org">covenant@kairos-lab.org</a></p>
+        <p class="contact-entry"><a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener">@Covenant_Lang on X</a></p>
+        <p class="contact-entry"><a href="https://x.com/Valisthea" target="_blank" rel="noopener">@Valisthea on X</a></p>
+      </div>
+      <div>
+        <span class="contact-label">Repository</span>
+        <p class="contact-entry"><a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener">github.com/Valisthea/covenant-lang</a></p>
+        <p class="contact-entry" style="font-family:'JetBrains Mono',monospace;font-size:9pt;color:var(--ink-mute);">Specs: CC0-1.0 · Compiler: Apache-2.0</p>
+      </div>
+    </div>
+    <p class="doc-closing">Watch this space. Private until V1.0.</p>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-row">
+        <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true">
+          <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+          <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+          <rect x="40" y="40" width="16" height="16" fill="#7C3AED"/>
+        </svg>
+        <span class="footer-brand-name">Covenant</span>
+      </div>
+      <p class="footer-by">by Kairos Lab</p>
+      <p class="footer-tagline">where cryptographic guarantees become language primitives</p>
+    </div>
+    <div>
+      <span class="footer-col-title">Contact</span>
+      <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a>
+      <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang</a>
+      <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea</a>
+    </div>
+    <div>
+      <span class="footer-col-title">Repository</span>
+      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a>
+      <a href="index.html" class="footer-link" style="margin-top:12px;">← Back to landing</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-closing">Watch this space. Private until V1.0.</p>
+    <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0</span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Progress + header */
+  const prog = document.getElementById('progress');
+  const hdr  = document.getElementById('site-header');
+  window.addEventListener('scroll', function() {
+    const sh = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (sh > 0 ? window.scrollY/sh*100 : 0) + '%';
+    hdr.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+  /* Cover title cipher */
+  const WORD  = 'Covenant';
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@%&';
+  const ct    = document.getElementById('cover-title');
+  const cb    = document.getElementById('cover-bar');
+  if (reduced) {
+    ct.textContent = WORD;
+    cb.style.width = '64px';
+  } else {
+    WORD.split('').forEach(function(ch) {
+      const s = document.createElement('span');
+      s.className = 'letter'; s.textContent = ch; s.dataset.final = ch;
+      ct.appendChild(s);
+    });
+    ct.querySelectorAll('.letter').forEach(function(span, i) {
+      setTimeout(function() {
+        span.style.opacity = '1';
+        let step = 0;
+        const fin = span.dataset.final;
+        const iv = setInterval(function() {
+          if (step < 4) { span.textContent = CHARS[Math.floor(Math.random()*CHARS.length)]; step++; }
+          else { span.textContent = fin; clearInterval(iv); }
+        }, 22);
+      }, 200 + i * 48);
+    });
+    setTimeout(function() { cb.style.width = '64px'; }, 740);
+  }
+
+  /* Reveal on scroll */
+  const io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+
+  /* Copy buttons */
+  document.querySelectorAll('.copy-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const pre = document.getElementById(btn.getAttribute('data-target'));
+      if (!pre) return;
+      navigator.clipboard.writeText(pre.innerText||pre.textContent).then(function() {
+        btn.textContent = 'COPIED';
+        setTimeout(function() { btn.textContent = 'COPY'; }, 2000);
+      });
+    });
+  });
+
+  /* Architecture diagram */
+  const archData = {
+    fortress: {
+      name: 'FORTRESS — Post-Quantum Key Infrastructure',
+      text: 'FORTRESS implements the post-quantum key infrastructure layer of Styx Protocol using CRYSTALS-Kyber-1024 for key encapsulation and CRYSTALS-Dilithium-5 for digital signatures — both NIST-standardized lattice constructions. In Covenant, every identity is a FORTRESS key identity. The type system propagates key identity through all operations; a VEIL encryption must use the same key identity that a PRISM proof asserts. This constraint cannot be violated without a compile-time error. FORTRESS also provides the cryptographic material that OBLIVION destroys: key shards are distributed via Shamir secret sharing, and the Wesolowski VDF provides a time-delay commitment ensuring destruction cannot be rushed or forged.'
+    },
+    veil: {
+      name: 'VEIL — Fully Homomorphic Blind Computation',
+      text: 'VEIL wraps tfhe-rs, the state-of-the-art TFHE implementation in Rust, behind Covenant\'s type abstraction. An fhe<T> type in Covenant is a VEIL-managed ciphertext: the compiler tracks its provenance, its key identity, and whether it has been consumed. Operations on fhe<T> values execute on encrypted data without decryption. VEIL\'s integration with PRISM is the critical interaction: homomorphic computations over fhe<T> values can be proven correct using PRISM\'s ZK verification without revealing the underlying plaintexts. The compiler verifies that this interaction is sound: a proof over a VEIL-computed value cannot be constructed with a mismatched key identity.'
+    },
+    prism: {
+      name: 'PRISM — Zero-Knowledge Recursive Verification',
+      text: 'PRISM implements zero-knowledge proof generation and verification using Nova IVC folding for recursive proof composition and Halo2 for SNARK verification on-chain. In Covenant, a proof<T> type represents a zero-knowledge assertion about a value of type T without revealing T itself. The ZK proof system is used for selective state disclosure: a contract may prove that a state variable satisfies a predicate without revealing the variable\'s value. Recursive IVC allows proofs over long computation histories — essential for rolling up multiple private state transitions into a single on-chain proof.'
+    },
+    oblivion: {
+      name: 'OBLIVION — Cryptographic Amnesia',
+      text: 'OBLIVION implements cryptographic amnesia: the provable, verifiable destruction of secrets. When a Covenant function returns a value of type amnesia, the compiler inserts destruction code for all fhe<T> values and FORTRESS key shards that entered that scope. Shamir secret sharing distributes key material across a quorum of erasure nodes; Wesolowski VDF provides a time-delay commitment ensuring destruction cannot be executed before its scheduled time; a ZK destruction proof, verifiable on-chain, asserts that the erasure was completed correctly. A ciphertext cannot be used after its amnesia scope has been entered — enforced at compile time.'
+    }
+  };
+  let curArch = null;
+  window.toggleArch = function(layer) {
+    const exp = document.getElementById('arch-expansion');
+    document.querySelectorAll('.arch-q').forEach(function(q) { q.setAttribute('aria-expanded','false'); });
+    if (curArch === layer) { exp.classList.remove('open'); curArch = null; return; }
+    const d = archData[layer];
+    if (!d) return;
+    document.getElementById('arch-exp-name').textContent = d.name;
+    document.getElementById('arch-exp-text').textContent = d.text;
+    exp.classList.add('open');
+    document.getElementById('aq-'+layer).setAttribute('aria-expanded','true');
+    curArch = layer;
+  };
+  window.closeArch = function() {
+    document.getElementById('arch-expansion').classList.remove('open');
+    document.querySelectorAll('.arch-q').forEach(function(q) { q.setAttribute('aria-expanded','false'); });
+    curArch = null;
+  };
+  window.archKey = function(e, layer) {
+    if (e.key==='Enter'||e.key===' ') { e.preventDefault(); window.toggleArch(layer); }
+    else if (e.key==='Escape') { window.closeArch(); }
+  };
+  document.addEventListener('keydown', function(e) { if (e.key==='Escape'&&curArch) window.closeArch(); });
+})();
+</script>
+</body>
+</html>

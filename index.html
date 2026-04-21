@@ -3,16 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#7C3AED">
-
-<title>Covenant — where cryptographic guarantees become language primitives</title>
-<meta name="description" content="A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Post-quantum signatures, FHE computation, trustless verification, and cryptographic amnesia as language primitives.">
+<title>Covenant — Cryptographic guarantees as language primitives</title>
+<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.1 live on Sepolia.">
 <meta name="author" content="Kairos Lab">
-<meta name="keywords" content="smart contract language, cryptographic agility, post-quantum, FHE, zero-knowledge, Ethereum, Styx Protocol, Kairos Lab, Solidity alternative, privacy preserving contracts">
-
-<!-- Canonical -->
 <link rel="canonical" href="https://covenant-lang.org/">
-
 <!-- Favicons -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="alternate icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -20,1451 +14,1408 @@
 <link rel="alternate icon" type="image/x-icon" href="/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="mask-icon" href="/favicon.svg" color="#7C3AED">
-
+<meta name="theme-color" content="#7C3AED">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://covenant-lang.org/">
 <meta property="og:site_name" content="Covenant">
-<meta property="og:title" content="Covenant — where cryptographic guarantees become language primitives">
-<meta property="og:description" content="A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library.">
+<meta property="og:title" content="Covenant — Cryptographic guarantees as language primitives">
+<meta property="og:description" content="A smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.1 live on Sepolia.">
 <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:alt" content="Covenant — a smart contract language for cryptographic agility, by Kairos Lab">
-
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@Valisthea">
-<meta name="twitter:title" content="Covenant — where cryptographic guarantees become language primitives">
-<meta name="twitter:description" content="A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library.">
+<meta name="twitter:title" content="Covenant — Cryptographic guarantees as language primitives">
+<meta name="twitter:description" content="A smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia.">
 <meta name="twitter:image" content="https://covenant-lang.org/og-image.jpg">
-<meta name="twitter:image:alt" content="Covenant — a smart contract language for cryptographic agility, by Kairos Lab">
-
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ─────────────────────────────────────────────
+   TOKENS
+   ───────────────────────────────────────────── */
 :root {
-  --ink: #1a1a1a;
-  --ink-soft: #3d3d3d;
-  --ink-mute: #6b7280;
-  --ink-faint: #9ca3af;
-  --rule: #d1d5db;
-  --rule-faint: #e5e7eb;
-  --paper: #fcfbf8;
-  --paper-pure: #ffffff;
-
-  --accent: #7C3AED;
+  --ink:          #1a1a1a;
+  --ink-soft:     #3d3d3d;
+  --ink-mute:     #6b7280;
+  --ink-faint:    #9ca3af;
+  --rule:         #d1d5db;
+  --rule-faint:   #e5e7eb;
+  --paper:        #fcfbf8;
+  --paper-pure:   #ffffff;
+  --accent:       #7C3AED;
   --accent-faint: #faf7ff;
-  --accent-soft: #a78bfa;
-  --cyan: #0891b2;
-  --blue: #2563eb;
-  --red: #dc2626;
-  --green: #059669;
-  --warn: #9f1b1b;
-
-  --serif: 'EB Garamond', 'Times New Roman', serif;
-  --sans: 'Inter', -apple-system, sans-serif;
-  --mono: 'JetBrains Mono', 'Courier New', monospace;
+  --accent-soft:  #a78bfa;
+  --cyan:         #0891b2;
+  --blue:         #2563eb;
+  --green:        #059669;
+  --header-h:     56px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  font-family: var(--serif);
-  font-size: 12pt;
-  line-height: 1.65;
+  background: var(--paper);
   color: var(--ink);
-  background: var(--paper);
-  font-feature-settings: "liga" 1, "onum" 1, "kern" 1;
-  text-rendering: optimizeLegibility;
+  font-family: 'EB Garamond', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-.page {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 80px 56px 120px;
-  background: var(--paper);
+/* ─────────────────────────────────────────────
+   SCROLL PROGRESS
+   ───────────────────────────────────────────── */
+#progress {
+  position: fixed; top: 0; left: 0; height: 2px;
+  width: 0; background: var(--accent); z-index: 2000;
+  transition: width 80ms linear;
 }
 
-/* ========================================================== */
-/*  Cover                                                       */
-/* ========================================================== */
-
-.cover {
-  padding: 140px 56px 100px;
-  max-width: 720px;
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: var(--paper);
+/* ─────────────────────────────────────────────
+   HEADER
+   ───────────────────────────────────────────── */
+#site-header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: rgba(252,251,248,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule-faint);
+  display: flex; align-items: center;
+  padding: 0 48px;
+  z-index: 1000;
+  transition: border-color 0.3s ease;
 }
 
-.cover-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  font-family: var(--mono);
-  font-size: 9pt;
-  letter-spacing: 0.08em;
-  color: var(--ink-mute);
-  text-transform: uppercase;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--rule);
-}
+#site-header.scrolled { border-bottom-color: var(--rule); }
 
-.cover-mark {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 60px;
-}
-
-.cover-mark svg {
+.header-brand {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--ink);
   flex-shrink: 0;
-  display: block;
 }
 
-.cover-mark-label {
-  font-family: var(--mono);
-  font-size: 9pt;
-  letter-spacing: 0.14em;
-  color: var(--ink-mute);
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.cover-center {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px 0;
-}
-
-.cover-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 88pt;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  margin-bottom: 32px;
-  font-feature-settings: "dlig" 1;
-}
-
-.cover-subtitle {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 22pt;
-  line-height: 1.35;
-  color: var(--ink-soft);
-  max-width: 560px;
-  margin-bottom: 12px;
-}
-
-.cover-accent-bar {
-  width: 64px;
-  height: 2px;
-  background: var(--accent);
-  margin: 48px 0 24px;
-}
-
-.cover-description {
-  font-family: var(--sans);
-  font-weight: 300;
-  font-size: 11pt;
-  line-height: 1.7;
-  color: var(--ink-mute);
-  max-width: 540px;
-  letter-spacing: 0.01em;
-}
-
-.cover-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 24px;
-  padding-top: 32px;
-  border-top: 1px solid var(--rule);
-}
-
-.cover-meta-item {
-  font-family: var(--mono);
-  font-size: 8.5pt;
-  color: var(--ink-mute);
-}
-
-.cover-meta-label {
-  display: block;
-  font-size: 7.5pt;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin-bottom: 6px;
-}
-
-.cover-meta-value {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-/* ========================================================== */
-/*  Document body                                               */
-/* ========================================================== */
-
-.preamble {
-  border-left: 2px solid var(--accent);
-  padding: 4px 0 4px 28px;
-  margin: 0 0 72px;
-}
-
-.preamble-label {
-  font-family: var(--mono);
-  font-size: 8.5pt;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 14px;
-  font-weight: 600;
-}
-
-.preamble p {
-  font-family: var(--serif);
-  font-size: 12pt;
-  line-height: 1.65;
-  color: var(--ink-soft);
-  font-style: italic;
-}
-
-section {
-  margin-bottom: 72px;
-  page-break-inside: auto;
-}
-
-section:last-of-type {
-  margin-bottom: 0;
-}
-
-h2 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 26pt;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  margin-bottom: 32px;
+.header-logo-wrap {
+  width: 32px; height: 32px;
   position: relative;
-  padding-top: 20px;
-  border-top: 1px solid var(--ink);
-  max-width: 540px;
 }
 
-h2 .h2-num {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 10pt;
+.header-brand-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10pt; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink);
+}
+
+.header-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7pt; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--accent);
-  margin-right: 16px;
-  font-weight: 500;
+  border: 1px solid var(--accent);
+  padding: 1px 6px;
+  margin-left: 4px;
   vertical-align: middle;
-  letter-spacing: 0.05em;
 }
 
-h3 {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 15pt;
-  line-height: 1.3;
-  color: var(--ink);
-  margin: 36px 0 16px;
-  font-style: italic;
+.header-spacer { flex: 1; }
+
+nav.header-nav {
+  display: flex; align-items: center; gap: 32px;
 }
 
-p {
-  margin-bottom: 18px;
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  orphans: 2;
-  widows: 2;
+.nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.5pt; font-weight: 400;
+  color: var(--ink-mute);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s ease;
 }
+.nav-link:hover { color: var(--ink); }
 
-p.lead {
-  font-size: 13pt;
-  line-height: 1.6;
-  color: var(--ink-soft);
-  font-style: italic;
-  margin-bottom: 32px;
-}
-
-strong {
-  font-weight: 600;
-  color: var(--ink);
-}
-
-em {
-  font-style: italic;
-}
-
-a {
+.nav-link-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid rgba(124, 58, 237, 0.3);
-  transition: border-color 0.15s;
+  border: 1px solid var(--accent);
+  padding: 5px 12px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
+.nav-link-cta:hover { background: var(--accent); color: white; }
 
-a:hover {
-  border-bottom-color: var(--accent);
-}
-
-code {
-  font-family: var(--mono);
-  font-size: 0.88em;
-  background: var(--paper-pure);
-  padding: 1px 5px;
-  border: 1px solid var(--rule-faint);
-  border-radius: 2px;
-  color: var(--ink);
-}
-
-/* ========================================================== */
-/*  Thesis assertions                                           */
-/* ========================================================== */
-
-.assertion {
-  margin: 36px 0;
-  padding: 4px 0 4px 32px;
-  border-left: 1px solid var(--rule);
+/* ─────────────────────────────────────────────
+   HERO
+   ───────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  padding-top: var(--header-h);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
+  overflow: hidden;
+  /* subtle paper dot grid */
+  background-image: radial-gradient(circle, rgba(26,26,26,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-color: var(--paper);
 }
 
-.assertion::before {
-  content: "";
-  position: absolute;
-  left: -1px;
-  top: 0;
-  width: 1px;
-  height: 24px;
-  background: var(--accent);
-}
-
-.assertion-label {
-  font-family: var(--mono);
-  font-size: 8pt;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  margin-bottom: 12px;
-  display: block;
-}
-
-.assertion-statement {
-  font-family: var(--serif);
-  font-size: 14pt;
-  line-height: 1.4;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 16px;
-  font-style: italic;
-}
-
-/* ========================================================== */
-/*  Code blocks                                                 */
-/* ========================================================== */
-
-pre.code {
-  font-family: var(--mono);
-  font-size: 9pt;
-  line-height: 1.6;
-  background: var(--paper-pure);
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
-  padding: 20px 24px;
-  margin: 28px 0;
-  overflow-x: auto;
-  color: var(--ink);
-  page-break-inside: avoid;
-}
-
-pre.code .kw { color: var(--accent); font-weight: 500; }
-pre.code .cm { color: var(--ink-faint); font-style: italic; }
-pre.code .tp { color: var(--cyan); }
-pre.code .fn { color: var(--blue); }
-pre.code .st { color: var(--green); }
-
-/* ========================================================== */
-/*  Figures                                                     */
-/* ========================================================== */
-
-figure {
-  margin: 40px 0;
-  page-break-inside: avoid;
-}
-
-figure svg {
+.hero-inner {
+  max-width: 760px;
   width: 100%;
-  height: auto;
-  display: block;
-  border: 1px solid var(--rule);
-  background: var(--paper-pure);
-  padding: 24px 20px;
-}
-
-figcaption {
-  font-family: var(--sans);
-  font-size: 9pt;
-  color: var(--ink-mute);
-  margin-top: 10px;
+  padding: 0 48px;
   text-align: center;
-  font-style: italic;
-  letter-spacing: 0.02em;
+  position: relative;
+  z-index: 1;
 }
 
-/* ========================================================== */
-/*  Roadmap blocks                                              */
-/* ========================================================== */
-
-.phase {
-  margin: 28px 0;
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 32px;
-  padding-bottom: 24px;
-  border-bottom: 1px dashed var(--rule);
+/* Animated logo — hero size */
+.hero-logo {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px;
+  margin-bottom: 44px;
 }
 
-.phase:last-of-type {
-  border-bottom: none;
+#hero-svg {
+  width: 96px; height: 96px;
+  overflow: visible;
 }
 
-.phase-meta {
-  font-family: var(--mono);
-  font-size: 9pt;
+/* SVG bracket animation */
+#bracket-left, #bracket-right {
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+#hero-svg:hover #bracket-left  { transform: translateX(-6px); }
+#hero-svg:hover #bracket-right { transform: translateX(6px); }
+
+#hero-square {
+  transform-origin: 50% 50%;
+  animation: squarePulse 4s ease-in-out infinite;
+}
+
+@keyframes squarePulse {
+  0%,100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  33%      { opacity: 0.85; transform: scale(1.12) rotate(3deg); }
+  66%      { opacity: 0.92; transform: scale(0.9) rotate(-2deg); }
+}
+
+.hero-logo-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--ink-mute);
 }
 
-.phase-name {
-  display: block;
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 10pt;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.phase-dates {
-  color: var(--ink-soft);
-  font-weight: 500;
-}
-
-.phase-body p {
-  margin-bottom: 12px;
-  font-size: 11.5pt;
-  text-align: left;
-}
-
-.phase-body p:last-child {
-  margin-bottom: 0;
-}
-
-/* ========================================================== */
-/*  Recruitment & funding                                       */
-/* ========================================================== */
-
-.roles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin: 28px 0;
-}
-
-.role {
-  padding: 20px 22px;
-  background: var(--paper-pure);
-  border: 1px solid var(--rule);
-  page-break-inside: avoid;
-}
-
-.role-title {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 12pt;
-  color: var(--ink);
-  margin-bottom: 8px;
-  font-style: italic;
-}
-
-.role-desc {
-  font-family: var(--sans);
-  font-size: 10pt;
-  line-height: 1.55;
-  color: var(--ink-soft);
+/* Title */
+h1#hero-title {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(72pt, 10vw, 112pt);
   font-weight: 400;
-}
-
-/* ========================================================== */
-/*  Closing                                                     */
-/* ========================================================== */
-
-.closing {
-  margin-top: 80px;
-  padding-top: 40px;
-  border-top: 1px solid var(--ink);
-  page-break-inside: avoid;
-}
-
-.closing-statement {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 20pt;
-  line-height: 1.4;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
   color: var(--ink);
-  margin: 40px 0 16px;
-  letter-spacing: -0.005em;
-}
-
-.closing-accent {
-  color: var(--accent);
-}
-
-/* ========================================================== */
-/*  Document footer                                             */
-/* ========================================================== */
-
-.doc-footer {
-  margin-top: 100px;
-  padding-top: 24px;
-  border-top: 1px solid var(--rule);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  font-family: var(--mono);
-  font-size: 8.5pt;
-  color: var(--ink-mute);
-  line-height: 1.7;
-}
-
-.doc-footer strong {
-  color: var(--ink-faint);
-  font-weight: 500;
-  display: block;
-  font-size: 7.5pt;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.doc-footer a {
-  font-size: 8.5pt;
-}
-
-/* ========================================================== */
-/*  Print styles                                                */
-/* ========================================================== */
-
-@media print {
-  @page {
-    size: A4;
-    margin: 18mm 16mm 20mm;
-  }
-
-  html, body {
-    background: white;
-    font-size: 10.5pt;
-  }
-
-  .cover {
-    min-height: auto;
-    padding: 0 0 60px;
-    page-break-after: always;
-  }
-
-  .page {
-    padding: 0;
-    max-width: 100%;
-  }
-
-  section {
-    page-break-inside: auto;
-    margin-bottom: 48px;
-  }
-
-  h2 {
-    page-break-after: avoid;
-    page-break-before: auto;
-  }
-
-  h3 {
-    page-break-after: avoid;
-  }
-
-  figure, pre.code, .role, .phase {
-    page-break-inside: avoid;
-  }
-
-  a {
-    color: var(--ink);
-    border-bottom: none;
-  }
-
-  a::after {
-    content: " (" attr(href) ")";
-    font-size: 0.85em;
-    color: var(--ink-mute);
-    font-family: var(--mono);
-  }
-
-  a[href^="#"]::after,
-  a[href^="mailto:"]::after {
-    content: "";
-  }
-
-  .print-note { display: none; }
-
-  .cover-title { font-size: 64pt; }
-  .cover-subtitle { font-size: 18pt; }
-  h2 { font-size: 22pt; }
-  h3 { font-size: 13pt; }
-  .closing-statement { font-size: 16pt; }
-}
-
-/* Screen-only controls */
-@media screen {
-  .print-note {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 10px 16px;
-    font-family: var(--mono);
-    font-size: 9pt;
-    letter-spacing: 0.05em;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    z-index: 100;
-  }
-
-  .print-note button {
-    background: none;
-    border: 1px solid var(--paper);
-    color: var(--paper);
-    padding: 4px 10px;
-    font-family: inherit;
-    font-size: inherit;
-    cursor: pointer;
-    margin-left: 12px;
-    letter-spacing: 0.05em;
-  }
-
-  .print-note button:hover {
-    background: var(--paper);
-    color: var(--ink);
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .page, .cover {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-  .cover {
-    padding-top: 60px;
-    padding-bottom: 60px;
-  }
-  .cover-title { font-size: 56pt; }
-  .cover-subtitle { font-size: 16pt; }
-  h2 { font-size: 20pt; }
-  .cover-bottom { grid-template-columns: 1fr; }
-  .roles { grid-template-columns: 1fr; }
-  .phase { grid-template-columns: 1fr; gap: 12px; }
-}
-
-/* ========================================================== */
-/*  Status block                                                */
-/* ========================================================== */
-
-.status-block {
-  background: var(--accent-faint);
-  border-left: 2px solid var(--accent);
-  padding: 32px 36px;
-  margin: 0 0 72px;
-}
-
-.status-label {
-  font-family: var(--mono);
-  font-size: 8.5pt;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-.status-headline {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 20pt;
-  line-height: 1.3;
-  color: var(--ink);
-  margin-bottom: 18px;
-  letter-spacing: -0.005em;
-}
-
-.status-body {
-  font-family: var(--serif);
-  font-size: 12pt;
-  line-height: 1.65;
-  color: var(--ink-soft);
   margin-bottom: 24px;
 }
 
-.status-artifact {
-  font-family: var(--mono);
-  font-size: 9.5pt;
-  color: var(--ink);
-  background: var(--paper-pure);
-  padding: 14px 18px;
-  border: 1px solid var(--rule);
-  margin-bottom: 6px;
-  word-break: break-all;
+h1#hero-title .letter {
+  display: inline-block;
+  opacity: 0;
 }
 
-.status-artifact a {
-  color: var(--accent);
+.hero-subtitle {
+  font-family: 'EB Garamond', serif;
+  font-size: 16pt; font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards 1.4s;
+}
+
+.hero-bar {
+  width: 0; height: 2px;
+  background: var(--accent);
+  margin: 0 auto 36px;
+  transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+
+.hero-actions {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards 1.7s;
+}
+
+.btn-primary {
+  font-family: 'Inter', sans-serif;
+  font-size: 10pt; font-weight: 500;
+  color: white; background: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid var(--accent-soft);
+  padding: 10px 24px;
+  border: 1px solid var(--accent);
+  transition: background 0.15s ease, transform 0.15s ease;
+  display: inline-block;
 }
+.btn-primary:hover { background: #6d28d9; transform: translateY(-1px); }
 
-.status-artifact a:hover {
-  border-bottom-color: var(--accent);
-}
-
-.status-meta {
-  font-family: var(--mono);
-  font-size: 8pt;
+.btn-secondary {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; font-weight: 500;
+  letter-spacing: 0.06em;
   color: var(--ink-mute);
-  letter-spacing: 0.05em;
-  margin-top: 14px;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 1px solid var(--rule);
+  transition: border-color 0.15s ease, color 0.15s ease;
+  display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--ink-mute); color: var(--ink); }
+
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-faint);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: fadeIn 0.8s ease forwards 2.2s; opacity: 0;
+}
+.hero-scroll-line {
+  width: 1px; height: 32px;
+  background: linear-gradient(to bottom, var(--ink-faint), transparent);
+  animation: scrollLine 2s ease-in-out infinite 2.5s;
+}
+@keyframes scrollLine {
+  0%,100% { transform: scaleY(1); opacity: 1; }
+  50%      { transform: scaleY(0.6); opacity: 0.4; }
+}
+
+/* ─────────────────────────────────────────────
+   LAYOUT
+   ───────────────────────────────────────────── */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.section {
+  padding: 80px 0;
+  border-top: 1px solid var(--ink);
+}
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; font-weight: 500;
+  letter-spacing: 0.1em; color: var(--accent);
+  display: block; margin-bottom: 8px;
+}
+
+h2.section-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 28pt; font-weight: 500;
+  line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+
+.body-text {
+  font-family: 'EB Garamond', serif;
+  font-size: 12pt; line-height: 1.65;
+  color: var(--ink-soft);
+  text-align: justify; hyphens: auto;
+  margin-bottom: 14px;
+  max-width: 640px;
+}
+
+/* ─────────────────────────────────────────────
+   FOUR LAYERS — COMPACT GRID
+   ───────────────────────────────────────────── */
+.layers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+  margin-top: 40px;
+}
+
+.layer-card {
+  padding: 28px 20px;
+  border-right: 1px solid var(--rule-faint);
+  position: relative;
+}
+.layer-card:last-child { border-right: none; }
+
+.layer-icon { margin-bottom: 16px; }
+
+.layer-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink); display: block; margin-bottom: 4px;
+}
+
+.layer-italic {
+  font-family: 'EB Garamond', serif;
+  font-size: 10pt; font-style: italic;
+  color: var(--ink-mute); display: block; margin-bottom: 10px;
+}
+
+.layer-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt; color: var(--ink-mute); line-height: 1.5;
+}
+
+.layer-tag {
+  display: inline-block; margin-top: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7pt; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 1px 6px;
+}
+
+/* Per-layer accent colors */
+.layer-card[data-layer="fortress"] { border-top: 2px solid #7C3AED; }
+.layer-card[data-layer="veil"]     { border-top: 2px solid #2563eb; }
+.layer-card[data-layer="prism"]    { border-top: 2px solid #0891b2; }
+.layer-card[data-layer="oblivion"] { border-top: 2px solid #dc2626; }
+
+.layer-tag-fortress { color: #7C3AED; border: 1px solid rgba(124,58,237,0.4); }
+.layer-tag-veil     { color: #2563eb; border: 1px solid rgba(37,99,235,0.4); }
+.layer-tag-prism    { color: #0891b2; border: 1px solid rgba(8,145,178,0.4); }
+.layer-tag-oblivion { color: #dc2626; border: 1px solid rgba(220,38,38,0.4); }
+
+/* Icon animations */
+@keyframes fortressShackle {
+  0%,100% { transform: translateY(0); }
+  40%     { transform: translateY(-2px); }
+  60%     { transform: translateY(-1px); }
+}
+@keyframes veilIrisPulse {
+  0%,100% { r: 4; opacity: 1; }
+  50%     { r: 5.5; opacity: 0.6; }
+}
+@keyframes prismScan {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -20; }
+}
+@keyframes oblivionDissolve {
+  0%,100% { opacity: 0.4; transform: scale(1); }
+  50%     { opacity: 0.08; transform: scale(1.3); }
+}
+
+.fortress-shackle { animation: fortressShackle 3s ease-in-out infinite; transform-origin: 50% 14px; }
+.veil-iris        { animation: veilIrisPulse 2.5s ease-in-out infinite; transform-origin: 16px 16px; }
+.prism-beam       { animation: prismScan 2s linear infinite; }
+.oblivion-core    { animation: oblivionDissolve 2s ease-in-out infinite; transform-origin: 16px 16px; }
+
+/* ─────────────────────────────────────────────
+   SIDE-BY-SIDE CODE COMPARISON
+   ───────────────────────────────────────────── */
+.compare-section { padding: 80px 0; border-top: 1px solid var(--ink); }
+
+.compare-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 28px;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+
+.compare-col { position: relative; }
+.compare-col:first-child { border-right: 2px solid var(--accent); }
+
+.compare-col-label {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--rule-faint);
+  background: var(--paper-pure);
+}
+
+.col-lang-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.col-lang-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.col-lang-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 8pt; color: var(--ink-faint);
+  margin-left: auto;
+}
+
+pre.compare-code {
+  background: var(--paper-pure);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt; line-height: 1.5;
+  color: var(--ink-soft);
+  padding: 14px 16px 14px 40px;
+  overflow-x: auto;
+  position: relative;
+  counter-reset: codeline;
+  white-space: pre;
+}
+
+/* line numbers via pseudo - use spans with class .ln */
+.ln {
+  display: block;
+  counter-increment: codeline;
+  position: relative;
+  padding-left: 0;
+}
+.ln::before {
+  content: counter(codeline);
+  position: absolute;
+  left: -36px; width: 24px;
+  text-align: right;
+  font-size: 7.5pt;
+  color: var(--ink-faint);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Right column: accent left border */
+.compare-col:last-child pre.compare-code {
+  border-left: 3px solid var(--accent);
+  padding-left: 41px;
+}
+
+/* Compare callouts below the grid */
+.compare-callouts {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; border: 1px solid var(--rule-faint);
+  border-top: none;
+}
+
+.compare-callout {
+  padding: 14px 20px;
+  border-right: 1px solid var(--rule-faint);
+}
+.compare-callout:last-child { border-right: none; }
+
+.callout-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt; color: var(--ink-mute); line-height: 1.5;
+}
+.callout-text strong {
+  font-weight: 600; color: var(--ink-soft);
+}
+
+/* Syntax tokens */
+.kw  { color: var(--accent); font-weight: 500; }
+.ty  { color: var(--cyan); }
+.fn  { color: var(--blue); }
+.st  { color: var(--green); }
+.cm  { color: var(--ink-faint); font-style: italic; }
+.cv  { color: var(--accent-soft); font-style: italic; }
+.nu  { color: var(--cyan); }
+
+/* ─────────────────────────────────────────────
+   DEPLOYMENT — CEREMONIAL
+   ───────────────────────────────────────────── */
+#deployment {
+  padding: 80px 0;
+  border-top: 1px solid var(--ink);
+}
+
+.deployment-inner {
+  border: 2px solid var(--ink);
+  padding: 52px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Watermark GENESIS behind content */
+.deployment-inner::before {
+  content: 'GENESIS';
+  position: absolute;
+  bottom: -12px; right: -8px;
+  font-family: 'EB Garamond', serif;
+  font-size: 96pt; font-weight: 400; font-style: italic;
+  color: var(--ink);
+  opacity: 0.03;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Corner marks */
+.deployment-inner::after {
+  content: '';
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 20px; height: 20px;
+  border-top: 1px solid var(--accent);
+  border-right: 1px solid var(--accent);
+  opacity: 0.6;
+}
+
+/* Animated scanline sweep */
+@keyframes scanline {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(500%); opacity: 0; }
+}
+.deploy-scanline {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(124,58,237,0.15), transparent);
+  animation: scanline 6s ease-in-out infinite 1s;
+  pointer-events: none;
+}
+
+.deployment-eyebrow {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 32px;
+}
+
+.deploy-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--green);
+  animation: liveGlow 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes liveGlow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(5,150,105,0.5); }
+  50%      { box-shadow: 0 0 0 8px rgba(5,150,105,0); }
+}
+
+.deploy-live-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--green);
+}
+
+.deploy-network {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; letter-spacing: 0.08em;
+  color: var(--ink-mute);
+}
+
+.deploy-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 40pt; font-weight: 400;
+  line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 8px;
+}
+
+.deploy-subtitle {
+  font-family: 'EB Garamond', serif;
+  font-size: 14pt; font-style: italic;
+  color: var(--ink-mute); margin-bottom: 40px;
+}
+
+.deploy-meta-grid {
+  display: grid; grid-template-columns: auto auto 1fr;
+  gap: 32px; align-items: start;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+}
+
+.deploy-meta-col {}
+
+.deploy-meta-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); display: block; margin-bottom: 6px;
+}
+
+.deploy-meta-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt; color: var(--ink-soft); display: block;
+}
+
+.deploy-address-wrap {
+  margin-bottom: 28px;
+}
+
+.deploy-address-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); display: block; margin-bottom: 10px;
+}
+
+.deploy-address {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15pt; font-weight: 500;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  word-break: break-all;
+  display: block;
+  cursor: default;
+  transition: color 0.2s ease;
+}
+
+.deploy-address:hover { color: var(--accent); }
+
+/* Cipher reveal for address */
+.deploy-address .addr-char {
+  display: inline;
+  transition: color 0.15s ease;
+}
+
+@keyframes addrReveal {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.deploy-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; letter-spacing: 0.06em;
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+  display: inline-block; margin-top: 8px;
+}
+.deploy-link:hover { border-bottom-color: var(--accent); }
+
+/* ─────────────────────────────────────────────
+   WHAT SHIPS
+   ───────────────────────────────────────────── */
+.ships-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; border: 1px solid var(--rule);
+  margin-top: 32px;
+}
+
+.ship-card {
+  padding: 24px 28px;
+  border: 1px solid var(--rule-faint);
+}
+
+.ship-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 13pt; font-weight: 600;
+  color: var(--ink); display: block; margin-bottom: 4px;
+}
+
+.ship-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.5pt; color: var(--ink-mute);
+  margin-bottom: 10px; display: block;
+}
+
+.ship-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--accent); color: white;
+  padding: 2px 7px; display: inline-block;
+}
+
+.ship-badge-outline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid var(--rule); color: var(--ink-mute);
+  padding: 2px 7px; display: inline-block;
+}
+
+/* ─────────────────────────────────────────────
+   MANIFESTO BRIDGE
+   ───────────────────────────────────────────── */
+.manifesto-bridge {
+  padding: 80px 0;
+  border-top: 1px solid var(--ink);
+}
+
+.bridge-inner {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 48px;
+}
+
+.bridge-text { flex: 1; }
+.bridge-text h2 {
+  font-family: 'EB Garamond', serif;
+  font-size: 26pt; font-weight: 400; font-style: italic;
+  color: var(--ink); margin-bottom: 16px;
+}
+.bridge-text p {
+  font-family: 'EB Garamond', serif;
+  font-size: 12pt; line-height: 1.65;
+  color: var(--ink-soft); max-width: 480px;
+}
+
+.bridge-cta {
+  flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: flex-end; justify-content: center;
+  gap: 12px;
+}
+
+/* ─────────────────────────────────────────────
+   FOOTER
+   ───────────────────────────────────────────── */
+footer#site-footer {
+  border-top: 1px solid var(--ink);
+  padding: 48px 0 40px;
+}
+
+.footer-inner {
+  max-width: 900px; margin: 0 auto;
+  padding: 0 48px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-brand {
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.footer-brand-row {
+  display: flex; align-items: center; gap: 8px;
+}
+
+.footer-brand-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10pt; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink);
+}
+
+.footer-by {
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt; color: var(--ink-faint);
+}
+
+.footer-tagline {
+  font-family: 'EB Garamond', serif;
+  font-size: 11pt; font-style: italic;
+  color: var(--ink-mute); line-height: 1.5;
+}
+
+.footer-col-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-faint); display: block; margin-bottom: 14px;
+}
+
+.footer-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 10pt; color: var(--ink-soft);
+  text-decoration: none; display: block; margin-bottom: 6px;
+  transition: color 0.15s ease;
+}
+.footer-link:hover { color: var(--accent); }
+
+.footer-link-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt; color: var(--ink-mute);
+  text-decoration: none; display: block; margin-bottom: 6px;
+  word-break: break-all;
+  transition: color 0.15s ease;
+}
+.footer-link-mono:hover { color: var(--accent); }
+
+.footer-bottom {
+  max-width: 900px; margin: 36px auto 0;
+  padding: 20px 48px 0;
+  border-top: 1px solid var(--rule-faint);
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.footer-closing {
+  font-family: 'EB Garamond', serif;
+  font-size: 11pt; font-style: italic;
+  color: var(--ink-mute);
+}
+
+.footer-license {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; color: var(--ink-faint);
+  letter-spacing: 0.06em;
+}
+
+/* ─────────────────────────────────────────────
+   REVEAL ANIMATIONS
+   ───────────────────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(5px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────
+   ACCESSIBILITY
+   ───────────────────────────────────────────── */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .container, .footer-inner { padding: 0 24px; }
+  #site-header { padding: 0 24px; }
+  nav.header-nav .nav-link { display: none; }
+  .layers-grid { grid-template-columns: 1fr 1fr; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .compare-col:first-child { border-right: none; border-bottom: 2px solid var(--accent); }
+  .compare-callouts { grid-template-columns: 1fr; }
+  .ships-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .bridge-inner { flex-direction: column; }
+  .bridge-cta { align-items: flex-start; }
+  .deploy-meta-grid { grid-template-columns: 1fr 1fr; }
+  .deployment-inner { padding: 32px 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+
+/* ─────────────────────────────────────────────
+   REDUCED MOTION
+   ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  h1#hero-title .letter { opacity: 1; }
+  .hero-subtitle, .hero-actions, .hero-scroll { opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────
+   PRINT
+   ───────────────────────────────────────────── */
+@media print {
+  #progress, #site-header { display: none; }
+  body { padding-top: 0; }
+  .section, .compare-section, #deployment, .manifesto-bridge { page-break-inside: avoid; }
 }
 </style>
 </head>
 <body>
 
-<div class="print-note">
-  Press Ctrl/Cmd+P to print or save as PDF
-  <button onclick="window.print()">Print</button>
-</div>
+<div id="progress" aria-hidden="true"></div>
 
-<!-- ============================================================ -->
-<!--  Cover                                                        -->
-<!-- ============================================================ -->
-
-<div class="cover">
-
-  <div class="cover-top">
-    <span>Kairos Lab · Project Document</span>
-    <span>v2.1 · April 2026 · V0.1 shipped</span>
-  </div>
-
-  <div class="cover-center">
-    <div class="cover-mark">
-      <svg width="40" height="40" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-label="Covenant mark">
-        <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square" stroke-linejoin="miter"/>
-        <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square" stroke-linejoin="miter"/>
-        <rect x="40" y="40" width="16" height="16" fill="#7C3AED"/>
+<!-- ═══════════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════════ -->
+<header id="site-header">
+  <a href="/" class="header-brand" aria-label="Covenant — home">
+    <!-- Animated logo -->
+    <div class="header-logo-wrap" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg">
+        <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+        <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+        <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"/>
       </svg>
-      <span class="cover-mark-label">Covenant</span>
     </div>
-    <h1 class="cover-title">Covenant</h1>
-    <p class="cover-subtitle">where cryptographic guarantees become language primitives</p>
-    <div class="cover-accent-bar"></div>
-    <p class="cover-description">
-      A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library.
-      Version 0.1 Basics is live — the first public Covenant contract has deployed on Ethereum Sepolia.
-      This document presents the project's vision, design principles, current state, and invitation to contribute.
-    </p>
+    <span class="header-brand-name">Covenant</span>
+    <span class="header-badge">V0.1</span>
+  </a>
+
+  <div class="header-spacer"></div>
+
+  <nav class="header-nav" aria-label="Primary navigation">
+    <a href="manifesto.html" class="nav-link">Manifesto</a>
+    <a href="#architecture" class="nav-link">Architecture</a>
+    <a href="#deployment" class="nav-link">Deployment</a>
+    <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+    <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">↗ @Covenant_Lang</a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════ -->
+<section id="hero" aria-label="Covenant — hero">
+  <div class="hero-inner">
+
+    <div class="hero-logo">
+      <svg id="hero-svg" viewBox="0 0 96 96" aria-label="Covenant logo" role="img">
+        <title>Covenant</title>
+        <path id="bracket-left"  d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+        <path id="bracket-right" d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+        <rect id="hero-square" x="40" y="40" width="16" height="16" fill="#7C3AED"/>
+      </svg>
+      <span class="hero-logo-label">Covenant</span>
+    </div>
+
+    <h1 id="hero-title" aria-label="Covenant"></h1>
+
+    <p class="hero-subtitle">where cryptographic guarantees become language primitives</p>
+
+    <div class="hero-bar" id="hero-bar" aria-hidden="true"></div>
+
+    <div class="hero-actions">
+      <a href="manifesto.html" class="btn-primary">Read the Manifesto →</a>
+      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="btn-secondary">github.com/Valisthea/covenant-lang</a>
+    </div>
+
   </div>
 
-  <div class="cover-bottom">
-    <div class="cover-meta-item">
-      <span class="cover-meta-label">Author</span>
-      <span class="cover-meta-value">Kairos Lab</span>
-    </div>
-    <div class="cover-meta-item">
-      <span class="cover-meta-label">Specification</span>
-      <span class="cover-meta-value">CC0-1.0</span>
-    </div>
-    <div class="cover-meta-item">
-      <span class="cover-meta-label">Compiler</span>
-      <span class="cover-meta-value">Apache 2.0</span>
-    </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ARCHITECTURE — FOUR LAYERS
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section class="section" id="architecture" aria-labelledby="arch-title">
+  <div class="section-header">
+    <span class="section-num">01 — Architecture</span>
+    <h2 class="section-title" id="arch-title">Styx Protocol: four cryptographic layers</h2>
+    <p class="body-text">Styx is Covenant's native runtime, not a dependency. Four named layers — each responsible for a distinct class of cryptographic guarantee. The compiler verifies that compositions across layers are sound.</p>
   </div>
 
-</div>
+  <div class="layers-grid reveal" role="list" aria-label="Styx Protocol layers">
 
-<!-- ============================================================ -->
-<!--  Document body                                                -->
-<!-- ============================================================ -->
+    <div class="layer-card" role="listitem" data-layer="fortress">
+      <div class="layer-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <rect x="6" y="14" width="20" height="14" stroke="#7C3AED" stroke-width="1.5"/>
+          <path class="fortress-shackle" d="M 10 14 L 10 10 Q 10 4 16 4 Q 22 4 22 10 L 22 14" stroke="#7C3AED" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="21" r="2.5" fill="#7C3AED"/>
+        </svg>
+      </div>
+      <span class="layer-name" style="color:#7C3AED;">Fortress</span>
+      <span class="layer-italic">Post-quantum keys</span>
+      <p class="layer-desc">CRYSTALS-Kyber-1024 + Dilithium-5. Identity substrate for all layers.</p>
+      <span class="layer-tag layer-tag-fortress">NIST PQC · ERC-8231</span>
+    </div>
 
-<div class="page">
+    <div class="layer-card" role="listitem" data-layer="veil">
+      <div class="layer-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <path d="M 4 16 Q 16 4 28 16 Q 16 28 4 16 Z" stroke="#2563eb" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="16" class="veil-iris" r="4" stroke="#2563eb" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="16" r="1.5" fill="#2563eb"/>
+        </svg>
+      </div>
+      <span class="layer-name" style="color:#2563eb;">Veil</span>
+      <span class="layer-italic">Homomorphic computation</span>
+      <p class="layer-desc">TFHE via tfhe-rs. Operate on encrypted data without decrypting.</p>
+      <span class="layer-tag layer-tag-veil">FHE BLIND · ERC-8227</span>
+    </div>
 
-<div class="preamble">
-  <div class="preamble-label">Preamble</div>
-  <p>
-    This document presents Covenant, a smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Covenant is a long-term project of Kairos Lab. Version 0.1 Basics shipped in April 2026 with the first public contract deployed on Ethereum Sepolia. The road to a fully production-grade release (V1) and formal verification (V1.5) remains 18 to 24 months out, and its construction requires a team of technical contributors we are currently forming. We actively seek collaborators and institutional support. The present document sets out the vision, design principles, current state, and invitation to join the effort.
+    <div class="layer-card" role="listitem" data-layer="prism">
+      <div class="layer-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <polygon points="16,4 28,24 4,24" stroke="#0891b2" stroke-width="1.5" fill="none"/>
+          <line class="prism-beam" x1="16" y1="4" x2="16" y2="24" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="3,3" stroke-dashoffset="0"/>
+        </svg>
+      </div>
+      <span class="layer-name" style="color:#0891b2;">Prism</span>
+      <span class="layer-italic">Zero-knowledge proofs</span>
+      <p class="layer-desc">Nova IVC folding + Halo2 SNARK. Selective state disclosure.</p>
+      <span class="layer-tag layer-tag-prism">ZK RECURSIVE · ERC-8229</span>
+    </div>
+
+    <div class="layer-card" role="listitem" data-layer="oblivion">
+      <div class="layer-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <rect x="8" y="8" width="16" height="16" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <rect x="11" y="11" width="10" height="10" stroke="#dc2626" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/>
+          <rect class="oblivion-core" x="14" y="14" width="4" height="4" fill="#dc2626" opacity="0.4"/>
+        </svg>
+      </div>
+      <span class="layer-name" style="color:#dc2626;">Oblivion</span>
+      <span class="layer-italic">Cryptographic amnesia</span>
+      <p class="layer-desc">Shamir SSS + Wesolowski VDF + ZK destruction proofs.</p>
+      <span class="layer-tag layer-tag-oblivion">AMNESIA · ERC-8228</span>
+    </div>
+
+  </div>
+
+  <p class="body-text reveal" style="margin-top: 24px; font-style: italic;">
+    The integration between these four layers is where the most dangerous bugs live in existing systems. Covenant's type system makes such bugs inexpressible.
+    <a href="manifesto.html#architecture" style="color:var(--accent); text-decoration:none; border-bottom: 1px solid transparent; transition: border-color 0.15s;" onmouseover="this.style.borderBottomColor='var(--accent)'" onmouseout="this.style.borderBottomColor='transparent'">Read the full architecture →</a>
   </p>
-</div>
-
-<!-- ============================================================ -->
-<!--  Status block                                                 -->
-<!-- ============================================================ -->
-
-<div class="status-block">
-  <div class="status-label">Status · April 2026</div>
-  <p class="status-headline">
-    V0.1 Basics — the compiler produces deployable bytecode.
-  </p>
-  <p class="status-body">
-    The first public Covenant contract is live on Ethereum Sepolia: an ERC-20 synthesized end-to-end from a four-line declarative source,
-    recognized as a token by Etherscan's automatic tracker, decoded by ethers.js without modification, and transferable via Metamask.
-    The compiler passes 500+ tests across 18 crates. V0.1 is a research release — unaudited, experimental,
-    for demonstration of the language's semantics, not for production value.
-  </p>
-  <div class="status-artifact">
-    First deployment: <a href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133</a>
-  </div>
-  <div class="status-meta">
-    CHAIN · SEPOLIA    ·    COMPILER · v0.1.0-basics    ·    SOURCE · 4 lines of Covenant    ·    BYTECODE · 969 bytes runtime
-  </div>
-</div>
-
-<!-- SECTION 1 -->
-<section>
-<h2><span class="h2-num">01</span>The problem</h2>
-
-<p>
-  Solidity has been an extraordinary success. More than twelve million contracts deployed, hundreds of billions of dollars secured, one of the most mature ecosystems of tooling and auditors in all of open-source computing. But Solidity was designed for a specific world, at a specific moment.
-</p>
-
-<p>
-  That world rested on three foundational assumptions: on-chain data transparency is the norm and privacy is opt-in; classical cryptography (ECDSA, keccak, Merkle) will remain sufficient for decades to come; what is written on-chain stays there forever, with no cryptographic alternative.
-</p>
-
-<p>
-  Each of these assumptions is becoming false.
-</p>
-
-<p>
-  Privacy is becoming a regulatory requirement, not an opt-in. European right-to-be-forgotten regulations, emerging laws on the confidentiality of financial positions, and the protections coalescing around behavioral data make the integral transparency of public blockchains legally problematic for a growing number of use cases. The post-quantum standards were finalized by NIST in August 2024 — ML-KEM, ML-DSA, SLH-DSA. Cryptographically-relevant quantum computers sit on a ten-to-fifteen-year horizon, and the "harvest now, decrypt later" pattern means that data published today is already being archived by adversaries who will decrypt it tomorrow. Finally, the absolute permanence of on-chain state is becoming a legal liability — not because auditability has lost its value, but because cryptographic techniques now exist that separate auditability (which must persist) from individual opinion (which must be able to disappear).
-</p>
-
-<p>
-  Beyond these three shifts, a fourth phenomenon imposes itself. Modern smart contracts are built from heterogeneous cryptographic primitives assembled by hand by the developer: an FHE library here, a ZK verifier there, a post-quantum signature scheme elsewhere, a custom key-destruction pattern. Each assembly is an opportunity for an integration bug, and integration bugs are particularly expensive when they touch cryptographic guarantees: they do not crash, they do not raise exceptions — they silently produce incorrect results on data no one can inspect.
-</p>
-
-<p>
-  The contracts that will be deployed in the next decade need properties that current languages do not express naturally: blind computation on encrypted data, trustless verification of that computation, post-quantum signatures, provable key destruction, and formally verifiable compositions of these guarantees. These properties should exist as primitives of the language, not as libraries to be assembled.
-</p>
 </section>
-
-<!-- SECTION 2 -->
-<section>
-<h2><span class="h2-num">02</span>The observation</h2>
-
-<p>
-  The cryptographic primitives required to address this shift already exist, either as Ethereum standards or as mature infrastructure.
-</p>
-
-<figure>
-<svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .f1-title { font: 600 14px 'Inter', sans-serif; fill: #1a1a1a; }
-    .f1-box { font: 500 11px 'JetBrains Mono', monospace; fill: #1a1a1a; }
-    .f1-box-sm { font: 400 10px 'JetBrains Mono', monospace; fill: #4a4a4a; }
-    .f1-label { font: 400 10px 'Inter', sans-serif; fill: #6b7280; letter-spacing: 1px; }
-    .f1-acc { font: 600 11px 'JetBrains Mono', monospace; fill: #7C3AED; }
-  </style>
-
-  <text x="350" y="25" text-anchor="middle" class="f1-title">Today's stack: scattered primitives, manual integration</text>
-
-  <text x="175" y="60" text-anchor="middle" class="f1-label">TODAY</text>
-  <rect x="50" y="75" width="250" height="260" fill="none" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,3"/>
-
-  <rect x="70" y="95" width="210" height="45" fill="#fff" stroke="#1a1a1a" stroke-width="1"/>
-  <text x="175" y="115" text-anchor="middle" class="f1-box">Solidity contract</text>
-  <text x="175" y="130" text-anchor="middle" class="f1-box-sm">business logic</text>
-
-  <rect x="70" y="155" width="100" height="30" fill="#fff" stroke="#9ca3af" stroke-width="1"/>
-  <text x="120" y="174" text-anchor="middle" class="f1-box-sm">fhEVM lib</text>
-
-  <rect x="180" y="155" width="100" height="30" fill="#fff" stroke="#9ca3af" stroke-width="1"/>
-  <text x="230" y="174" text-anchor="middle" class="f1-box-sm">ZK verifier</text>
-
-  <rect x="70" y="195" width="100" height="30" fill="#fff" stroke="#9ca3af" stroke-width="1"/>
-  <text x="120" y="214" text-anchor="middle" class="f1-box-sm">PQ sig lib</text>
-
-  <rect x="180" y="195" width="100" height="30" fill="#fff" stroke="#9ca3af" stroke-width="1"/>
-  <text x="230" y="214" text-anchor="middle" class="f1-box-sm">SSS shamir</text>
-
-  <text x="175" y="260" text-anchor="middle" class="f1-box-sm" font-style="italic">+ glue code</text>
-  <text x="175" y="278" text-anchor="middle" class="f1-box-sm" font-style="italic">+ integration bugs</text>
-  <text x="175" y="296" text-anchor="middle" class="f1-box-sm" font-style="italic">+ audit complexity</text>
-  <text x="175" y="320" text-anchor="middle" class="f1-box-sm" fill="#9f1b1b">several hundred lines</text>
-
-  <path d="M 320 205 L 380 205" stroke="#1a1a1a" stroke-width="1.5" fill="none" marker-end="url(#ar1)"/>
-  <defs>
-    <marker id="ar1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"/>
-    </marker>
-  </defs>
-
-  <text x="525" y="60" text-anchor="middle" class="f1-label">COVENANT</text>
-  <rect x="400" y="75" width="250" height="260" fill="none" stroke="#7C3AED" stroke-width="1"/>
-
-  <rect x="420" y="95" width="210" height="45" fill="#fff" stroke="#7C3AED" stroke-width="1.5"/>
-  <text x="525" y="115" text-anchor="middle" class="f1-box">Covenant contract</text>
-  <text x="525" y="130" text-anchor="middle" class="f1-acc">business logic + primitives</text>
-
-  <rect x="420" y="160" width="210" height="30" fill="#faf7ff" stroke="#7C3AED" stroke-width="0.5"/>
-  <text x="525" y="179" text-anchor="middle" class="f1-box-sm">encrypted uint256 — native type</text>
-
-  <rect x="420" y="195" width="210" height="30" fill="#faf7ff" stroke="#7C3AED" stroke-width="0.5"/>
-  <text x="525" y="214" text-anchor="middle" class="f1-box-sm">pq_signature — native type</text>
-
-  <rect x="420" y="230" width="210" height="30" fill="#faf7ff" stroke="#7C3AED" stroke-width="0.5"/>
-  <text x="525" y="249" text-anchor="middle" class="f1-box-sm">amnesia_ceremony — native block</text>
-
-  <text x="525" y="290" text-anchor="middle" class="f1-box-sm" font-style="italic">compiler generates</text>
-  <text x="525" y="306" text-anchor="middle" class="f1-box-sm" font-style="italic">correct integration</text>
-  <text x="525" y="326" text-anchor="middle" class="f1-box-sm" fill="#059669">a few dozen lines</text>
-
-  <text x="350" y="365" text-anchor="middle" class="f1-label">Primitives are not imports. They are the language.</text>
-</svg>
-<figcaption>Figure 1 — From scattered libraries to language-level primitives</figcaption>
-</figure>
-
-<p>
-  The four ERCs of the Styx Protocol (ERC-8227 Encrypted Token, ERC-8228 Cryptographic Amnesia, ERC-8229 FHE Verification, ERC-8231 Post-Quantum Key Registry) define the contracts of these primitives at the Ethereum standard level. They exist, they are officially registered on the Ethereum repository with assigned numbers, they are public under CC0 license. What is missing is not another abstraction layer — it is a <em>language</em> in which these primitives are native, where the compiler prevents integration errors, and where auditors read a specification instead of an implementation.
-</p>
-
-<p>
-  Covenant is that language.
-</p>
-</section>
-
-<!-- SECTION 3 -->
-<section>
-<h2><span class="h2-num">03</span>The thesis</h2>
-
-<p>Three assertions define what Covenant seeks to accomplish.</p>
-
-<div class="assertion">
-<span class="assertion-label">First assertion</span>
-<p class="assertion-statement">Cryptographic properties must be language primitives, not libraries to import.</p>
-<p>
-  When a developer writes <code>uint256</code> in Solidity, they do not wonder how additions are implemented, how overflow has been checked since 0.8, how storage slots are allocated. The type is a primitive, and the compiler guarantees its properties. This abstraction works.
-</p>
-<p>
-  When the same developer wants an FHE-encrypted balance, they import a library (fhEVM, Fhenix SDK, TFHE-rs), learn an API, manually wire up the calls to the co-processor, verify — or forget to verify — that the ciphertext they pass as argument is compatible with the one they expect in return. The abstraction has leaked. And FHE integration bugs are particularly expensive: they do not always manifest as crashes, but sometimes as silently incorrect computations on data no one can inspect.
-</p>
-<p>
-  Covenant posits that an <code>encrypted uint256</code> type must be as native as a <code>uint256</code>. An <code>amnesia_ceremony</code> block must be as native as a <code>modifier</code>. A ZK verification of an FHE computation must be as native as a <code>require</code>. The compiler knows these primitives, composes them correctly, and catches at compile time the errors that today slip past human audit.
-</p>
 </div>
 
-<div class="assertion">
-<span class="assertion-label">Second assertion</span>
-<p class="assertion-statement">A contract must declare its guarantees, not implement them.</p>
-<p>
-  The shift here is the one from SQL to manual file access. Before SQL, developers wrote loops over indexes, handled transactions themselves, implemented joins by hand. SQL did not speed up these operations — it <em>declared</em> them to an engine that knows how to execute them correctly. <code>SELECT ... WHERE ... GROUP BY</code> says what you want, not how to get it.
-</p>
-<p>
-  A private-governance contract in today's Solidity procedurally describes every step: how to encrypt votes, how to compute the tally homomorphically, how to verify the ZK proof, how to orchestrate the amnesia ceremony. Each step is an opportunity for a bug. An equivalent contract in Covenant declares: "this vote is encrypted, the tally is homomorphic, the result is public, individual positions are destroyed after the cycle." The compiler generates the correct implementation from that declaration.
-</p>
-<p>
-  For an auditor, this transforms the exercise. Instead of hunting bugs across a thousand lines, they validate a ten-line specification and trust the compiler. The compiler itself is audited once.
-</p>
-</div>
+<!-- ═══════════════════════════════════════════
+     CODE COMPARISON — SIDE BY SIDE
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section class="compare-section" id="comparison" aria-labelledby="compare-title">
+  <span class="section-num">02 — The proof point</span>
+  <h2 class="section-title" id="compare-title">The same logic. Two languages.</h2>
+  <p class="body-text">A private vote function — FHE computation, post-quantum identity, cryptographic amnesia on exit. In Solidity, this requires ~220 lines of integration glue and compiler-invisible contracts between libraries. In Covenant, the type system enforces every invariant.</p>
 
-<div class="assertion">
-<span class="assertion-label">Third assertion</span>
-<p class="assertion-statement">Cryptographic agility must be a property of the language.</p>
-<p>
-  Cryptographic primitives evolve. ECDSA was sufficient in 2015; ML-DSA becomes necessary by 2030. TFHE is the dominant FHE choice in 2026; a successor scheme will emerge. Nova IVC dominates recursive proofs today; Protostar or HyperNova tomorrow. A language that hardcodes a specific cryptographic choice becomes obsolete with every evolution.
-</p>
-<p>
-  Covenant posits that cryptographic primitives must be expressed through <em>traits</em> and <em>scheme interfaces</em>, not through calls to specific implementations. The type system knows the notion of security level (classical 128-bit, post-quantum NIST Level 3, 5). The compiler can refuse an operation that would compose incompatible schemes. When a scheme evolves, the source code does not need to be rewritten — only the build configuration changes.
-</p>
-<p>
-  This property is not an optional feature added later. It is an architectural constraint that shapes the type system's semantics from V0 onward.
-</p>
-</div>
-</section>
+  <div class="compare-grid reveal" role="region" aria-label="Code comparison: Solidity vs Covenant">
 
-<!-- SECTION 4 -->
-<section>
-<h2><span class="h2-num">04</span>The solution</h2>
+    <!-- LEFT: Solidity -->
+    <div class="compare-col">
+      <div class="compare-col-label">
+        <div class="col-lang-dot" style="background:#f59e0b;" aria-hidden="true"></div>
+        <span class="col-lang-name">Solidity</span>
+        <span class="col-lang-note">manual integration · compiler-invisible</span>
+      </div>
+<pre class="compare-code" aria-label="Solidity example"><span class="ln"><span class="cm">// integration glue (~220 lines above)</span></span>
+<span class="ln"><span class="kw">function</span> <span class="fn">processPrivateVote</span>(</span>
+<span class="ln">    bytes calldata <span class="ty">ciphertext</span>,</span>
+<span class="ln">    bytes calldata <span class="ty">pqSignature</span>,</span>
+<span class="ln">    bytes calldata <span class="ty">zkProof</span>,</span>
+<span class="ln">    bytes calldata <span class="ty">publicInputs</span></span>
+<span class="ln">) <span class="kw">external</span> {</span>
+<span class="ln">    <span class="cm">// manual key identity check</span></span>
+<span class="ln">    <span class="kw">require</span>(</span>
+<span class="ln">      IFHE(fheLib).<span class="fn">verifyKey</span>(pqSignature,</span>
+<span class="ln">        voterRegistry[msg.sender]),</span>
+<span class="ln">      <span class="st">"key mismatch"</span>); <span class="cm">// not enforced</span></span>
+<span class="ln">    <span class="kw">require</span>(</span>
+<span class="ln">      IZKVerifier(zkLib).<span class="fn">verify</span>(</span>
+<span class="ln">        zkProof, publicInputs),</span>
+<span class="ln">      <span class="st">"proof invalid"</span>);</span>
+<span class="ln">    uint256 <span class="ty">vote</span> =</span>
+<span class="ln">      IFHE(fheLib).<span class="fn">decrypt</span>(</span>
+<span class="ln">        voterKey, ciphertext); <span class="cm">// assumed</span></span>
+<span class="ln">    _tally(vote);</span>
+<span class="ln">    <span class="cm">// destroy — ordering unenforced</span></span>
+<span class="ln">    IForget(amnesiaLib).<span class="fn">destroy</span>(ciphertext);</span>
+<span class="ln">    IForget(amnesiaLib).<span class="fn">destroy</span>(pqSignature);</span>
+<span class="ln">}</span></pre>
+    </div>
 
-<p>
-  Covenant is a smart contract language designed for cryptographic agility, with the Styx Protocol as its native standard library.
-</p>
+    <!-- RIGHT: Covenant -->
+    <div class="compare-col">
+      <div class="compare-col-label">
+        <div class="col-lang-dot" style="background:#7C3AED;" aria-hidden="true"></div>
+        <span class="col-lang-name">Covenant</span>
+        <span class="col-lang-note">compiler-enforced · type-safe · 6 lines</span>
+      </div>
+<pre class="compare-code" aria-label="Covenant example"><span class="ln"><span class="cm">// key identity enforced by type system</span></span>
+<span class="ln"><span class="kw">fn</span> <span class="fn">process_private_vote</span>(</span>
+<span class="ln">    <span class="ty">vote</span>:  <span class="kw">fhe&lt;u256&gt;</span>,</span>
+<span class="ln">    <span class="ty">voter</span>: <span class="kw">identity&lt;pq&gt;</span></span>
+<span class="ln">) <span class="kw">-&gt;</span> <span class="ty">amnesia</span> {</span>
+<span class="ln">    <span class="cv">// @non_reentrant        auto-injected</span></span>
+<span class="ln">    <span class="cv">// privacy flow          verified</span></span>
+<span class="ln">    <span class="cv">// compiled to           2,847 bytes</span></span>
+<span class="ln">    <span class="kw">let</span> <span class="ty">cleartext</span> = <span class="fn">decrypt</span>(</span>
+<span class="ln">        vote, voter.key); <span class="cm">// key — enforced</span></span>
+<span class="ln">    self.<span class="fn">tally</span>(cleartext);</span>
+<span class="ln">} <span class="cm">// amnesia auto-triggered on exit</span></span></pre>
+    </div>
 
-<p>
-  The language is general-purpose in the sense that it expresses everything a modern EVM smart contract can express: arbitrary business logic, interaction with existing contracts, complex data types, inheritance, interfaces. But it is specialized in the sense that its <strong>privileged primitives</strong> — those the language exposes with the greatest ergonomics and the strongest compile-time guarantees — are the four Styx primitives: blind computation (ERC-8227), trustless verification (ERC-8229), amnesia (ERC-8228), and post-quantum signatures (ERC-8231).
-</p>
-
-<p>
-  This specialization is a deliberate choice. A language can be balanced like Solidity — maximum expressivity, no privileged treatment of any family of use cases — and become the default standard through its generality. Or it can be specialized like Cairo for ZK, Move for linear resources, Clarity for decidability — and conquer a specific territory by expressing it better than anyone else. Covenant takes the second strategy, with modern cryptography as its territory.
-</p>
-
-<p>Here is the canonical use case — a private governance where individual votes are encrypted, the result is public, and individual positions are destroyed after the cycle.</p>
-
-<pre class="code"><span class="kw">contract</span> PrivateDAO {
-    <span class="kw">using</span> PQKeys           <span class="cm">// ERC-8231</span>
-    <span class="kw">using</span> EncryptedTokens  <span class="cm">// ERC-8227</span>
-    <span class="kw">using</span> FHEVerification  <span class="cm">// ERC-8229</span>
-    <span class="kw">using</span> Amnesia          <span class="cm">// ERC-8228</span>
-
-    <span class="kw">encrypted</span> <span class="tp">uint256</span> yesVotes;
-    <span class="kw">encrypted</span> <span class="tp">uint256</span> noVotes;
-    <span class="tp">mapping</span>(<span class="tp">address</span> =&gt; <span class="tp">bool</span>) hasVoted;
-
-    <span class="kw">function</span> <span class="fn">vote</span>(<span class="kw">encrypted</span> <span class="tp">bool</span> choice)
-        <span class="kw">requires</span> pq_signed_by(msg.sender)
-    {
-        <span class="fn">require</span>(!hasVoted[msg.sender]);
-        hasVoted[msg.sender] = <span class="st">true</span>;
-
-        <span class="kw">encrypted if</span> (choice) {
-            yesVotes += <span class="st">1</span>;
-        } <span class="kw">else</span> {
-            noVotes += <span class="st">1</span>;
-        }
-    }
-
-    <span class="kw">function</span> <span class="fn">finalize</span>()
-        <span class="kw">verified_by_ivc_proof</span>
-        <span class="kw">returns</span> (<span class="tp">uint256</span> yes, <span class="tp">uint256</span> no)
-    {
-        <span class="kw">return</span> (<span class="fn">decrypt</span>(yesVotes), <span class="fn">decrypt</span>(noVotes));
-    }
-
-    <span class="kw">amnesia_ceremony</span> {
-        trigger: <span class="fn">after</span>(finalize)
-        custodians: <span class="st">5</span>
-        threshold: <span class="st">3</span>
-        vdf_delay: <span class="st">72h</span>
-        preserve: [yesVotes_decrypted, noVotes_decrypted]
-        destroy: [hasVoted, individual_choices]
-    }
-}</pre>
-
-<p>
-  This contract is about fifty lines long. Its equivalent in Solidity with the same guarantees — manually assembling fhEVM, a ZK verifier, a PQ registry, and a custom Shamir ceremony — runs several hundred lines across multiple contracts, with dozens of points where integration can break silently.
-</p>
-
-<p>
-  Covenant is also capable of expressing classical contracts without advanced cryptographic primitives — a standard ERC-20, a staking pool, a simple AMM. In these cases, ergonomics are comparable to Solidity, with no overhead. The distinctive value of Covenant reveals itself when contracts compose heterogeneous cryptographic primitives: it is at that moment that the compiler delivers value no other tool delivers today.
-</p>
-
-<figure>
-<svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .f2-title { font: 600 13px 'Inter', sans-serif; fill: #1a1a1a; }
-    .f2-label { font: 500 10px 'Inter', sans-serif; fill: #6b7280; letter-spacing: 1px; }
-    .f2-mono { font: 400 10px 'JetBrains Mono', monospace; fill: #1a1a1a; }
-    .f2-mono-sm { font: 400 9px 'JetBrains Mono', monospace; fill: #4a4a4a; }
-    .f2-acc { font: 600 10px 'JetBrains Mono', monospace; fill: #7C3AED; }
-  </style>
-
-  <text x="350" y="22" text-anchor="middle" class="f2-title">Covenant → Styx Protocol: compilation pipeline</text>
-
-  <rect x="50" y="55" width="160" height="55" fill="#fff" stroke="#7C3AED" stroke-width="1.5"/>
-  <text x="130" y="76" text-anchor="middle" class="f2-label">SOURCE</text>
-  <text x="130" y="93" text-anchor="middle" class="f2-mono">vote.covenant</text>
-  <text x="130" y="105" text-anchor="middle" class="f2-mono-sm">50 lines</text>
-
-  <path d="M 210 82 L 260 82" stroke="#1a1a1a" stroke-width="1" marker-end="url(#ar2)"/>
-  <defs>
-    <marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"/>
-    </marker>
-  </defs>
-
-  <rect x="260" y="55" width="180" height="55" fill="#faf7ff" stroke="#7C3AED" stroke-width="1"/>
-  <text x="350" y="76" text-anchor="middle" class="f2-label">COVENANT COMPILER</text>
-  <text x="350" y="93" text-anchor="middle" class="f2-mono-sm">parser · typecheck · codegen</text>
-  <text x="350" y="105" text-anchor="middle" class="f2-mono-sm">circuit emission · proof setup</text>
-
-  <path d="M 440 82 L 490 82" stroke="#1a1a1a" stroke-width="1" marker-end="url(#ar2)"/>
-
-  <rect x="490" y="38" width="160" height="30" fill="#fff" stroke="#7C3AED" stroke-width="0.8"/>
-  <text x="570" y="55" text-anchor="middle" class="f2-acc">ERC-8231</text>
-  <text x="570" y="64" text-anchor="middle" class="f2-mono-sm">PQ Key Registry calls</text>
-
-  <rect x="490" y="72" width="160" height="30" fill="#fff" stroke="#0891b2" stroke-width="0.8"/>
-  <text x="570" y="89" text-anchor="middle" style="font: 600 10px 'JetBrains Mono', monospace; fill: #0891b2;">ERC-8227</text>
-  <text x="570" y="98" text-anchor="middle" class="f2-mono-sm">FHE circuit (TFHE)</text>
-
-  <rect x="490" y="106" width="160" height="30" fill="#fff" stroke="#2563eb" stroke-width="0.8"/>
-  <text x="570" y="123" text-anchor="middle" style="font: 600 10px 'JetBrains Mono', monospace; fill: #2563eb;">ERC-8229</text>
-  <text x="570" y="132" text-anchor="middle" class="f2-mono-sm">IVC proof generator</text>
-
-  <rect x="490" y="140" width="160" height="30" fill="#fff" stroke="#dc2626" stroke-width="0.8"/>
-  <text x="570" y="157" text-anchor="middle" style="font: 600 10px 'JetBrains Mono', monospace; fill: #dc2626;">ERC-8228</text>
-  <text x="570" y="166" text-anchor="middle" class="f2-mono-sm">Amnesia ceremony</text>
-
-  <text x="130" y="205" text-anchor="middle" class="f2-label">RUNTIME</text>
-  <rect x="50" y="220" width="600" height="1" fill="#d1d5db"/>
-
-  <rect x="50" y="235" width="180" height="70" fill="#fff" stroke="#9ca3af" stroke-width="1"/>
-  <text x="140" y="253" text-anchor="middle" class="f2-mono">EVM chains</text>
-  <text x="140" y="270" text-anchor="middle" class="f2-mono-sm">Base Sepolia, Ethereum,</text>
-  <text x="140" y="283" text-anchor="middle" class="f2-mono-sm">Arbitrum, Optimism</text>
-  <text x="140" y="298" text-anchor="middle" class="f2-mono-sm" font-style="italic">on-chain verifier contracts</text>
-
-  <rect x="260" y="235" width="180" height="70" fill="#fff" stroke="#9ca3af" stroke-width="1"/>
-  <text x="350" y="253" text-anchor="middle" class="f2-mono">Aster Chain</text>
-  <text x="350" y="270" text-anchor="middle" class="f2-mono-sm">native encrypted execution</text>
-  <text x="350" y="283" text-anchor="middle" class="f2-mono-sm">50ms blocks</text>
-  <text x="350" y="298" text-anchor="middle" class="f2-mono-sm" font-style="italic">defense-in-depth privacy</text>
-
-  <rect x="470" y="235" width="180" height="70" fill="#fff" stroke="#9ca3af" stroke-width="1"/>
-  <text x="560" y="253" text-anchor="middle" class="f2-mono">FHE co-processors</text>
-  <text x="560" y="270" text-anchor="middle" class="f2-mono-sm">Zama fhEVM, Fhenix</text>
-  <text x="560" y="283" text-anchor="middle" class="f2-mono-sm">custom TFHE runtime</text>
-  <text x="560" y="298" text-anchor="middle" class="f2-mono-sm" font-style="italic">pluggable backends</text>
-
-  <text x="350" y="330" text-anchor="middle" class="f2-label">Chain-agnostic. One Covenant contract, many deployment targets.</text>
-</svg>
-<figcaption>Figure 2 — Compilation pipeline from source to multiple runtime targets</figcaption>
-</figure>
-
-<p>
-  Covenant is chain-agnostic. It compiles to a combination of artifacts depending on the target: standard Solidity contracts implementing the four Styx ERCs for EVM chains (Base Sepolia as first target, followed by Ethereum mainnet, Arbitrum, Optimism), a native deployment on Aster Chain where Covenant's guarantees compose with Aster's server-side encryption in defense-in-depth, and an abstraction layer over existing FHE co-processors.
-</p>
-</section>
-
-<!-- SECTION 5 -->
-<section>
-<h2><span class="h2-num">05</span>Why now</h2>
-
-<p>
-  Four windows have opened simultaneously, and it is their conjunction that makes Covenant relevant in 2026 — not in 2023, and not in 2029.
-</p>
-
-<figure>
-<svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .f3-title { font: 600 13px 'Inter', sans-serif; fill: #1a1a1a; }
-    .f3-label { font: 500 10px 'Inter', sans-serif; fill: #6b7280; letter-spacing: 0.5px; }
-    .f3-text { font: 400 10px 'Inter', sans-serif; fill: #1a1a1a; }
-    .f3-sm { font: 400 9px 'Inter', sans-serif; fill: #4a4a4a; }
-    .f3-year { font: 700 18px 'JetBrains Mono', monospace; fill: #7C3AED; }
-  </style>
-
-  <text x="350" y="25" text-anchor="middle" class="f3-title">The 2026 conjunction</text>
-
-  <line x1="50" y1="130" x2="650" y2="130" stroke="#9ca3af" stroke-width="1"/>
-
-  <line x1="125" y1="125" x2="125" y2="135" stroke="#1a1a1a"/>
-  <line x1="275" y1="125" x2="275" y2="135" stroke="#1a1a1a"/>
-  <line x1="425" y1="125" x2="425" y2="135" stroke="#1a1a1a"/>
-  <line x1="575" y1="125" x2="575" y2="135" stroke="#1a1a1a"/>
-
-  <text x="125" y="110" text-anchor="middle" class="f3-year">2024</text>
-  <text x="125" y="155" text-anchor="middle" class="f3-label">NIST PQ</text>
-  <text x="125" y="170" text-anchor="middle" class="f3-text">FIPS 203/204/205</text>
-  <text x="125" y="184" text-anchor="middle" class="f3-sm">finalized</text>
-  <text x="125" y="198" text-anchor="middle" class="f3-sm">Kyber · Dilithium</text>
-  <text x="125" y="212" text-anchor="middle" class="f3-sm">SPHINCS+</text>
-
-  <text x="275" y="110" text-anchor="middle" class="f3-year">2025</text>
-  <text x="275" y="155" text-anchor="middle" class="f3-label">FHE VIABLE</text>
-  <text x="275" y="170" text-anchor="middle" class="f3-text">Zama fhEVM prod</text>
-  <text x="275" y="184" text-anchor="middle" class="f3-sm">Fhenix live</text>
-  <text x="275" y="198" text-anchor="middle" class="f3-sm">TFHE ~100ms/gate</text>
-  <text x="275" y="212" text-anchor="middle" class="f3-sm">stable co-processor</text>
-
-  <text x="425" y="110" text-anchor="middle" class="f3-year">2025</text>
-  <text x="425" y="155" text-anchor="middle" class="f3-label">ZK COPROC.</text>
-  <text x="425" y="170" text-anchor="middle" class="f3-text">Succinct SP1</text>
-  <text x="425" y="184" text-anchor="middle" class="f3-sm">Nova folding</text>
-  <text x="425" y="198" text-anchor="middle" class="f3-sm">Halo2 SNARK</text>
-  <text x="425" y="212" text-anchor="middle" class="f3-sm">IVC proofs in prod</text>
-
-  <text x="575" y="110" text-anchor="middle" class="f3-year">2026</text>
-  <text x="575" y="155" text-anchor="middle" class="f3-label">STYX ERCs</text>
-  <text x="575" y="170" text-anchor="middle" class="f3-text">8227 · 8228</text>
-  <text x="575" y="184" text-anchor="middle" class="f3-sm">8229 · 8231</text>
-  <text x="575" y="198" text-anchor="middle" class="f3-sm">registered + active</text>
-  <text x="575" y="212" text-anchor="middle" class="f3-sm">on Eth. Magicians</text>
-
-  <circle cx="640" cy="130" r="6" fill="#7C3AED"/>
-  <text x="640" y="240" text-anchor="middle" style="font: 700 10px 'Inter', sans-serif; fill: #7C3AED;">COVENANT</text>
-  <text x="640" y="252" text-anchor="middle" style="font: 500 9px 'Inter', sans-serif; fill: #7C3AED;">2026</text>
-</svg>
-<figcaption>Figure 3 — Four independent maturations, one convergent moment</figcaption>
-</figure>
-
-<p>
-  Post-quantum standards were finalized by NIST in August 2024 — ML-KEM for key exchange, ML-DSA and SLH-DSA for signatures. This is no longer research; it is a stable reference on which to build infrastructure meant to last decades.
-</p>
-
-<p>
-  Fully homomorphic encryption (FHE) became production-viable during 2025. Zama fhEVM runs on Ethereum, Fhenix launched its L2, benchmarks converge around one hundred milliseconds per TFHE gate. FHE architectures are no longer theoretical — they are deployed and used.
-</p>
-
-<p>
-  ZK co-processors are operational. Succinct SP1, RiscZero, Nova folding, and Halo2 SNARK form a mature ecosystem in which arbitrary off-chain computation can be proven on-chain in a few hundred bytes. Trustless verification of FHE computation (what ERC-8229 defines) becomes technically implementable without exotic prerequisites.
-</p>
-
-<p>
-  Finally, the four ERCs of the Styx Protocol have been officially registered in the Ethereum repository and are the subject of active discussions on Ethereum Magicians. They constitute the stable contractual surface on which Covenant can compile.
-</p>
-
-<p>
-  When these four conditions are simultaneously in place — finalized cryptographic standards, FHE in production, mature ZK co-processors, registered ERCs — a window opens in which a project like Covenant can be built. That window is today.
-</p>
-</section>
-
-<!-- SECTION 6 -->
-<section>
-<h2><span class="h2-num">06</span>Open model</h2>
-
-<p>
-  Covenant is a fully open project. No VCs, no token, no proprietary component under NDA. The language specification is published under CC0-1.0, full public domain. The reference compiler, the execution VM, the tooling, and the standard library are published under Apache 2.0. External contributions are welcomed under a public governance process starting from V0.
-</p>
-
-<p>
-  This decision is strategic. Adoption of a smart contract language is a network effect: adoption speed depends on the project's permeability to developers, contributors, auditors, and chains seeking integration. A proprietary component, however technically justified, slows adoption by several years — as shown by the contrasting trajectories of Rust (fully open, rapid adoption) and historical Java (proprietary components, hindered adoption).
-</p>
-
-<p>
-  Kairos Lab stewards Covenant as the organization responsible for its initial stewardship. Stewardship may transition to an independent foundation at a later stage if the project requires it, following the model of the Rust Foundation or the Ethereum Foundation.
-</p>
-</section>
-
-<!-- SECTION 7 -->
-<section>
-<h2><span class="h2-num">07</span>Roadmap</h2>
-
-<p>
-  Building a smart contract language is a long and demanding project, one that does not lend itself to hasty promises. Comparable projects (Move, Cairo, Sway, Fe) stabilized over three-to-five-year horizons with dedicated teams. Covenant will not be an exception.
-</p>
-
-<p>
-  The roadmap has begun. The design phase is complete. V0.1 Basics shipped in April 2026 with the first public deployment on Ethereum Sepolia. The remaining phases extend over the next 24–36 months, contingent on team formation and funding. The dates are not commitments; they are reference milestones that will shift based on team size, funding, and adoption signals.
-</p>
-
-<div class="phase">
-  <div class="phase-meta">
-    <span class="phase-name">Design</span>
-    <span class="phase-dates">2025 – early 2026</span>
   </div>
-  <div class="phase-body">
-    <p>
-      Specs V0 complete, 8 normative documents published, Styx ERCs drafted and officially registered on the Ethereum repository. Formal language specification (BNF grammar, operational semantics, typing rules) published under CC0.
-    </p>
-    <p>
-      <strong>Status: complete.</strong>
-    </p>
+
+  <div class="compare-callouts">
+    <div class="compare-callout">
+      <p class="callout-text"><strong>22 lines, 4 libraries, 0 compiler checks.</strong> Key identity, proof validity, and destruction ordering are all convention — invisible to the compiler. One misordered call, one wrong key reference: a silent bug in production.</p>
+    </div>
+    <div class="compare-callout">
+      <p class="callout-text"><strong>6 lines, 1 language, full compiler coverage.</strong> The <code style="font-family:'JetBrains Mono',monospace;font-size:0.88em;background:var(--paper);border:1px solid var(--rule-faint);padding:1px 4px;">identity&lt;pq&gt;</code> type carries the key. <code style="font-family:'JetBrains Mono',monospace;font-size:0.88em;background:var(--paper);border:1px solid var(--rule-faint);padding:1px 4px;">amnesia</code> return type enforces destruction. None of this can be skipped.</p>
+    </div>
   </div>
-</div>
-
-<div class="phase">
-  <div class="phase-meta">
-    <span class="phase-name">V0.1 Basics</span>
-    <span class="phase-dates">April 2026 — shipped</span>
-  </div>
-  <div class="phase-body">
-    <p>
-      5 reference contracts compile end-to-end. First public ERC-20 deployed on Ethereum Sepolia at <a href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">0x6C79…7133</a>, recognized by Etherscan Token Tracker, decoded by ethers.js, transferable via Metamask. Compiler at tag <code>v0.1.0-basics</code>, 500+ tests across 18 crates.
-    </p>
-    <p>
-      Research release — unaudited, experimental, not for production value. A working compiler contributors can inspect, critique, extend, and port.
-    </p>
-  </div>
-</div>
-
-<div class="phase">
-  <div class="phase-meta">
-    <span class="phase-name">V0.2 Intermediate</span>
-    <span class="phase-dates">2026 – 2027</span>
-  </div>
-  <div class="phase-body">
-    <p>
-      fhEVM-class support: private DAO, sealed auction, encrypted token, time-locked vault. First FHE runtime integrated via Zama fhEVM or equivalent backend. Usable by sophisticated early adopters.
-    </p>
-  </div>
-</div>
-
-<div class="phase">
-  <div class="phase-meta">
-    <span class="phase-name">V0.3 Advanced</span>
-    <span class="phase-dates">2027</span>
-  </div>
-  <div class="phase-body">
-    <p>
-      Cryptographic amnesia, bridges, ZK selective disclosure, reputation primitives. Full surface coverage of the Styx stdlib. Native Aster Chain integration with defense-in-depth privacy.
-    </p>
-  </div>
-</div>
-
-<div class="phase">
-  <div class="phase-meta">
-    <span class="phase-name">V1.0 GA</span>
-    <span class="phase-dates">2028</span>
-  </div>
-  <div class="phase-body">
-    <p>
-      Feature completeness, external audit Phase C, CLI + LSP + IDE support. Expansion to full Solidity feature parity: inheritance, interfaces, libraries, classical DeFi patterns, gas optimization. Web playground, complete documentation.
-    </p>
-    <p>
-      Adoption target: five to ten pilot protocols in production, with published case studies.
-    </p>
-  </div>
-</div>
-
-<div class="phase">
-  <div class="phase-meta">
-    <span class="phase-name">V1.5 Formal</span>
-    <span class="phase-dates">2028 – 2029</span>
-  </div>
-  <div class="phase-body">
-    <p>
-      Coq/Lean formal verification artifacts, CL5 conformance achievement. Standardization via a public RFC process (analogous to Rust's), stabilized community governance, bug bounty program on the compiler.
-    </p>
-  </div>
-</div>
-
-<p style="margin-top: 28px;">
-  This roadmap is ambitious and requires resources Kairos Lab does not possess alone today. V0.1 demonstrates that execution is real. It becomes fully achievable to the extent that the team forms and funding follows. That is precisely why this document is published — to make the effort visible and invite the right people to contribute.
-</p>
-</section>
-
-<!-- SECTION 8 -->
-<section>
-<h2><span class="h2-num">08</span>Team and recruitment</h2>
-
-<p>
-  Covenant requires a technical team to be built, and Kairos Lab is actively recruiting. With the compiler at tag <code>v0.1.0-basics</code> and the first contract live on Ethereum Sepolia, contributors now join a project with a working artifact, not only a specification.
-</p>
-
-<p>
-  Four profiles are particularly sought over the next twelve months.
-</p>
-
-<div class="roles">
-  <div class="role">
-    <div class="role-title">Compiler architect</div>
-    <div class="role-desc">Senior engineer with experience on a mature programming language (Rust, OCaml, Swift, Move, Cairo). Owns the language design and compiler architecture.</div>
-  </div>
-  <div class="role">
-    <div class="role-title">Cryptographer</div>
-    <div class="role-desc">Expertise in FHE — TFHE preferred — to validate the semantics of the primitives exposed by the language and ensure no side channel is introduced.</div>
-  </div>
-  <div class="role">
-    <div class="role-title">Zero-knowledge engineer</div>
-    <div class="role-desc">Experience with recent IVC systems (Nova, Protostar) for the implementation of the verification layer and proof generation pipeline.</div>
-  </div>
-  <div class="role">
-    <div class="role-title">Developer tooling engineer</div>
-    <div class="role-desc">For the toolchain — LSP, formatter, documentation generator, web playground. The surface that determines adoption velocity.</div>
-  </div>
-</div>
-
-<p>
-  These four profiles do not all need to be full-time immediately. Initial engagement can take the form of punctual consulting, academic collaboration, or grant-compensated open-source contributions. The team will grow progressively as funding structures itself.
-</p>
-
-<p>
-  Interested individuals — contributors, advisors, or institutional partners — can contact Kairos Lab through the channels listed at the end of this document.
-</p>
-</section>
-
-<!-- SECTION 9 -->
-<section>
-<h2><span class="h2-num">09</span>Funding</h2>
-
-<p>
-  Covenant is a public infrastructure project. Its economic viability does not depend on generating classical commercial revenue — there will be no token, no SaaS, no paid license on the language. The funding required to build it will be mobilized through three channels.
-</p>
-
-<h3>Public foundation grants</h3>
-<p>
-  The Ethereum Foundation, the Protocol Guild, the Aster Foundation, and other organizations supporting Web3 public goods are natural targets. With the four Styx ERCs registered as Ethereum standards, Covenant qualifies naturally as infrastructure contributing to the ecosystem. Grant applications will be formalized progressively as intermediate deliverables become available.
-</p>
-
-<h3>Chain-level partnerships</h3>
-<p>
-  Chains that have an interest in Covenant supporting their environment can co-fund its development — Aster Chain being an obvious candidate given the synergy with its native encryption, but other privacy-oriented chains may join the effort.
-</p>
-
-<h3>Kairos Lab bootstrap</h3>
-<p>
-  While external funding does not cover the full scope of needs, Kairos Lab allocates its own resources (audits, consulting, bug bounties) to the project. This bootstrap phase is intrinsically rate-limiting on development speed, but it preserves the project's independence until it has demonstrated value to external funders.
-</p>
-
-<p>
-  No VCs, no traditional private fundraise, no token pre-sale. This red line is drawn to preserve the public-goods nature of the project and avoid the classical conflicts of interest that have compromised other smart contract languages in the past.
-</p>
-</section>
-
-<!-- SECTION 10 -->
-<section>
-<h2><span class="h2-num">10</span>Invitation</h2>
-
-<p>
-  Covenant is neither a product nor a startup. It is a software infrastructure project whose value to the Web3 ecosystem depends entirely on who builds it and who deploys it in production. With V0.1 Basics shipped, contributors now have a working compiler to inspect, critique, extend, and port, rather than a specification alone.
-</p>
-
-<p>
-  The profiles who can contribute fall into several groups. <strong>Cryptographers</strong>, who can audit the semantics of the language to verify that FHE, PQ, and ZK primitives are exposed without introducing side channels. <strong>Compiler implementers</strong>, who can port Covenant to new backends or new compilation targets. <strong>Smart contract auditors</strong>, who can stress-test the correspondence between Covenant source and generated artifacts. <strong>Chains and L2s</strong>, who can integrate Covenant as a first-class language and raise infrastructure needs we did not anticipate. <strong>Foundations and grant programs</strong>, who can fund development at a more sustainable pace than bootstrap. And <strong>early adopters</strong> — advanced DeFi protocols, high-sensitivity DAOs, institutional custody projects — who can adopt the first versions and surface the gaps.
-</p>
-
-<div class="closing">
-<p class="closing-statement">
-  Covenant is the language for contracts that must keep their promises — not by convention, not by good faith, not by manual audit, <span class="closing-accent">but by construction.</span>
-</p>
-
-<p class="closing-statement" style="margin-top: 24px;">
-  <em>The river has its language now.</em>
-</p>
-</div>
 
 </section>
-
-<!-- Footer -->
-<div class="doc-footer">
-  <div>
-    <strong>Author</strong>
-    Kairos Lab · <a href="https://x.com/Valisthea">@Valisthea</a><br>
-    Published April 2026 · Version 2.1 · V0.1 Basics
-  </div>
-  <div>
-    <strong>Related</strong>
-    <a href="https://styx-website.vercel.app">Styx Protocol</a><br>
-    <a href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">First deployment</a><br>
-    Ethereum Magicians thread forthcoming
-  </div>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     DEPLOYMENT — CEREMONIAL
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section id="deployment" aria-labelledby="deploy-title">
+  <div class="deployment-inner reveal" id="deploy-panel">
+    <!-- Animated scanline sweep -->
+    <div class="deploy-scanline" aria-hidden="true"></div>
+
+    <!-- Bottom-left corner mark -->
+    <div aria-hidden="true" style="position:absolute;bottom:12px;left:12px;width:20px;height:20px;border-bottom:1px solid var(--accent);border-left:1px solid var(--accent);opacity:0.6;"></div>
+
+    <div class="deployment-eyebrow">
+      <div class="deploy-dot" aria-hidden="true"></div>
+      <span class="deploy-live-label">Live on Ethereum</span>
+      <span class="deploy-network">· Sepolia Testnet · April 2026</span>
+    </div>
+
+    <h2 class="deploy-title" id="deploy-title">The first Covenant contract.</h2>
+    <p class="deploy-subtitle">A proof of concept is not a proof. This is a deployment.</p>
+
+    <div class="deploy-address-wrap">
+      <span class="deploy-address-label">Contract address</span>
+      <span class="deploy-address" id="deploy-address-el" role="text" aria-label="Contract address: 0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133"></span>
+      <a class="deploy-link" href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">
+        View on Sepolia Etherscan ↗
+      </a>
+    </div>
+
+    <div class="deploy-meta-grid">
+      <div class="deploy-meta-col">
+        <span class="deploy-meta-label">Contract</span>
+        <span class="deploy-meta-value">Sepolia Coin</span>
+      </div>
+      <div class="deploy-meta-col">
+        <span class="deploy-meta-label">Compiler</span>
+        <span class="deploy-meta-value">Covenant V0.1</span>
+      </div>
+      <div class="deploy-meta-col">
+        <span class="deploy-meta-label">Language</span>
+        <span class="deploy-meta-value">Rust · ~15,000 lines</span>
+      </div>
+    </div>
+
+  </div>
+</section>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     WHAT SHIPS
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section class="section" id="ships" aria-labelledby="ships-title">
+  <span class="section-num">04 — What ships today</span>
+  <h2 class="section-title" id="ships-title">Working infrastructure. Not a paper.</h2>
+
+  <div class="ships-grid reveal">
+
+    <div class="ship-card">
+      <span class="ship-title">Compiler</span>
+      <span class="ship-sub">Rust · ~15,000 lines</span>
+      <span class="ship-badge">GA · V0.1</span>
+    </div>
+
+    <div class="ship-card">
+      <span class="ship-title">Codex</span>
+      <span class="ship-sub">20 working examples · 4 tiers</span>
+      <span class="ship-badge">V0.4 · Complete</span>
+    </div>
+
+    <div class="ship-card">
+      <span class="ship-title">CLI</span>
+      <span class="ship-sub">810+ tests · compile, check, deploy, test</span>
+      <span class="ship-badge">V0.5 · Shipped</span>
+    </div>
+
+    <div class="ship-card">
+      <span class="ship-title">LSP + Linter</span>
+      <span class="ship-sub">21+ security detectors · VS Code</span>
+      <span class="ship-badge-outline">V0.6 · In Progress</span>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MANIFESTO BRIDGE
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section class="manifesto-bridge" id="manifesto-link" aria-labelledby="bridge-title">
+  <div class="bridge-inner">
+    <div class="bridge-text">
+      <h2 id="bridge-title">The full argument is in the manifesto.</h2>
+      <p>The type system formalism, the Styx Protocol specification, the roadmap to V1.0, and the argument for why Covenant is not another Solidity fork — all of it is documented in full. Specifications are CC0-1.0. Read, fork, implement.</p>
+    </div>
+    <div class="bridge-cta">
+      <a href="manifesto.html" class="btn-primary" style="white-space:nowrap;">Read the Manifesto →</a>
+      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="btn-secondary" style="white-space:nowrap; text-align:center;">View Source on GitHub</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<footer id="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <div class="footer-brand-row">
+        <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true">
+          <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+          <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+          <rect x="40" y="40" width="16" height="16" fill="#7C3AED"/>
+        </svg>
+        <span class="footer-brand-name">Covenant</span>
+      </div>
+      <p class="footer-by">by Kairos Lab</p>
+      <p class="footer-tagline">where cryptographic guarantees become language primitives</p>
+    </div>
+
+    <div>
+      <span class="footer-col-title">Contact</span>
+      <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a>
+      <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a>
+      <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a>
+    </div>
+
+    <div>
+      <span class="footer-col-title">Repository</span>
+      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/<wbr>covenant-lang</a>
+      <a href="manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a>
+      <a href="manifesto.html#architecture" class="footer-link">Architecture spec</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-closing">Watch this space. Private until V1.0.</p>
+    <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* — Scroll progress — */
+  const prog = document.getElementById('progress');
+  const header = document.getElementById('site-header');
+  function onScroll() {
+    const sh = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (sh > 0 ? (window.scrollY / sh * 100) : 0) + '%';
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* — Hero title cipher animation — */
+  const WORD = 'Covenant';
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@%&';
+  const heroTitle = document.getElementById('hero-title');
+  const heroBar   = document.getElementById('hero-bar');
+
+  if (reduced) {
+    heroTitle.textContent = WORD;
+    heroBar.style.width = '64px';
+  } else {
+    WORD.split('').forEach(function(ch) {
+      const s = document.createElement('span');
+      s.className = 'letter';
+      s.textContent = ch;
+      s.dataset.final = ch;
+      heroTitle.appendChild(s);
+    });
+    const letters = heroTitle.querySelectorAll('.letter');
+    letters.forEach(function(span, i) {
+      setTimeout(function() {
+        span.style.opacity = '1';
+        let step = 0, total = 4;
+        const fin = span.dataset.final;
+        const iv = setInterval(function() {
+          if (step < total) { span.textContent = CHARS[Math.floor(Math.random()*CHARS.length)]; step++; }
+          else { span.textContent = fin; clearInterval(iv); }
+        }, 22);
+      }, 180 + i * 48);
+    });
+    setTimeout(function() { heroBar.style.width = '64px'; }, 720);
+  }
+
+  /* — Contract address cipher reveal — */
+  const ADDR = '0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133';
+  const addrEl = document.getElementById('deploy-address-el');
+  if (addrEl) {
+    // Build char spans (hidden)
+    ADDR.split('').forEach(function(ch) {
+      const s = document.createElement('span');
+      s.className = 'addr-char';
+      s.textContent = ch;
+      s.style.opacity = '0';
+      addrEl.appendChild(s);
+    });
+    // Trigger when deployment panel enters view
+    const deployPanel = document.getElementById('deploy-panel');
+    const addrObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (!e.isIntersecting) return;
+        addrObserver.unobserve(e.target);
+        const chars = addrEl.querySelectorAll('.addr-char');
+        const CSET = '0123456789ABCDEFabcdef';
+        chars.forEach(function(span, i) {
+          if (reduced) { span.style.opacity = '1'; return; }
+          setTimeout(function() {
+            span.style.opacity = '1';
+            let step = 0, max = 3;
+            const fin = span.textContent;
+            const iv = setInterval(function() {
+              if (step < max) {
+                span.textContent = CSET[Math.floor(Math.random() * CSET.length)];
+                step++;
+              } else {
+                span.textContent = fin;
+                clearInterval(iv);
+              }
+            }, 18);
+          }, 300 + i * 20);
+        });
+      });
+    }, { threshold: 0.5 });
+    if (deployPanel) addrObserver.observe(deployPanel);
+  }
+
+  /* — Reveal on scroll — */
+  const revEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+  revEls.forEach(function(el) { io.observe(el); });
+
+  /* — Header logo square: context-reactive color based on scroll section — */
+  const hsq = document.getElementById('header-square');
+  const sections = [
+    { id: 'architecture', color: '#0891b2' },   /* FORTRESS → cyan */
+    { id: 'comparison',   color: '#2563eb' },   /* VEIL → blue */
+    { id: 'deployment',   color: '#059669' },   /* PRISM → green (live) */
+    { id: 'ships',        color: '#7C3AED' },   /* default */
+  ];
+  if (hsq) {
+    window.addEventListener('scroll', function() {
+      let active = '#7C3AED';
+      sections.forEach(function(sec) {
+        const el = document.getElementById(sec.id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.5 && rect.bottom > 0) active = sec.color;
+      });
+      hsq.style.transition = 'fill 0.6s ease';
+      hsq.setAttribute('fill', active);
+    }, { passive: true });
+  }
+})();
+</script>
 </body>
 </html>
