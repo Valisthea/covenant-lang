@@ -1,20 +1,27 @@
-# Covenant
+# Covenant — Website and Manifesto
 
-**where cryptographic guarantees become language primitives**
+> The public-facing site and manifesto for [Covenant](https://github.com/Valisthea/covenant),
+> a declarative smart contract language by [Kairos Lab](https://kairos-lab.org).
 
-A smart contract language designed for cryptographic agility, with [Styx Protocol](https://styx-website.vercel.app) as its native standard library.
+## Related repos
 
----
+| What | Where | License |
+|---|---|---|
+| **This repo** — Website, manifesto, visual assets | github.com/Valisthea/covenant-lang | CC-BY-4.0 (content) + MIT (code) |
+| **Compiler source + specs** | github.com/Valisthea/covenant *(private until V1.0)* | Apache-2.0 (code) + CC0-1.0 (specs) |
+| **Live manifesto** | [covenant-lang.org](https://covenant-lang.org) | — |
 
 ## Current state — V0.1 Basics (April 2026)
 
-- 5 reference contracts compile end-to-end
-- First public deployment on Ethereum Sepolia: [0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133](https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133)
-- ERC-20 synthesis validated via Etherscan Token Tracker and ethers.js
-- Compiler at tag `v0.1.0-basics`
-- Research release, unaudited, not for production value
+Covenant's first public release is live.
 
-Read the full manifesto: **[covenant-lang.org](https://covenant-lang.org)**
+- **5 reference contracts compile end-to-end** via the Rust compiler : Hello, Coin, OpenBallot, ShieldedCounter, QuantumBoard
+- **First deployment on Ethereum Sepolia** : [0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133](https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133)
+- **ERC-20 synthesis validated** : recognized automatically by Etherscan's Token Tracker ; ABI decoded by ethers.js without modification ; transferable via Metamask
+- **508+ tests passing** across 18 Rust crates
+- **Compiler tagged** `v0.1.0-basics`
+
+**Disclaimer** : V0.1 is a research release. Unaudited, experimental, intended for demonstration of the language's semantics. Not for deployment with production value.
 
 ## The three principles
 
@@ -24,7 +31,7 @@ Read the full manifesto: **[covenant-lang.org](https://covenant-lang.org)**
 
 ## Styx Protocol as standard library
 
-Covenant compiles against four Ethereum ERCs that form its native stdlib:
+Covenant compiles against four Ethereum ERCs that form its native stdlib :
 
 | ERC | Role | Layer |
 |---|---|---|
@@ -35,23 +42,23 @@ Covenant compiles against four Ethereum ERCs that form its native stdlib:
 
 ## Roadmap
 
-| Phase | When | Milestone |
+| Phase | When | Status |
 |---|---|---|
-| Design | 2025 – early 2026 | Specs V0 complete, 8 normative docs published, Styx ERCs drafted |
-| **V0.1 Basics** | **April 2026 (shipped)** | **5 examples compile end-to-end; first ERC-20 deployed on Sepolia** |
-| V0.2 Intermediate | 2026 – 2027 | fhEVM-class support: private DAO, sealed auction, encrypted token, time-locked vault |
-| V0.3 Advanced | 2027 | Cryptographic amnesia, bridges, ZK selective disclosure, reputation primitives |
-| V1.0 GA | 2028 | Feature completeness, external audit Phase C, CLI + LSP + IDE support |
-| V1.5 Formal | 2028 – 2029 | Coq/Lean formal verification artifacts, CL5 conformance achievement |
+| Design | 2025 – early 2026 | **Complete** — 8 normative docs, Styx ERCs drafted |
+| V0.1 Basics | April 2026 | **Shipped** — 5 examples compile, first Sepolia deploy |
+| V0.2 Intermediate | 2026 – 2027 | Planned — PrivateDAO, SealedAuction, SecretCoin, TimeVault, MPCEscrow |
+| V0.3 Advanced | 2027 | Cryptographic amnesia, bridges, selective disclosure, reputation |
+| V1.0 GA | 2028 | Feature completeness, external audit (Phase C), CLI + LSP |
+| V1.5 Formal | 2028 – 2029 | Formal verification artifacts (Coq/Lean), CL5 conformance |
 
-Dates are reference milestones, not commitments. They will move with team size and funding.
+Dates are reference milestones, contingent on team formation and funding.
 
 ## Get involved
 
-Covenant is open-source (Apache 2.0 for compiler, CC0 for spec) and seeks contributors on four profiles:
+Covenant's specification is CC0-1.0 (public domain). The compiler is Apache-2.0. The project seeks contributors on four profiles :
 
-- **Compiler architects** — experience on Rust, OCaml, Swift, Move, or Cairo
-- **Cryptographers** — FHE (TFHE preferred) to validate primitive semantics
+- **Compiler architects** — experience with Rust, OCaml, Swift, Move, or Cairo toolchains
+- **Cryptographers** — FHE (TFHE preferred) to validate primitive semantics and audit for side channels
 - **ZK engineers** — IVC systems (Nova, Protostar) for the verification layer
 - **Tooling engineers** — LSP, formatter, docs generator, web playground
 
@@ -59,11 +66,11 @@ With V0.1 shipped, contributors can inspect, critique, extend, and port a workin
 
 Initial engagements can be part-time, consulting, or grant-funded open-source contributions.
 
-**Contact:** [@Valisthea](https://x.com/Valisthea) on X, or via [Kairos Lab](https://styx-website.vercel.app).
+**Contact** : [@Valisthea](https://x.com/Valisthea) on X, or via [Kairos Lab](https://kairos-lab.org).
 
 ## Funding model
 
-No VC, no token, no private raise. Funding comes from three channels:
+No VC, no token, no private raise. Funding comes from three channels :
 
 - Public-goods grants (Ethereum Foundation, Protocol Guild, Aster Foundation)
 - Chain-level partnerships for integration work
@@ -73,13 +80,16 @@ No VC, no token, no private raise. Funding comes from three channels:
 
 | What | License |
 |---|---|
-| Specification | [CC0-1.0](LICENSE-CC0.txt) — public domain |
-| Compiler & tooling code | [Apache-2.0](LICENSE-APACHE.txt) |
+| This repository — website content | [CC-BY-4.0](LICENSE-CC-BY.txt) — attribution required |
+| This repository — HTML / CSS / JS code | [MIT](LICENSE-MIT.txt) |
+| Specification (in covenant/ repo, future public) | CC0-1.0 — public domain |
+| Compiler source (in covenant/ repo, future public) | Apache-2.0 |
 
 ## Related
 
 - [Styx Protocol](https://styx-website.vercel.app) — the four ERCs that form Covenant's stdlib
 - [Aster Chain](https://asterdex.com) — primary deployment target with native encrypted execution
+- [Kairos Lab](https://kairos-lab.org) — the organization building Covenant
 - [First deployment](https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133) — Sepolia Coin (COIN) on Ethereum Sepolia
 
 ---
