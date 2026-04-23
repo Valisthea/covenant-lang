@@ -1,0 +1,12 @@
+---
+const { type = 'info', title } = Astro.props;
+const icons = { info: 'i', tip: '+', warning: '!', danger: 'x' };
+const icon = icons[type] ?? 'i';
+---
+<div class:list={['callout', `callout--${type}`]} role="note">
+  <span class="callout-icon" aria-hidden="true">{icon}</span>
+  <div class="callout-body">
+    {title && <strong>{title} </strong>}
+    <slot />
+  </div>
+</div>

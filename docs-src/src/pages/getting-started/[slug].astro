@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('getting-started');
+  return pages.map(entry => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: { entry }
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const all = (await getCollection('getting-started')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const idx = all.findIndex(e => e.id === entry.id);
+const prev = idx > 0 ? all[idx - 1] : null;
+const next = idx < all.length - 1 ? all[idx + 1] : null;
+
+function toSlug(e: any) { return e.id.replace(/\.mdx?$/, ''); }
+---
+<DocsLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  breadcrumb={[{ label: 'Getting Started', href: '/getting-started/01-install' }, { label: entry.data.title }]}
+  prev={prev ? { href: '/getting-started/' + toSlug(prev), label: prev.data.title } : undefined}
+  next={next ? { href: '/getting-started/' + toSlug(next), label: next.data.title } : undefined}
+>
+  <Content />
+</DocsLayout>

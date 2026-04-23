@@ -1,0 +1,30 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+<DocsLayout title="Covenant Language Documentation" description="Official documentation for Covenant - post-quantum, FHE, ZK smart contract language.">
+  <h1>Covenant Language Docs</h1>
+  <p style="font-family:'EB Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--ink-mute);margin-bottom:2rem;">where cryptographic guarantees become language primitives</p>
+  <p>Covenant is a declarative smart contract language that compiles to EVM bytecode. Post-quantum signatures, FHE, zero-knowledge proofs, and cryptographic amnesia are first-class language primitives.</p>
+  <h2>Quick start</h2>
+  <pre><code>cargo install covenant-cli
+covenant new my-contract
+cd my-contract
+covenant build</code></pre>
+  <h2>Browse</h2>
+  <ul>
+    <li><a href="/getting-started/01-install">Getting Started</a> - Install the CLI and write your first contract</li>
+    <li><a href="/examples/01-hello-contract">By Example</a> - 15 annotated chapters from Hello Contract to Sepolia deployment</li>
+    <li><a href="/security/audit-report">Security</a> - OMEGA V4 audit: 41 findings, all resolved</li>
+    <li><a href="/glossary">Glossary</a> - 100+ terms: keywords, types, FHE primitives, ZK, PQ</li>
+  </ul>
+  <h2>V0.7 GA highlights</h2>
+  <ul>
+    <li><strong>Post-quantum signatures</strong> - Dilithium3 (NIST FIPS 204), <code>@pq_signed</code></li>
+    <li><strong>FHE</strong> - <code>encrypted&lt;T&gt;</code>, <code>fhe_add</code>, <code>fhe_mul</code>, scheme-agnostic precompiles</li>
+    <li><strong>ZK proofs</strong> - <code>zk_prove</code> / <code>zk_verify</code>, Groth16 / PLONK / Halo2</li>
+    <li><strong>Cryptographic amnesia</strong> - <code>amnesia {{ }}</code> blocks, two-pass provable erasure</li>
+    <li><strong>Multi-target</strong> - EVM, Aster Chain (ID 1996), WASM</li>
+    <li><strong>LSP</strong> - 38+ lint detectors in VS Code</li>
+    <li><strong>OMEGA V4 audited</strong> - 41 findings, 5 Critical, all resolved</li>
+  </ul>
+</DocsLayout>

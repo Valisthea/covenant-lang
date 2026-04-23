@@ -1,0 +1,78 @@
+---
+const { currentPath } = Astro.props;
+const nav = [
+  { title: 'Getting Started', links: [
+    { href: '/getting-started/01-install', label: '01 - Installation' },
+    { href: '/getting-started/02-first-contract', label: '02 - First Contract' },
+    { href: '/getting-started/03-cli-reference', label: '03 - CLI Reference' },
+  ]},
+  { title: 'Fundamentals', links: [
+    { href: '/examples/01-hello-contract', label: '01 - Hello Contract' },
+    { href: '/examples/02-fields-and-storage', label: '02 - Fields & Storage' },
+    { href: '/examples/03-actions-events-errors', label: '03 - Actions, Events & Errors' },
+    { href: '/examples/04-guards', label: '04 - Guards' },
+    { href: '/examples/05-external-calls', label: '05 - External Calls' },
+  ]},
+  { title: 'Standards', links: [
+    { href: '/examples/06-erc20-token', label: '06 - ERC-20 Token' },
+    { href: '/examples/07-fhe-basics', label: '07 - FHE Basics' },
+    { href: '/examples/08-encrypted-token', label: '08 - Encrypted Token' },
+    { href: '/examples/09-post-quantum-signatures', label: '09 - Post-Quantum Sigs' },
+    { href: '/examples/10-zero-knowledge-proofs', label: '10 - Zero-Knowledge Proofs' },
+  ]},
+  { title: 'Advanced', links: [
+    { href: '/examples/11-cryptographic-amnesia', label: '11 - Cryptographic Amnesia' },
+    { href: '/examples/12-uups-upgradeable', label: '12 - UUPS Upgradeable' },
+    { href: '/examples/13-beacon-proxy', label: '13 - Beacon Proxy' },
+    { href: '/examples/14-oracle-integration', label: '14 - Oracle Integration' },
+    { href: '/examples/15-deploy-to-sepolia', label: '15 - Deploy to Sepolia' },
+  ]},
+  { title: 'Security', links: [
+    { href: '/security/audit-report', label: 'Audit Report' },
+    { href: '/security/critical-findings', label: 'Critical Findings' },
+    { href: '/security/secure-patterns', label: 'Secure Patterns' },
+    { href: '/security/known-pitfalls', label: 'Known Pitfalls' },
+  ]},
+  { title: 'Reference', links: [
+    { href: '/glossary', label: 'Glossary' },
+  ]},
+];
+---
+<aside id="docs-sidebar" aria-label="Documentation navigation">
+  <div class="search-wrap">
+    <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search" />
+    <div id="search-results" aria-live="polite"></div>
+  </div>
+  {nav.map(section => (
+    <div class="sidebar-section">
+      <span class="sidebar-section-title">{section.title}</span>
+      {section.links.map(link => (
+        <a href={link.href} class:list={['sidebar-link', { active: currentPath === link.href }]}>{link.label}</a>
+      ))}
+    </div>
+  ))}
+</aside>
+<script>
+async function initSearch() {
+  const input = document.getElementById('search-input');
+  const resultsEl = document.getElementById('search-results');
+  if (!input || !resultsEl) return;
+  const pagefind = await import('/pagefind/pagefind.js').catch(() => null);
+  if (!pagefind) { input.placeholder = 'Search (build required)'; return; }
+  await pagefind.init();
+  let t;
+  input.addEventListener('input', () => {
+    clearTimeout(t);
+    t = setTimeout(async () => {
+      const q = input.value.trim();
+      if (!q) { resultsEl.innerHTML = ''; return; }
+      const r = await pagefind.search(q);
+      const top = await Promise.all(r.results.slice(0,6).map(x => x.data()));
+      resultsEl.innerHTML = top.length === 0
+        ? '<p style="color:var(--ink-faint);font-size:8.5pt;padding:4px 0">No results</p>'
+        : top.map(r => '<a class="search-result-item" href="' + r.url + '"><div class="search-result-title">' + (r.meta?.title || r.url) + '</div><div class="search-result-excerpt">' + (r.excerpt || '') + '</div></a>').join('');
+    }, 220);
+  });
+}
+initSearch();
+</script>
