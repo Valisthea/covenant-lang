@@ -1,5 +1,17 @@
 {
   "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "examples.covenant-lang.org"
+        }
+      ],
+      "destination": "/examples/$1"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
