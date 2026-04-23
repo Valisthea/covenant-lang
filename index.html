@@ -862,6 +862,11 @@ footer#site-footer {
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* Code typewriter — line-by-line entry */
+.ln { display: block; }
+.ln-hidden { opacity: 0; transform: translateX(-8px); transition: none; }
+.ln-visible { opacity: 1; transform: translateX(0); transition: opacity 0.14s ease, transform 0.14s ease; }
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -1286,7 +1291,7 @@ a:focus-visible, button:focus-visible {
   <h2 class="section-title" id="compare-title">The same logic. Two languages.</h2>
   <p class="body-text">A private vote function — FHE computation, post-quantum identity, cryptographic amnesia on exit. In Solidity, this requires ~220 lines of integration glue and compiler-invisible contracts between libraries. In Covenant, the type system enforces every invariant.</p>
 
-  <div class="compare-grid reveal" role="region" aria-label="Code comparison: Solidity vs Covenant">
+  <div class="compare-grid" id="code-compare-grid" role="region" aria-label="Code comparison: Solidity vs Covenant">
 
     <!-- LEFT: Solidity -->
     <div class="compare-col">
@@ -1661,6 +1666,34 @@ code --install-extension \
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
   revEls.forEach(function(el) { io.observe(el); });
+
+  /* — Code typewriter: comparison section — */
+  const ccGrid = document.getElementById('code-compare-grid');
+  if (ccGrid && !reduced) {
+    const allLn = ccGrid.querySelectorAll('.compare-code .ln');
+    allLn.forEach(function(ln) { ln.classList.add('ln-hidden'); });
+    const ccObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (!e.isIntersecting) return;
+        ccObs.unobserve(e.target);
+        const left  = Array.from(e.target.querySelectorAll('.compare-col:first-child .compare-code .ln'));
+        const right = Array.from(e.target.querySelectorAll('.compare-col:last-child .compare-code .ln'));
+        const max   = Math.max(left.length, right.length);
+        for (var i = 0; i < max; i++) {
+          (function(idx) {
+            setTimeout(function() {
+              [left[idx], right[idx]].forEach(function(ln) {
+                if (!ln) return;
+                ln.classList.remove('ln-hidden');
+                ln.classList.add('ln-visible');
+              });
+            }, 80 + idx * 65);
+          })(i);
+        }
+      });
+    }, { threshold: 0.15 });
+    ccObs.observe(ccGrid);
+  }
 
   /* — Header logo square: context-reactive color based on scroll section — */
   const hsq = document.getElementById('header-square');
