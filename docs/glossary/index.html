@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Glossary - Covenant Docs</title><meta name="description" content="Complete glossary of Covenant language terms: keywords, types, FHE primitives, ZK, post-quantum."><meta property="og:title" content="Glossary - Covenant Docs"><meta property="og:description" content="Complete glossary of Covenant language terms: keywords, types, FHE primitives, ZK, post-quantum."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://docs.covenant-lang.org/glossary"><link rel="stylesheet" href="/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/getting-started/01-install" class="nav-link">Install</a> <a href="/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/security/audit-report" class="sidebar-link">Audit Report</a><a href="/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/glossary" class="sidebar-link active">Glossary</a> </div> </aside> <script type="module" src="/_astro/Sidebar.astro_astro_type_script_index_0_lang.CpCE4sML.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/">Docs</a>  <span aria-hidden="true">/</span> <span>Glossary</span> </nav> <h1 id="glossary">Glossary</h1>
+<p>100+ terms covering the Covenant language, cryptographic primitives, and ecosystem concepts.</p>
+<hr>
+<h2 id="a">A</h2>
+<p><strong><code>action</code></strong> — The primary entry point declaration in a Covenant contract. Maps to an ABI-visible function. May be annotated with <code>@view</code>, <code>@nonreentrant</code>, <code>@pq_signed</code>, etc.</p>
+<p><strong>ABI</strong> — Application Binary Interface. The JSON descriptor of a contract’s public actions, events, and errors. Covenant emits a fully typed ABI compatible with ethers.js and viem.</p>
+<p><strong><code>amnesia { }</code></strong> — A block-scoped keyword that triggers the two-pass cryptographic erasure protocol. State mutations inside the block are provably erased at the end of the block.</p>
+<p><strong><code>assert</code></strong> — Unconditional invariant check. Reverts with <code>Panic(0x01)</code> if the condition is false.</p>
+<p><strong>Aster Chain</strong> — EVM-compatible L1 (Chain ID 1996) launched March 5, 2026. Features native FHE precompiles, ZK proof verification, and PoSA consensus.</p>
+<p><strong><code>@allow(..)</code></strong> — Compiler annotation that suppresses a specific lint detector.</p>
+<h2 id="b">B</h2>
+<p><strong><code>@before</code></strong> — Guard decorator that causes the guard to run before every action in the contract.</p>
+<p><strong>Beacon Proxy</strong> — EIP-1967 upgrade pattern where many proxies share a single beacon. See chapter 13.</p>
+<p><strong>BGV</strong> — Brakerski-Gentry-Vaikuntanathan. An FHE scheme optimised for integer arithmetic.</p>
+<p><strong><code>block.number</code></strong> — Built-in: the current block number.</p>
+<p><strong><code>block.timestamp</code></strong> — Built-in: UNIX timestamp of the current block (seconds). Can be manipulated by validators ±15 seconds.</p>
+<p><strong><code>Bool</code></strong> — Primitive boolean type. Compiles to <code>uint8</code> in the ABI.</p>
+<p><strong><code>Bytes</code></strong> — Dynamic byte array. Compiles to <code>bytes</code> in the ABI.</p>
+<p><strong><code>Bytes32</code></strong> — Fixed 32-byte value. Compiles to <code>bytes32</code> in the ABI.</p>
+<h2 id="c">C</h2>
+<p><strong>CEI</strong> — Checks-Effects-Interactions. The canonical safe action body ordering.</p>
+<p><strong><code>call()</code></strong> — Low-level external call primitive. Returns <code>(success: Bool, data: Bytes)</code>.</p>
+<p><strong>Circuit</strong> — A ZK arithmetic constraint system. Identified by string IDs registered at contract init time.</p>
+<p><strong>CKKS</strong> — Cheon-Kim-Kim-Song. An FHE scheme for approximate real-number arithmetic.</p>
+<p><strong><code>contract</code></strong> — Top-level declaration for a Covenant smart contract.</p>
+<p><strong><code>covenant.toml</code></strong> — The project configuration file.</p>
+<p><strong>Covenant CLI</strong> — The command-line toolchain (<code>covenant-cli</code>).</p>
+<p><strong>CRYSTALS-Dilithium</strong> — Lattice-based digital signature algorithm standardised as NIST FIPS 204.</p>
+<h2 id="d">D</h2>
+<p><strong><code>decimals</code></strong> — ERC-20 field indicating decimal places (typically 18).</p>
+<p><strong><code>delete</code></strong> — Resets a storage slot to zero. Inside <code>amnesia { }</code>, triggers two-pass erasure.</p>
+<p><strong>Dilithium3</strong> — CRYSTALS-Dilithium parameter set (NIST level 2). PK: 1952 B, Sig: 3293 B.</p>
+<p><strong>Dilithium5</strong> — Higher security parameter set (NIST level 5).</p>
+<h2 id="e">E</h2>
+<p><strong>EIP-1967</strong> — Standard storage slot layout for proxy contracts.</p>
+<p><strong>EIP-1822</strong> — Universal Upgradeable Proxy Standard. Defines the <code>proxiableUUID()</code> check.</p>
+<p><strong>EIP-712</strong> — Typed structured data signing standard.</p>
+<p><strong><code>emit</code></strong> — Emits an event. Must not reference amnesia-deleted fields.</p>
+<p><strong><code>encrypted&#x3C;T></code></strong> — The FHE ciphertext type. T may be u8–u256 or Bool.</p>
+<p><strong><code>error</code></strong> — Named revert reason declaration. Use <code>revert ErrorName(...)</code> or <code>require(cond, Err)</code>.</p>
+<p><strong>ERC-20</strong> — Ethereum fungible token standard. See chapter 06.</p>
+<p><strong><code>event</code></strong> — Structured log entry declaration. Up to 3 <code>indexed</code> fields per event.</p>
+<p><strong>EVM</strong> — Ethereum Virtual Machine. Covenant’s primary compilation target.</p>
+<h2 id="f">F</h2>
+<p><strong><code>fhe_add(a, b)</code></strong> — Homomorphic addition of two <code>encrypted&#x3C;T></code> values.</p>
+<p><strong><code>fhe_decrypt(c, key)</code></strong> — Decrypts an <code>encrypted&#x3C;T></code> ciphertext, emitting an on-chain proof.</p>
+<p><strong><code>fhe_encrypt(v, pubkey)</code></strong> — Encrypts a plaintext value under a public key.</p>
+<p><strong><code>fhe_eq(a, b)</code></strong> — Homomorphic equality comparison. Returns <code>encrypted&#x3C;Bool></code>.</p>
+<p><strong><code>fhe_lt(a, b)</code></strong> — Homomorphic less-than comparison. Returns <code>encrypted&#x3C;Bool></code>.</p>
+<p><strong><code>fhe_mul(a, b)</code></strong> — Homomorphic multiplication.</p>
+<p><strong><code>fhe_owner_key()</code></strong> — Built-in: the deployer’s FHE public key.</p>
+<p><strong><code>fhe_reencrypt(c, pubkey)</code></strong> — Re-encrypts under a different public key without decrypting.</p>
+<p><strong><code>fhe_sub(a, b)</code></strong> — Homomorphic subtraction.</p>
+<p><strong><code>fhe_zero()</code></strong> — Returns an encryption of zero; initialises <code>encrypted&#x3C;T></code> fields.</p>
+<p><strong>FHE</strong> — Fully Homomorphic Encryption. Supports arbitrary computation on ciphertext.</p>
+<p><strong><code>field</code></strong> — Persistent storage declaration. Compiles to EVM storage slots.</p>
+<p><strong>fflonk</strong> — PLONK variant with smaller proof sizes. Supported by Covenant ZK backend.</p>
+<h2 id="g">G</h2>
+<p><strong><code>guard</code></strong> — Named boolean predicate for access control.</p>
+<p><strong>Groth16</strong> — Most widely deployed ZK proof system. ~200 B proof, ~280K gas verify.</p>
+<h2 id="h">H</h2>
+<p><strong>Halo2</strong> — ZK proof system with no trusted setup. ~1.2 KB proofs.</p>
+<h2 id="i">I</h2>
+<p><strong><code>i256</code></strong> — Signed 256-bit integer. Compiles to <code>int256</code> in the ABI.</p>
+<p><strong><code>indexed</code></strong> — Event field modifier for Bloom filter topics (max 3 per event).</p>
+<p><strong><code>init</code></strong> — Constructor block. Runs once at deployment.</p>
+<p><strong><code>interface</code></strong> — External contract ABI declaration for typed external calls.</p>
+<p><strong><code>internal</code></strong> — Action modifier: not exposed in ABI, callable only from within the contract.</p>
+<h2 id="k">K</h2>
+<p><strong><code>keccak256</code></strong> — Built-in hash function. Takes <code>Bytes</code>, returns <code>Bytes32</code>.</p>
+<h2 id="l">L</h2>
+<p><strong>Lattice cryptography</strong> — Mathematical foundation for post-quantum schemes. Quantum-resistant.</p>
+<p><strong><code>List&#x3C;T></code></strong> — Dynamic array. Length in base slot; elements at <code>keccak256(base) + i</code>.</p>
+<p><strong>LSP</strong> — Language Server Protocol. Covenant ships an LSP with 38+ lint detectors for VS Code.</p>
+<h2 id="m">M</h2>
+<p><strong><code>Map&#x3C;K, V></code></strong> — Hash-map type. Compiles to <code>keccak256(key . slot)</code> storage layout.</p>
+<p><strong><code>msg.sender</code></strong> — Built-in: the caller’s address.</p>
+<p><strong><code>msg.value</code></strong> — Built-in: ETH (wei) sent with the call.</p>
+<h2 id="n">N</h2>
+<p><strong>NIST FIPS 204</strong> — Federal standard (August 2024) standardising CRYSTALS-Dilithium.</p>
+<p><strong><code>@nonreentrant</code></strong> — Prevents reentrant calls via a reentrancy lock storage slot.</p>
+<p><strong>Nonce</strong> — Monotonically increasing counter preventing replay attacks.</p>
+<h2 id="o">O</h2>
+<p><strong><code>only()</code></strong> — Guard invocation. <code>only(owner)</code>, <code>only(role: R)</code>, or <code>only(expr)</code>.</p>
+<p><strong>oracle_price</strong> — Built-in on Aster Chain: stake-weighted median price from validator committee.</p>
+<p><strong>OMEGA V4</strong> — Security audit by OMEGA Security Labs on Covenant v0.7.0-rc3. 41 findings, all resolved.</p>
+<h2 id="p">P</h2>
+<p><strong><code>@pq_hybrid</code></strong> — Accepts both ECDSA and Dilithium3 signatures.</p>
+<p><strong><code>@pq_signed</code></strong> — Replaces ECDSA with Dilithium3 (NIST FIPS 204).</p>
+<p><strong>Pagefind</strong> — Static search library used by this documentation site.</p>
+<p><strong>PLONK</strong> — Universal ZK proof system with a universal trusted setup.</p>
+<p><strong>PoSA</strong> — Proof-of-Staked Authority. Aster Chain’s consensus mechanism.</p>
+<p><strong>Post-quantum</strong> — Cryptographic schemes secure against quantum computers.</p>
+<p><strong><code>prevrandao</code></strong> — EVM opcode providing validator-contributed randomness (post-Merge).</p>
+<p><strong><code>proxiableUUID()</code></strong> — ERC-1822 magic value identifying a UUPS implementation.</p>
+<h2 id="r">R</h2>
+<p><strong><code>register_circuit</code></strong> — Built-in for registering a ZK verification key at contract init time.</p>
+<p><strong><code>require(cond, Err)</code></strong> — Reverts with <code>Err</code> if <code>cond</code> is false.</p>
+<p><strong><code>revert Err(..args)</code></strong> — Unconditional typed revert.</p>
+<p><strong>Role</strong> — Named access-control group declared with <code>role</code>. Managed by <code>grant_role</code>/<code>revoke_role</code>.</p>
+<h2 id="s">S</h2>
+<p><strong>STARK</strong> — Scalable Transparent ARguments of Knowledge. No trusted setup; post-quantum secure.</p>
+<p><strong><code>String</code></strong> — Dynamic UTF-8 string. Compiles to <code>string</code> in the ABI.</p>
+<p><strong><code>staticcall</code></strong> — Read-only external call emitted for <code>@view</code> action cross-contract calls.</p>
+<h2 id="t">T</h2>
+<p><strong>TFHE</strong> — Fast Fully Homomorphic Encryption over the Torus. Covenant default FHE scheme.</p>
+<p><strong>Timelock</strong> — Enforces a waiting period before governance actions execute.</p>
+<p><strong><code>transfer_eth(to, amount)</code></strong> — Built-in ETH transfer without 2300-gas stipend restriction.</p>
+<h2 id="u">U</h2>
+<p><strong><code>u8</code> / <code>u16</code> / <code>u32</code> / <code>u64</code> / <code>u128</code> / <code>u256</code></strong> — Unsigned integer types. Overflow reverts by default.</p>
+<p><strong><code>unchecked { }</code></strong> — Block disabling overflow checking. Use only when overflow is provably impossible.</p>
+<p><strong>UUPS</strong> — Universal Upgradeable Proxy Standard (EIP-1822 / EIP-1967). See chapter 12.</p>
+<h2 id="v">V</h2>
+<p><strong><code>verify_pq_sig</code></strong> — Built-in: verifies a Dilithium3 signature. Injected by <code>@pq_signed</code>.</p>
+<p><strong><code>@view</code></strong> — Marks an action as read-only. Compiler enforces no state mutations.</p>
+<p><strong>Viewer Pass</strong> — Aster Chain selective disclosure mechanism: grants read access to encrypted state without exposing data to other validators.</p>
+<h2 id="w">W</h2>
+<p><strong>WASM</strong> — WebAssembly. A Covenant compilation target for off-chain proving and testing.</p>
+<h2 id="z">Z</h2>
+<p><strong><code>zk_prove(circuit, private_inputs, public_inputs)</code></strong> — On-chain ZK proving (practical for &#x3C; 2^16 constraints).</p>
+<p><strong><code>zk_verify(circuit, proof, pub_inputs)</code></strong> — Verifies a ZK proof on-chain. Returns <code>Bool</code>.</p>
+<p><strong>ZkProof</strong> — Covenant’s native ZK proof blob type with circuit-binding commitment header.</p>
+<p><strong>Zero-knowledge proof</strong> — Allows proving a statement is true without revealing the witness. See chapter 10.</p>  </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

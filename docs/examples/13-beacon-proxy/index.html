@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>13 — Beacon Proxy - Covenant Docs</title><meta name="description" content="One-to-many upgrades with ERC-1967 Beacon Proxy in Covenant."><meta property="og:title" content="13 — Beacon Proxy - Covenant Docs"><meta property="og:description" content="One-to-many upgrades with ERC-1967 Beacon Proxy in Covenant."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://docs.covenant-lang.org/examples/13-beacon-proxy"><link rel="stylesheet" href="/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/getting-started/01-install" class="nav-link">Install</a> <a href="/examples/01-hello-contract" class="nav-link active">Examples</a> <a href="/" class="nav-link">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/examples/13-beacon-proxy" class="sidebar-link active">13 - Beacon Proxy</a><a href="/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/security/audit-report" class="sidebar-link">Audit Report</a><a href="/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/_astro/Sidebar.astro_astro_type_script_index_0_lang.CpCE4sML.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/">Docs</a>  <span aria-hidden="true">/</span> <a href="/examples/01-hello-contract">Examples</a> <span aria-hidden="true">/</span> <span>13 — Beacon Proxy</span> </nav>  <h1 id="13--beacon-proxy">13 — Beacon Proxy</h1>
+<p>The Beacon Proxy pattern (EIP-1967) lets you upgrade <strong>many proxy instances</strong> by pointing a single beacon contract to a new implementation. This is ideal for factory-deployed contracts (e.g. per-user vaults, per-pool AMM pairs).</p>
+<h2 id="architecture">Architecture</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span> ┌──────────────┐     points to     ┌─────────────────┐</span></span>
+<span class="line"><span> │  Beacon      │ ──────────────►   │  Implementation  │</span></span>
+<span class="line"><span> │  (upgradeable│                   │  (logic contract)│</span></span>
+<span class="line"><span> │   by owner)  │                   └─────────────────┘</span></span>
+<span class="line"><span> └──────────────┘</span></span>
+<span class="line"><span>        ▲ reads implementation()</span></span>
+<span class="line"><span>        │</span></span>
+<span class="line"><span> ┌──────┴──────┐  ┌─────────────┐  ┌─────────────┐</span></span>
+<span class="line"><span> │ BeaconProxy │  │ BeaconProxy │  │ BeaconProxy │  ...</span></span>
+<span class="line"><span> │  (instance) │  │  (instance) │  │  (instance) │</span></span>
+<span class="line"><span> └─────────────┘  └─────────────┘  └─────────────┘</span></span></code></pre>
+<h2 id="beacon-contract">Beacon contract</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>contract VaultBeacon {</span></span>
+<span class="line"><span>  field implementation: Address</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  init(impl: Address) {</span></span>
+<span class="line"><span>    self.implementation = impl;</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  @view</span></span>
+<span class="line"><span>  action get_implementation() -> Address {</span></span>
+<span class="line"><span>    return self.implementation;</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  action upgrade(new_impl: Address) {</span></span>
+<span class="line"><span>    only(owner);</span></span>
+<span class="line"><span>    self.implementation = new_impl;</span></span>
+<span class="line"><span>    emit Upgraded(new_impl);</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h2 id="implementation-contract">Implementation contract</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>@upgradeable(beacon)</span></span>
+<span class="line"><span>contract UserVault {</span></span>
+<span class="line"><span>  field balance: u256</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  action deposit() {</span></span>
+<span class="line"><span>    self.balance += msg.value;</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  @nonreentrant</span></span>
+<span class="line"><span>  action withdraw(amount: u256) {</span></span>
+<span class="line"><span>    require(self.balance >= amount, InsufficientBalance);</span></span>
+<span class="line"><span>    self.balance -= amount;</span></span>
+<span class="line"><span>    transfer_eth(msg.sender, amount);</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h2 id="factory-pattern">Factory pattern</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>contract VaultFactory {</span></span>
+<span class="line"><span>  field beacon:  Address</span></span>
+<span class="line"><span>  field vaults:  Map&#x3C;Address, Address></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  init(beacon: Address) {</span></span>
+<span class="line"><span>    self.beacon = beacon;</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  action create_vault() -> Address {</span></span>
+<span class="line"><span>    require(self.vaults[msg.sender] == Address(0), AlreadyHasVault);</span></span>
+<span class="line"><span>    // Deploy a new BeaconProxy pointing at self.beacon</span></span>
+<span class="line"><span>    let proxy = deploy_beacon_proxy(self.beacon);</span></span>
+<span class="line"><span>    self.vaults[msg.sender] = proxy;</span></span>
+<span class="line"><span>    emit VaultCreated(msg.sender, proxy);</span></span>
+<span class="line"><span>    return proxy;</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h2 id="upgrading-all-vaults">Upgrading all vaults</h2>
+<p>Because all proxies query the same beacon, upgrading is a single call:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> deploy</span><span style="color:#032F62"> UserVaultV2</span><span style="color:#005CC5"> --out</span><span style="color:#032F62"> impl_v2.json</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> call</span><span style="color:#24292E"> $BEACON_ADDR </span><span style="color:#032F62">upgrade</span><span style="color:#24292E"> $(</span><span style="color:#6F42C1">cat</span><span style="color:#032F62"> impl_v2.json</span><span style="color:#D73A49"> |</span><span style="color:#6F42C1"> jq</span><span style="color:#005CC5"> -r</span><span style="color:#032F62"> .address</span><span style="color:#24292E">)</span></span></code></pre>
+<p>All existing proxies immediately delegate to <code>UserVaultV2</code> — zero per-proxy transactions needed.</p>
+<h2 id="when-to-use-beacon-vs-uups">When to use Beacon vs UUPS</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Use case</th><th>Recommended pattern</th></tr></thead><tbody><tr><td>Single upgradeable contract</td><td>UUPS</td></tr><tr><td>Many identical contract instances</td><td>Beacon</td></tr><tr><td>Contracts that need independent upgrade schedules</td><td>UUPS per contract</td></tr><tr><td>Factory-deployed per-user contracts</td><td>Beacon</td></tr></tbody></table>  <nav class="doc-nav" aria-label="Page navigation"> <a href="/examples/12-uups-upgradeable" class="doc-nav-link prev"><span>Previous</span>12 — UUPS Upgradeable</a> <a href="/examples/14-oracle-integration" class="doc-nav-link next"><span>Next</span>14 — Oracle Integration</a> </nav> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

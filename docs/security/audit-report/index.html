@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Audit Report — OMEGA V4 - Covenant Docs</title><meta name="description" content="Full summary of the OMEGA V4 security audit: 41 findings, all resolved."><meta property="og:title" content="Audit Report — OMEGA V4 - Covenant Docs"><meta property="og:description" content="Full summary of the OMEGA V4 security audit: 41 findings, all resolved."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://docs.covenant-lang.org/security/audit-report"><link rel="stylesheet" href="/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/getting-started/01-install" class="nav-link">Install</a> <a href="/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/security/audit-report" class="sidebar-link active">Audit Report</a><a href="/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/_astro/Sidebar.astro_astro_type_script_index_0_lang.CpCE4sML.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/">Docs</a>  <span aria-hidden="true">/</span> <span>Security</span> <span aria-hidden="true">/</span> <span>Audit Report — OMEGA V4</span> </nav>  <h1 id="audit-report--omega-v4">Audit Report — OMEGA V4</h1>
+<p><strong>Auditor:</strong> OMEGA Security Labs<br>
+<strong>Audit period:</strong> November 4 – December 20, 2025<br>
+<strong>Version audited:</strong> Covenant compiler v0.7.0-rc3<br>
+<strong>Report date:</strong> January 10, 2026<br>
+<strong>Status:</strong> All findings resolved ✓</p>
+<h2 id="executive-summary">Executive summary</h2>
+<p>OMEGA Security Labs conducted a comprehensive audit of the Covenant compiler, runtime library, and standard contract library. The audit covered:</p>
+<ul>
+<li>Covenant compiler (Rust codebase, ~48,000 LOC)</li>
+<li>EVM code generation backend</li>
+<li>FHE precompile integration layer</li>
+<li>ZK proof verification circuits</li>
+<li>Post-quantum signature verifier</li>
+<li>Cryptographic amnesia two-pass erasure protocol</li>
+<li>Standard library contracts (ERC-20, UUPS, Beacon, etc.)</li>
+</ul>
+<p><strong>41 findings were identified. All 41 have been resolved.</strong></p>
+<h2 id="finding-summary">Finding summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Severity</th><th>Count</th><th>Resolved</th></tr></thead><tbody><tr><td>Critical</td><td>5</td><td>5 ✓</td></tr><tr><td>High</td><td>9</td><td>9 ✓</td></tr><tr><td>Medium</td><td>14</td><td>14 ✓</td></tr><tr><td>Low</td><td>9</td><td>9 ✓</td></tr><tr><td>Informational</td><td>4</td><td>4 ✓</td></tr><tr><td><strong>Total</strong></td><td><strong>41</strong></td><td><strong>41 ✓</strong></td></tr></tbody></table>
+<h2 id="critical-findings-overview">Critical findings overview</h2>
+<p>All 5 critical findings are described in detail in the <a href="/security/critical-findings">Critical Findings</a> page.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>ID</th><th>Title</th><th>Status</th></tr></thead><tbody><tr><td>CVN-001</td><td>FHE ciphertext malleability in <code>fhe_add</code></td><td>Fixed in v0.7.0-rc5</td></tr><tr><td>CVN-002</td><td>Amnesia pass-1 randomness is predictable on low-entropy chains</td><td>Fixed in v0.7.0-rc5</td></tr><tr><td>CVN-003</td><td>UUPS <code>_upgrade</code> missing ERC-1822 magic check</td><td>Fixed in v0.7.0-rc4</td></tr><tr><td>CVN-004</td><td>PQ key registry bypass via zero-length signature</td><td>Fixed in v0.7.0-rc5</td></tr><tr><td>CVN-005</td><td>ZK verifier accepts proof for wrong circuit ID</td><td>Fixed in v0.7.0-rc5</td></tr></tbody></table>
+<h2 id="audit-methodology">Audit methodology</h2>
+<ol>
+<li><strong>Automated analysis</strong> — Slither, Semgrep, and OMEGA’s proprietary FHE taint-analysis tool</li>
+<li><strong>Manual code review</strong> — line-by-line review of all compiler output paths</li>
+<li><strong>Property-based fuzzing</strong> — 72-hour Echidna campaign on the standard library</li>
+<li><strong>Formal verification</strong> — critical paths modelled in Lean 4; proofs machine-checked</li>
+<li><strong>Differential testing</strong> — Covenant-generated bytecode compared against reference Solidity for 200 test cases</li>
+</ol>
+<h2 id="recommendations-implemented">Recommendations implemented</h2>
+<p>All OMEGA recommendations were implemented before the V0.7 GA release:</p>
+<ul>
+<li><strong>CEI enforcement</strong>: compiler now statically checks and rejects checks-effects-interactions violations unless explicitly overridden</li>
+<li><strong>Reentrancy auto-detection</strong>: the LSP flags missing <code>@nonreentrant</code> on any action making external calls</li>
+<li><strong>FHE parameter validation</strong>: scheme-specific parameter bounds checked at compile time</li>
+<li><strong>Amnesia log suppression</strong>: event emission inside <code>amnesia { }</code> blocks now raises a compiler error</li>
+</ul>
+<h2 id="full-report">Full report</h2>
+<p>The complete 147-page report is available at: <a href="https://covenant-lang.org/omega-v4-audit.pdf">covenant-lang.org/omega-v4-audit.pdf</a></p>  <nav class="doc-nav" aria-label="Page navigation"> <span></span> <a href="/security/critical-findings" class="doc-nav-link next"><span>Next</span>Critical Findings</a> </nav> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>
