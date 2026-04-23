@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Covenant — Cryptographic guarantees as language primitives</title>
-<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.1 live on Sepolia.">
+<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.6 GA — audited compiler, LSP, VS Code extension live.">
 <meta name="author" content="Kairos Lab">
 <link rel="canonical" href="https://covenant-lang.org/">
 <!-- Favicons -->
@@ -20,7 +20,7 @@
 <meta property="og:url" content="https://covenant-lang.org/">
 <meta property="og:site_name" content="Covenant">
 <meta property="og:title" content="Covenant — Cryptographic guarantees as language primitives">
-<meta property="og:description" content="A smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.1 live on Sepolia.">
+<meta property="og:description" content="A smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.6 GA — audited compiler, LSP, VS Code extension live.">
 <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -920,6 +920,131 @@ a:focus-visible, button:focus-visible {
   body { padding-top: 0; }
   .section, .compare-section, #deployment, .manifesto-bridge { page-break-inside: avoid; }
 }
+
+/* ─────────────────────────────────────────────
+   AUDITED SECTION
+   ───────────────────────────────────────────── */
+.audit-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border: 1px solid var(--rule);
+  margin: 40px 0;
+}
+.audit-stat {
+  padding: 28px 16px;
+  text-align: center;
+  border-right: 1px solid var(--rule-faint);
+}
+.audit-stat:last-child { border-right: none; }
+.audit-stat__count {
+  display: block;
+  font-family: 'EB Garamond', serif;
+  font-size: 36pt; font-weight: 400; line-height: 1;
+  color: var(--ink); margin-bottom: 4px;
+}
+.audit-stat__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7pt; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.audit-stat--total {
+  grid-column: 1 / -1;
+  background: var(--accent); border-top: 1px solid var(--rule);
+  border-right: none; padding: 20px;
+}
+.audit-stat--total .audit-stat__count { color: white; font-size: 24pt; display: inline; margin-right: 12px; }
+.audit-stat--total .audit-stat__label { color: rgba(255,255,255,0.8); font-size: 8pt; }
+.audit-findings {
+  border-left: 2px solid var(--accent);
+  padding: 24px 28px;
+  background: var(--accent-faint);
+  margin: 32px 0;
+}
+.audit-findings-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 14pt; font-weight: 600; color: var(--ink);
+  margin-bottom: 16px; display: block;
+}
+.audit-findings ul {
+  list-style: none; padding: 0; margin: 0;
+}
+.audit-findings li {
+  font-family: 'Inter', sans-serif;
+  font-size: 10pt; color: var(--ink-soft); line-height: 1.55;
+  padding: 10px 0; border-bottom: 1px solid var(--rule-faint);
+}
+.audit-findings li:last-child { border-bottom: none; }
+.audit-findings li strong { color: var(--ink); }
+.audit-findings li code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt; background: var(--paper-pure);
+  padding: 1px 5px; border: 1px solid var(--rule-faint);
+}
+.audit-cta { display: flex; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
+@media (max-width: 640px) {
+  .audit-stats { grid-template-columns: repeat(3, 1fr); }
+  .audit-stat--total { grid-column: 1 / -1; }
+  .audit-cta { flex-direction: column; }
+}
+
+/* ─────────────────────────────────────────────
+   INSTALL SECTION
+   ───────────────────────────────────────────── */
+.install-methods {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; border: 1px solid var(--rule); margin: 32px 0;
+}
+.install-method {
+  padding: 28px 24px;
+  border-right: 1px solid var(--rule-faint);
+}
+.install-method:last-child { border-right: none; }
+.install-method-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent);
+  display: block; margin-bottom: 10px;
+}
+.install-method h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 15pt; font-weight: 600; color: var(--ink);
+  margin-bottom: 12px;
+}
+.install-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt; background: var(--ink); color: #fcfbf8;
+  padding: 12px 16px; display: block; margin: 12px 0;
+  overflow-x: auto; white-space: nowrap;
+}
+.install-method p {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.5pt; color: var(--ink-soft); line-height: 1.5;
+  margin-bottom: 12px;
+}
+.install-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; color: var(--ink-faint);
+  letter-spacing: 0.06em; display: block; margin-top: 12px;
+}
+.install-screenshot {
+  margin-top: 48px; border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.install-screenshot img {
+  width: 100%; height: auto; display: block;
+}
+.install-screenshot-caption {
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt; color: var(--ink-mute);
+  padding: 12px 16px; border-top: 1px solid var(--rule-faint);
+  font-style: italic;
+}
+@media (max-width: 768px) {
+  .install-methods { grid-template-columns: 1fr; }
+  .install-method { border-right: none; border-bottom: 1px solid var(--rule-faint); }
+  .install-method:last-child { border-bottom: none; }
+}
 </style>
 </head>
 <body>
@@ -940,7 +1065,7 @@ a:focus-visible, button:focus-visible {
       </svg>
     </div>
     <span class="header-brand-name">Covenant</span>
-    <span class="header-badge">V0.1</span>
+    <span class="header-badge">V0.6 GA</span>
   </a>
 
   <div class="header-spacer"></div>
@@ -948,7 +1073,8 @@ a:focus-visible, button:focus-visible {
   <nav class="header-nav" aria-label="Primary navigation">
     <a href="manifesto.html" class="nav-link">Manifesto</a>
     <a href="#architecture" class="nav-link">Architecture</a>
-    <a href="#deployment" class="nav-link">Deployment</a>
+    <a href="#audited" class="nav-link">Audit</a>
+    <a href="#install" class="nav-link">Install</a>
     <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">↗ @Covenant_Lang</a>
   </nav>
@@ -977,8 +1103,9 @@ a:focus-visible, button:focus-visible {
     <div class="hero-bar" id="hero-bar" aria-hidden="true"></div>
 
     <div class="hero-actions">
-      <a href="manifesto.html" class="btn-primary">Read the Manifesto →</a>
-      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="btn-secondary">github.com/Valisthea/covenant-lang</a>
+      <a href="#install" class="btn-primary">Install now →</a>
+      <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary">Read the audit →</a>
+      <a href="manifesto.html" class="btn-secondary" style="border-color:transparent;color:var(--ink-mute);">Read the Manifesto</a>
     </div>
 
   </div>
@@ -1067,11 +1194,73 @@ a:focus-visible, button:focus-visible {
 </div>
 
 <!-- ═══════════════════════════════════════════
+     AUDITED — OMEGA V4
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section class="section" id="audited" aria-labelledby="audited-title">
+  <div class="section-header">
+    <span class="section-num">02 — Audited</span>
+    <h2 class="section-title" id="audited-title">OMEGA V4 — full audit, all findings resolved</h2>
+    <p class="body-text">Before V0.6 GA shipped, the compiler and runtime underwent a complete OMEGA V4 security audit — 41 findings across all severity levels. Every finding is resolved. The audit report is public.</p>
+  </div>
+
+  <div class="audit-stats reveal">
+    <div class="audit-stat audit-stat-critical">
+      <span class="audit-stat-count">5</span>
+      <span class="audit-stat-label">Critical</span>
+      <span class="audit-stat-status">resolved</span>
+    </div>
+    <div class="audit-stat audit-stat-high">
+      <span class="audit-stat-count">8</span>
+      <span class="audit-stat-label">High</span>
+      <span class="audit-stat-status">resolved</span>
+    </div>
+    <div class="audit-stat audit-stat-medium">
+      <span class="audit-stat-count">8</span>
+      <span class="audit-stat-label">Medium</span>
+      <span class="audit-stat-status">resolved</span>
+    </div>
+    <div class="audit-stat audit-stat-low">
+      <span class="audit-stat-count">6</span>
+      <span class="audit-stat-label">Low</span>
+      <span class="audit-stat-status">resolved</span>
+    </div>
+    <div class="audit-stat audit-stat-info">
+      <span class="audit-stat-count">9</span>
+      <span class="audit-stat-label">Informational</span>
+      <span class="audit-stat-status">resolved</span>
+    </div>
+    <div class="audit-stat audit-stat-total">
+      <span class="audit-stat-count">41</span>
+      <span class="audit-stat-label">Total</span>
+      <span class="audit-stat-status">0 open</span>
+    </div>
+  </div>
+
+  <div class="audit-findings reveal">
+    <h3 class="sub-title" style="margin-bottom:1rem;">Critical findings (all resolved)</h3>
+    <ul class="audit-findings-list">
+      <li><span class="finding-id">KSR-CVN-001</span> IrGuard node was never codegenned — on-chain guard clauses silently dropped</li>
+      <li><span class="finding-id">KSR-CVN-002</span> STATICCALL success flag discarded — failed external calls treated as success</li>
+      <li><span class="finding-id">KSR-CVN-003</span> Stale memory region forged VEIL verification — decryption bypassed under specific alloc patterns</li>
+      <li><span class="finding-id">KSR-CVN-004</span> No re-initialisation guard on Styx runtime — double-init corrupted cryptographic state</li>
+      <li><span class="finding-id">KSR-CVN-005</span> Ceremony phase transitions unchecked — attacker could skip phases and claim invalid proofs</li>
+    </ul>
+  </div>
+
+  <div class="audit-actions reveal">
+    <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary">View the full audit report →</a>
+    <a href="#install" class="btn-primary" style="margin-left:1rem;">Install the audited compiler →</a>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════
      CODE COMPARISON — SIDE BY SIDE
      ═══════════════════════════════════════════ -->
 <div class="container">
 <section class="compare-section" id="comparison" aria-labelledby="compare-title">
-  <span class="section-num">02 — The proof point</span>
+  <span class="section-num">03 — The proof point</span>
   <h2 class="section-title" id="compare-title">The same logic. Two languages.</h2>
   <p class="body-text">A private vote function — FHE computation, post-quantum identity, cryptographic amnesia on exit. In Solidity, this requires ~220 lines of integration glue and compiler-invisible contracts between libraries. In Covenant, the type system enforces every invariant.</p>
 
@@ -1146,6 +1335,58 @@ a:focus-visible, button:focus-visible {
 </div>
 
 <!-- ═══════════════════════════════════════════
+     INSTALL
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section class="section" id="install" aria-labelledby="install-title">
+  <div class="section-header">
+    <span class="section-num">04 — Install</span>
+    <h2 class="section-title" id="install-title">Get the audited compiler</h2>
+    <p class="body-text">Covenant V0.6 GA ships a full toolchain: compiler, CLI, LSP, and VS Code extension. One command to start.</p>
+  </div>
+
+  <div class="install-methods reveal">
+
+    <div class="install-method">
+      <div class="install-method-header">
+        <span class="install-method-label">Cargo (recommended)</span>
+        <span class="install-method-note">Rust 1.76+</span>
+      </div>
+      <pre class="install-code"><span class="cm"># Install compiler + CLI</span>
+cargo install covenant-cli
+
+<span class="cm"># Verify</span>
+covenant --version
+<span class="cm"># → Covenant V0.6.0 (OMEGA V4 audited)</span></pre>
+    </div>
+
+    <div class="install-method">
+      <div class="install-method-header">
+        <span class="install-method-label">VS Code Extension</span>
+        <span class="install-method-note">LSP + 21 security detectors</span>
+      </div>
+      <pre class="install-code"><span class="cm"># From VS Code marketplace</span>
+ext install kairos-lab.covenant-lang
+
+<span class="cm"># Or via CLI</span>
+code --install-extension kairos-lab.covenant-lang</pre>
+    </div>
+
+  </div>
+
+  <div class="install-screenshot reveal">
+    <img src="uploads/Capture d'écran 2026-04-21 113240.png" alt="Covenant LSP in VS Code — inline diagnostics, type hints, and security warnings" loading="lazy" style="width:100%;border-radius:6px;border:1px solid var(--rule-faint);"/>
+    <p class="install-screenshot-caption">Covenant LSP: inline diagnostics, post-quantum type inference, and real-time security detectors in VS Code.</p>
+  </div>
+
+  <div class="install-actions reveal">
+    <a href="https://github.com/Valisthea/covenant-lang/blob/main/INSTALL.md" target="_blank" rel="noopener" class="btn-secondary">Full install docs →</a>
+    <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary" style="margin-left:1rem;">Audit report →</a>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════
      DEPLOYMENT — CEREMONIAL
      ═══════════════════════════════════════════ -->
 <div class="container">
@@ -1156,6 +1397,8 @@ a:focus-visible, button:focus-visible {
 
     <!-- Bottom-left corner mark -->
     <div aria-hidden="true" style="position:absolute;bottom:12px;left:12px;width:20px;height:20px;border-bottom:1px solid var(--accent);border-left:1px solid var(--accent);opacity:0.6;"></div>
+
+    <span class="section-num" style="display:block;margin-bottom:1.5rem;">05 — Live on Ethereum</span>
 
     <div class="deployment-eyebrow">
       <div class="deploy-dot" aria-hidden="true"></div>
@@ -1181,7 +1424,7 @@ a:focus-visible, button:focus-visible {
       </div>
       <div class="deploy-meta-col">
         <span class="deploy-meta-label">Compiler</span>
-        <span class="deploy-meta-value">Covenant V0.1</span>
+        <span class="deploy-meta-value">Covenant V0.6</span>
       </div>
       <div class="deploy-meta-col">
         <span class="deploy-meta-label">Language</span>
@@ -1198,33 +1441,33 @@ a:focus-visible, button:focus-visible {
      ═══════════════════════════════════════════ -->
 <div class="container">
 <section class="section" id="ships" aria-labelledby="ships-title">
-  <span class="section-num">04 — What ships today</span>
+  <span class="section-num">06 — What ships today</span>
   <h2 class="section-title" id="ships-title">Working infrastructure. Not a paper.</h2>
 
   <div class="ships-grid reveal">
 
     <div class="ship-card">
       <span class="ship-title">Compiler</span>
-      <span class="ship-sub">Rust · ~15,000 lines</span>
-      <span class="ship-badge">GA · V0.1</span>
+      <span class="ship-sub">Rust · ~15,000 lines · 18 crates</span>
+      <span class="ship-badge">V0.6 · Shipped</span>
     </div>
 
     <div class="ship-card">
       <span class="ship-title">Codex</span>
       <span class="ship-sub">20 working examples · 4 tiers</span>
-      <span class="ship-badge">V0.4 · Complete</span>
+      <span class="ship-badge">V0.4 · Shipped</span>
     </div>
 
     <div class="ship-card">
       <span class="ship-title">CLI</span>
-      <span class="ship-sub">810+ tests · compile, check, deploy, test</span>
+      <span class="ship-sub">870+ tests · compile, check, deploy, test</span>
       <span class="ship-badge">V0.5 · Shipped</span>
     </div>
 
     <div class="ship-card">
       <span class="ship-title">LSP + Linter</span>
       <span class="ship-sub">21+ security detectors · VS Code</span>
-      <span class="ship-badge-outline">V0.6 · In Progress</span>
+      <span class="ship-badge">V0.6 · Shipped</span>
     </div>
 
   </div>
@@ -1285,7 +1528,7 @@ a:focus-visible, button:focus-visible {
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-closing">Watch this space. Private until V1.0.</p>
+    <p class="footer-closing">V0.6 GA — stable for early-adopter production use. Roadmap: V0.7 (Aster Chain adapter), V1.0 (full production).</p>
     <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0</span>
   </div>
 </footer>
@@ -1398,7 +1641,9 @@ a:focus-visible, button:focus-visible {
   const hsq = document.getElementById('header-square');
   const sections = [
     { id: 'architecture', color: '#0891b2' },   /* FORTRESS → cyan */
+    { id: 'audited',      color: '#dc2626' },   /* audit → red */
     { id: 'comparison',   color: '#2563eb' },   /* VEIL → blue */
+    { id: 'install',      color: '#059669' },   /* install → green */
     { id: 'deployment',   color: '#059669' },   /* PRISM → green (live) */
     { id: 'ships',        color: '#7C3AED' },   /* default */
   ];
