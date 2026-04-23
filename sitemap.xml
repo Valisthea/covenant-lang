@@ -6,4 +6,22 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Covenant By Example -->
+  <url><loc>https://examples.covenant-lang.org/</loc><priority>0.9</priority></url>
+  <url><loc>https://examples.covenant-lang.org/01-hello-contract</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/02-fields-and-storage</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/03-actions-events-errors</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/04-guards</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/05-external-calls</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/06-erc20-token</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/07-fhe-basics</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/08-encrypted-token</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/09-post-quantum-signatures</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/10-zero-knowledge-proofs</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/11-cryptographic-amnesia</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/12-uups-upgradeable</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/13-beacon-proxy</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/14-oracle-integration</loc><priority>0.7</priority></url>
+  <url><loc>https://examples.covenant-lang.org/15-deploy-to-sepolia</loc><priority>0.7</priority></url>
 </urlset>
