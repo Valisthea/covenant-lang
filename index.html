@@ -991,45 +991,63 @@ a:focus-visible, button:focus-visible {
 /* ─────────────────────────────────────────────
    INSTALL SECTION
    ───────────────────────────────────────────── */
-.install-methods {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 0; border: 1px solid var(--rule); margin: 32px 0;
+.install-cmd-wrap {
+  margin: 36px 0 40px;
+  display: flex; align-items: stretch;
+  border: 1px solid var(--rule); overflow: hidden;
 }
-.install-method {
-  padding: 28px 24px;
+.install-cmd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5pt; background: #1a1a1a; color: #fcfbf8;
+  padding: 18px 24px; flex: 1; display: block;
+  letter-spacing: 0.015em; white-space: nowrap; overflow-x: auto;
+}
+.install-cmd .cm { color: #6b7280; }
+.install-cmd-copy {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt; padding: 0 22px;
+  background: var(--paper); border-left: 1px solid var(--rule);
+  color: var(--ink-mute); cursor: pointer;
+  display: flex; align-items: center; white-space: nowrap;
+  transition: color 0.15s, background 0.15s; border: none;
+  border-left: 1px solid var(--rule);
+}
+.install-cmd-copy:hover { color: var(--accent); background: #f5f3ef; }
+
+.install-cards {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; border: 1px solid var(--rule); margin-bottom: 48px;
+}
+.install-card {
+  padding: 28px 28px 24px;
   border-right: 1px solid var(--rule-faint);
 }
-.install-method:last-child { border-right: none; }
-.install-method-label {
+.install-card:last-child { border-right: none; }
+.install-card-eyebrow {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7.5pt; font-weight: 600; letter-spacing: 0.1em;
+  font-size: 7pt; font-weight: 600; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--accent);
   display: block; margin-bottom: 10px;
 }
-.install-method h3 {
+.install-card-title {
   font-family: 'EB Garamond', serif;
-  font-size: 15pt; font-weight: 600; color: var(--ink);
-  margin-bottom: 12px;
+  font-size: 14pt; font-weight: 600; color: var(--ink);
+  display: block; margin-bottom: 6px;
+}
+.install-card-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt; color: var(--ink-mute); display: block; margin-bottom: 16px;
 }
 .install-code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9pt; background: var(--ink); color: #fcfbf8;
-  padding: 12px 16px; display: block; margin: 12px 0;
-  overflow-x: auto; white-space: nowrap;
+  font-size: 8.5pt; background: #1a1a1a; color: #fcfbf8;
+  padding: 12px 16px; display: block;
+  overflow-x: auto; white-space: pre; line-height: 1.65;
 }
-.install-method p {
-  font-family: 'Inter', sans-serif;
-  font-size: 9.5pt; color: var(--ink-soft); line-height: 1.5;
-  margin-bottom: 12px;
-}
-.install-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 7.5pt; color: var(--ink-faint);
-  letter-spacing: 0.06em; display: block; margin-top: 12px;
-}
+.install-code .cm { color: #6b7280; }
+
 .install-screenshot {
-  margin-top: 48px; border: 1px solid var(--rule);
-  overflow: hidden;
+  border: 1px solid var(--rule); overflow: hidden;
 }
 .install-screenshot img {
   width: 100%; height: auto; display: block;
@@ -1037,13 +1055,17 @@ a:focus-visible, button:focus-visible {
 .install-screenshot-caption {
   font-family: 'Inter', sans-serif;
   font-size: 9pt; color: var(--ink-mute);
-  padding: 12px 16px; border-top: 1px solid var(--rule-faint);
-  font-style: italic;
+  padding: 12px 18px; border-top: 1px solid var(--rule-faint);
+  font-style: italic; line-height: 1.5;
 }
-@media (max-width: 768px) {
-  .install-methods { grid-template-columns: 1fr; }
-  .install-method { border-right: none; border-bottom: 1px solid var(--rule-faint); }
-  .install-method:last-child { border-bottom: none; }
+.install-actions {
+  display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap;
+}
+@media (max-width: 680px) {
+  .install-cards { grid-template-columns: 1fr; }
+  .install-card { border-right: none; border-bottom: 1px solid var(--rule-faint); }
+  .install-card:last-child { border-bottom: none; }
+  .install-cmd { font-size: 9.5pt; }
 }
 </style>
 </head>
@@ -1345,43 +1367,46 @@ a:focus-visible, button:focus-visible {
     <p class="body-text">Covenant V0.6 GA ships a full toolchain: compiler, CLI, LSP, and VS Code extension. One command to start.</p>
   </div>
 
-  <div class="install-methods reveal">
+  <div class="install-cmd-wrap reveal">
+    <code class="install-cmd"><span class="cm"># one command</span>
+cargo install covenant-cli</code>
+    <button class="install-cmd-copy" onclick="navigator.clipboard.writeText('cargo install covenant-cli').then(()=>{this.textContent='Copied';setTimeout(()=>{this.textContent='Copy'},1500)})">Copy</button>
+  </div>
 
-    <div class="install-method">
-      <div class="install-method-header">
-        <span class="install-method-label">Cargo (recommended)</span>
-        <span class="install-method-note">Rust 1.76+</span>
-      </div>
-      <pre class="install-code"><span class="cm"># Install compiler + CLI</span>
+  <div class="install-cards reveal">
+    <div class="install-card">
+      <span class="install-card-eyebrow">Compiler + CLI</span>
+      <span class="install-card-title">Cargo</span>
+      <span class="install-card-note">Rust 1.76+ · ~15,000 lines · OMEGA V4 audited</span>
+      <pre class="install-code"><span class="cm"># install</span>
 cargo install covenant-cli
 
-<span class="cm"># Verify</span>
+<span class="cm"># verify</span>
 covenant --version
-<span class="cm"># → Covenant V0.6.0 (OMEGA V4 audited)</span></pre>
+<span class="cm"># Covenant V0.6.0 (OMEGA V4 audited)</span></pre>
     </div>
 
-    <div class="install-method">
-      <div class="install-method-header">
-        <span class="install-method-label">VS Code Extension</span>
-        <span class="install-method-note">LSP + 21 security detectors</span>
-      </div>
-      <pre class="install-code"><span class="cm"># From VS Code marketplace</span>
-ext install kairos-lab.covenant-lang
+    <div class="install-card">
+      <span class="install-card-eyebrow">Editor</span>
+      <span class="install-card-title">VS Code Extension</span>
+      <span class="install-card-note">Syntax · LSP · 21 security detectors</span>
+      <pre class="install-code"><span class="cm"># marketplace</span>
+kairos-lab.covenant-lang
 
-<span class="cm"># Or via CLI</span>
-code --install-extension kairos-lab.covenant-lang</pre>
+<span class="cm"># or via CLI</span>
+code --install-extension \
+  kairos-lab.covenant-lang</pre>
     </div>
-
   </div>
 
   <div class="install-screenshot reveal">
-    <img src="uploads/Capture d'écran 2026-04-21 113240.png" alt="Covenant LSP in VS Code — inline diagnostics, type hints, and security warnings" loading="lazy" style="width:100%;border-radius:6px;border:1px solid var(--rule-faint);"/>
-    <p class="install-screenshot-caption">Covenant LSP: inline diagnostics, post-quantum type inference, and real-time security detectors in VS Code.</p>
+    <img src="uploads/vscode-extension.png" alt="Covenant Language Support in VS Code — inline diagnostics, type inference, and security warnings on secret_vault.cov" loading="lazy"/>
+    <p class="install-screenshot-caption">Inline diagnostics in action — E421 (no matching field admin), W003 (reentrancy window) — caught at edit time, not at audit time.</p>
   </div>
 
   <div class="install-actions reveal">
     <a href="https://github.com/Valisthea/covenant-lang/blob/main/INSTALL.md" target="_blank" rel="noopener" class="btn-secondary">Full install docs →</a>
-    <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary" style="margin-left:1rem;">Audit report →</a>
+    <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary">Audit report →</a>
   </div>
 </section>
 </div>
