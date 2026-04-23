@@ -24,7 +24,7 @@ const pageTitle = title ? title + ' - Covenant Docs' : 'Covenant Docs';
   <link rel="canonical" href={"https://docs.covenant-lang.org" + currentPath}/>
 </head>
 <body>
-  <Header/>
+  <Header currentPath={currentPath}/>
   <div class="docs-layout">
     <Sidebar currentPath={currentPath}/>
     <main class="docs-main" id="main-content">

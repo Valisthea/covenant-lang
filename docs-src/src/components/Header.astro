@@ -1,4 +1,10 @@
 ---
+const { currentPath = '/' } = Astro.props;
+
+// Determine which nav item is active based on current path
+const isInstall  = currentPath.startsWith('/getting-started');
+const isExamples = currentPath.startsWith('/examples');
+const isDocs     = !isInstall && !isExamples;
 ---
 <header id="site-header">
   <a href="/" class="header-brand" aria-label="Covenant Docs home">
@@ -17,9 +23,9 @@
     <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a>
     <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a>
     <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a>
-    <a href="/getting-started/01-install" class="nav-link">Install</a>
-    <a href="/examples/01-hello-contract" class="nav-link">Examples</a>
-    <a href="/" class="nav-link active">Docs</a>
+    <a href="/getting-started/01-install" class:list={['nav-link', { active: isInstall }]}>Install</a>
+    <a href="/examples/01-hello-contract" class:list={['nav-link', { active: isExamples }]}>Examples</a>
+    <a href="/" class:list={['nav-link', { active: isDocs }]}>Docs</a>
     <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a>
   </nav>
