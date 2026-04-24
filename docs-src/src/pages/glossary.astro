@@ -1,0 +1,15 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../layouts/DocsLayout.astro';
+
+const entries = await getCollection('glossary');
+const entry = entries[0];
+const { Content } = entry ? await render(entry) : { Content: null };
+---
+<DocsLayout
+  title="Glossary"
+  description="Complete glossary of Covenant language terms: keywords, types, FHE primitives, ZK, post-quantum."
+  breadcrumb={[{ label: 'Glossary' }]}
+>
+  {Content ? <Content /> : <p>Glossary coming soon.</p>}
+</DocsLayout>

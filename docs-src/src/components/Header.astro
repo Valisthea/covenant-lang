@@ -1,0 +1,36 @@
+---
+const { currentPath = '/docs/' } = Astro.props;
+const isInstall  = currentPath.startsWith('/docs/getting-started');
+const isExamples = currentPath.startsWith('/docs/examples');
+const isDocs     = !isInstall && !isExamples;
+---
+<header id="site-header">
+  <a href="/docs/" class="header-brand" aria-label="Covenant Docs home">
+    <div class="header-logo-wrap" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg">
+        <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+        <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"/>
+        <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"/>
+      </svg>
+    </div>
+    <span class="header-brand-name">Covenant</span>
+    <span class="header-badge">Docs</span>
+  </a>
+  <div class="header-spacer"></div>
+  <nav class="header-nav" aria-label="Primary navigation">
+    <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a>
+    <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a>
+    <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a>
+    <a href="/docs/getting-started/01-install" class:list={['nav-link', { active: isInstall }]}>Install</a>
+    <a href="/docs/examples/01-hello-contract" class:list={['nav-link', { active: isExamples }]}>Examples</a>
+    <a href="/docs/" class:list={['nav-link', { active: isDocs }]}>Docs</a>
+    <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+    <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a>
+  </nav>
+</header>
+<script>
+const hdr = document.getElementById('site-header');
+if(hdr){const f=()=>hdr.classList.toggle('scrolled',window.scrollY>10);window.addEventListener('scroll',f,{passive:true});f();}
+const sq=document.getElementById('header-square');
+if(sq){let s=1,d=1;setInterval(()=>{s+=d*.004;if(s>=1.12)d=-1;if(s<=.88)d=1;sq.setAttribute('transform',`translate(48,48) scale(${s}) translate(-48,-48)`);},40);}
+</script>

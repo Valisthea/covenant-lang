@@ -1,0 +1,55 @@
+---
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+const { title, description = 'Covenant language documentation.', prev, next, breadcrumb } = Astro.props;
+const currentPath = Astro.url.pathname;
+const pageTitle = title ? title + ' - Covenant Docs' : 'Covenant Docs';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>{pageTitle}</title>
+  <meta name="description" content={description}/>
+  <meta property="og:title" content={pageTitle}/>
+  <meta property="og:description" content={description}/>
+  <meta property="og:image" content="https://covenant-lang.org/og-image.png"/>
+  <link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="canonical" href={"https://covenant-lang.org" + currentPath}/>
+</head>
+<body>
+  <Header currentPath={currentPath}/>
+  <div class="docs-layout">
+    <Sidebar currentPath={currentPath}/>
+    <main class="docs-main" id="main-content">
+      <article class="docs-content" data-pagefind-body>
+        {breadcrumb && (
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/docs/">Docs</a>
+            {breadcrumb.map((c, i) => (
+              <>
+                <span aria-hidden="true">/</span>
+                {c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>}
+              </>
+            ))}
+          </nav>
+        )}
+        <slot/>
+        {(prev || next) && (
+          <nav class="doc-nav" aria-label="Page navigation">
+            {prev ? <a href={prev.href} class="doc-nav-link prev"><span>Previous</span>{prev.label}</a> : <span/>}
+            {next ? <a href={next.href} class="doc-nav-link next"><span>Next</span>{next.label}</a> : <span/>}
+          </nav>
+        )}
+      </article>
+    </main>
+  </div>
+  <Footer/>
+</body>
+</html>
