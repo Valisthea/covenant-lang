@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+export async function getStaticPaths() {
+  const pages = await getCollection('reference-ercs');
+  return pages.map(entry => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: { entry }
+  }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const all = (await getCollection('reference-ercs')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const idx = all.findIndex(e => e.id === entry.id);
+const prev = idx > 0 ? all[idx - 1] : null;
+const next = idx < all.length - 1 ? all[idx + 1] : null;
+function toHref(e: any) { return '/docs/reference/ercs/' + e.id.replace(/\.mdx?$/, ''); }
+---
+<DocsLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  breadcrumb={[{label:'Reference',href:'/docs/reference/ercs/01-overview'},{label:'ERCs',href:'/docs/reference/ercs/01-overview'},{label:entry.data.title}]}
+  prev={prev ? { href: toHref(prev), label: prev.data.title } : undefined}
+  next={next ? { href: toHref(next), label: next.data.title } : undefined}>
+  <Content />
+</DocsLayout>
