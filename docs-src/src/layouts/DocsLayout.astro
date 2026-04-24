@@ -34,6 +34,16 @@ const jsonLd = {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="color-scheme" content="light"/>
+  <meta name="theme-color" content="#fcfbf8"/>
+  {/* Critical inline styles — paints the page in its final colors before the external CSS arrives.
+      Prevents the dark-background FOUC users were seeing during navigation. */}
+  <style>
+    html,body{background:#fcfbf8;color:#1a1a1a}
+    html{color-scheme:light}
+    body{font-family:'Inter',system-ui,-apple-system,sans-serif;margin:0;min-height:100vh}
+    #docs-sidebar{background:#fcfbf8}
+  </style>
   <title>{pageTitle}</title>
   <meta name="description" content={description}/>
   <meta property="og:title" content={pageTitle}/>
@@ -45,6 +55,36 @@ const jsonLd = {
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="canonical" href={canonical}/>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}/>
+  {/* Restore sidebar scroll position as early as possible (before the sidebar paints),
+      so clicking a link on a deeply-scrolled sidebar doesn't snap it back to top on the next page. */}
+  <script is:inline>
+    (function(){
+      try{
+        var k='covenant-docs-sidebar-scroll';
+        var saved=sessionStorage.getItem(k);
+        if(saved!==null){
+          var apply=function(){
+            var s=document.getElementById('docs-sidebar');
+            if(s){s.scrollTop=parseInt(saved,10)||0;}
+          };
+          if(document.readyState==='loading'){
+            document.addEventListener('DOMContentLoaded',apply,{once:true});
+          }else{apply();}
+        }
+        // Persist before navigation away.
+        document.addEventListener('click',function(e){
+          var a=e.target && e.target.closest && e.target.closest('#docs-sidebar a');
+          if(!a) return;
+          var s=document.getElementById('docs-sidebar');
+          if(s) sessionStorage.setItem(k,String(s.scrollTop));
+        },true);
+        window.addEventListener('pagehide',function(){
+          var s=document.getElementById('docs-sidebar');
+          if(s) sessionStorage.setItem(k,String(s.scrollTop));
+        });
+      }catch(_){/* sessionStorage blocked — silently ignore */}
+    })();
+  </script>
 </head>
 <body>
   <Header currentPath={currentPath}/>
