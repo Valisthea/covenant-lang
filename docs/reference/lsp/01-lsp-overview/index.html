@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Language Server Protocol - Covenant Docs</title><meta name="description" content="Covenant LSP capabilities: diagnostics, hover, completion, go-to-definition, and the 38 lint detectors. Setup for VS Code, Neovim, and IntelliJ."><meta property="og:title" content="Language Server Protocol - Covenant Docs"><meta property="og:description" content="Covenant LSP capabilities: diagnostics, hover, completion, go-to-definition, and the 38 lint detectors. Setup for VS Code, Neovim, and IntelliJ."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/reference/lsp/01-lsp-overview"><link rel="stylesheet" href="/docs/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link active">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/docs/reference/ercs/01-overview">Reference</a> <span aria-hidden="true">/</span> <a href="/docs/reference/lsp/01-lsp-overview">LSP</a> <span aria-hidden="true">/</span> <span>Language Server Protocol</span> </nav>  <!-- Source: doc10-lsp-specification.md -->
+<!-- Last sync: 2026-04-23 -->
+<h1 id="language-server-protocol">Language Server Protocol</h1>
+<p>The Covenant language server (<code>covenant-lsp</code>) implements <a href="https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/">LSP 3.17</a> and provides IDE intelligence for <code>.cvt</code> files. It ships inside the <code>covenant-cli</code> binary — no separate installation needed.</p>
+<h2 id="capabilities">Capabilities</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Capability</th><th>Status</th><th>Notes</th></tr></thead><tbody><tr><td>Diagnostics (on save)</td><td>✅ Full</td><td>All E/W/L codes</td></tr><tr><td>Diagnostics (on type)</td><td>✅ Full</td><td>&#x3C; 100ms latency</td></tr><tr><td>Hover</td><td>✅ Full</td><td>Type + domain + docs</td></tr><tr><td>Go-to-definition</td><td>✅ Full</td><td>Fields, actions, events, errors</td></tr><tr><td>Find references</td><td>✅ Full</td><td>Cross-file</td></tr><tr><td>Rename symbol</td><td>✅ Full</td><td>Safe rename with preview</td></tr><tr><td>Autocomplete</td><td>✅ Full</td><td>Context-aware</td></tr><tr><td>Signature help</td><td>✅ Full</td><td>FHE opcodes + stdlib</td></tr><tr><td>Code formatting</td><td>✅ Full</td><td><code>covenant fmt</code></td></tr><tr><td>Inline hints</td><td>✅ Full</td><td>Type + domain labels</td></tr><tr><td>Semantic tokens</td><td>✅ Full</td><td>Full syntax theme</td></tr><tr><td>Code actions</td><td>✅ Partial</td><td>12 quick-fix actions</td></tr><tr><td>Inlay hints</td><td>✅ Full</td><td>Domain P/E labels</td></tr><tr><td>Workspace symbols</td><td>✅ Full</td><td>Search all contracts</td></tr><tr><td>Document outline</td><td>✅ Full</td><td>Fields, actions, events tree</td></tr><tr><td>Folding ranges</td><td>✅ Full</td><td>Block folding</td></tr><tr><td>Call hierarchy</td><td>🔲 Planned</td><td>V0.8</td></tr><tr><td>Type hierarchy</td><td>🔲 Planned</td><td>V0.8</td></tr></tbody></table>
+<h2 id="installation">Installation</h2>
+<h3 id="vs-code-primary-support">VS Code (Primary Support)</h3>
+<p>Install from the VS Code Marketplace:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Via CLI</span></span>
+<span class="line"><span style="color:#6F42C1">code</span><span style="color:#005CC5"> --install-extension</span><span style="color:#032F62"> valisthea.covenant-lang</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Or search "Covenant" in the VS Code Extensions panel</span></span></code></pre>
+<p>The extension bundles <code>covenant-lsp</code> and starts it automatically when you open a <code>.cvt</code> file. No PATH configuration needed.</p>
+<p><strong>Minimum requirements</strong>: VS Code 1.85+, Node.js 18+ (for the extension host).</p>
+<h3 id="neovim">Neovim</h3>
+<p>Install with your plugin manager, then configure with nvim-lspconfig:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="lua"><code><span class="line"><span style="color:#6A737D">-- lazy.nvim</span></span>
+<span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#032F62">  "neovim/nvim-lspconfig"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#6F42C1">  config</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> function</span><span style="color:#24292E">()</span></span>
+<span class="line"><span style="color:#005CC5">    require</span><span style="color:#24292E">(</span><span style="color:#032F62">"lspconfig"</span><span style="color:#24292E">).</span><span style="color:#6F42C1">covenant_lsp</span><span style="color:#24292E">.</span><span style="color:#005CC5">setup</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">      cmd </span><span style="color:#D73A49">=</span><span style="color:#24292E"> { </span><span style="color:#032F62">"covenant"</span><span style="color:#24292E">, </span><span style="color:#032F62">"lsp" </span><span style="color:#24292E">},</span></span>
+<span class="line"><span style="color:#24292E">      filetypes </span><span style="color:#D73A49">=</span><span style="color:#24292E"> { </span><span style="color:#032F62">"covenant" </span><span style="color:#24292E">},</span></span>
+<span class="line"><span style="color:#24292E">      root_dir </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> require</span><span style="color:#24292E">(</span><span style="color:#032F62">"lspconfig.util"</span><span style="color:#24292E">).</span><span style="color:#005CC5">root_pattern</span><span style="color:#24292E">(</span><span style="color:#032F62">"covenant.toml"</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#24292E">    })</span></span>
+<span class="line"><span style="color:#D73A49">  end</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<p>Treesitter grammar for Covenant (syntax highlighting):</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">:TSInstall</span><span style="color:#032F62"> covenant</span></span></code></pre>
+<h3 id="intellij--jetbrains-ides">IntelliJ / JetBrains IDEs</h3>
+<p>Install the “Covenant Language” plugin from JetBrains Marketplace. The plugin connects to <code>covenant lsp</code> via the LSP4IJ bridge. Requires IntelliJ 2024.1+ or any 2024+ JetBrains IDE.</p>
+<p><strong>Note</strong>: IntelliJ support is community-maintained. Feature parity with VS Code is ~80%. Code actions and quick-fixes have limited support.</p>
+<h2 id="lint-detectors">Lint Detectors</h2>
+<p>The LSP runs 38 lint detectors across four categories. These appear as squiggles in the editor and in the Problems panel. See <a href="/docs/reference/compiler/04-diagnostics">Diagnostics Catalog</a> for the full list.</p>
+<h3 id="security-lints-l-sec-001-to-l-sec-010">Security lints (L-SEC-001 to L-SEC-010)</h3>
+<p>The most important category. <code>L-SEC-003</code> (reentrancy risk) detects the Checks-Effects-Interactions pattern violation — the pattern behind most DeFi exploits:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// L-SEC-003: external call before state update</span></span>
+<span class="line"><span>action withdraw(amount: amount) only owner {</span></span>
+<span class="line"><span>    transfer(caller, amount)      // &#x3C;- external call FIRST</span></span>
+<span class="line"><span>    balances[caller] -= amount    // &#x3C;- state update SECOND (reentrancy!)</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Correct: CEI pattern</span></span>
+<span class="line"><span>action withdraw(amount: amount) only owner {</span></span>
+<span class="line"><span>    balances[caller] -= amount    // 1. Effects</span></span>
+<span class="line"><span>    transfer(caller, amount)      // 2. Interaction</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h3 id="privacy-lints-l-pvt-001-to-l-pvt-005">Privacy lints (L-PVT-001 to L-PVT-005)</h3>
+<p><code>L-PVT-001</code> fires when an event emits an encrypted value without the <code>@confidential</code> flag. This is a common mistake: the event value is encrypted in storage but the event itself would leak the ciphertext to public indexers.</p>
+<h3 id="gas-lints-l-gas-001-to-l-gas-005">Gas lints (L-GAS-001 to L-GAS-005)</h3>
+<p><code>L-GAS-001</code> detects <code>map&#x3C;address, bool></code> used as a whitelist — the standard pattern wastes gas. The suggestion: use <code>set&#x3C;address></code> which stores membership via trie, not individual storage slots.</p>
+<h3 id="correctness-lints-l-cor-001-to-l-cor-008">Correctness lints (L-COR-001 to L-COR-008)</h3>
+<p><code>L-COR-007</code> warns when a guard uses <code>block.timestamp</code>. Miners can manipulate <code>block.timestamp</code> by up to ~15 seconds, which is enough to break deadline-based mechanics in high-frequency trading or MEV-sensitive contracts.</p>
+<h2 id="hover">Hover</h2>
+<p>Hovering over any identifier shows:</p>
+<ul>
+<li><strong>Fields</strong>: type, domain (P/E/A), storage slot, default value</li>
+<li><strong>Actions</strong>: signature, guards, gas estimate</li>
+<li><strong>Events</strong>: fields, indexed status</li>
+<li><strong>Errors</strong>: parameters, common cause</li>
+<li><strong>FHE opcodes</strong>: gas cost, domain requirements, precompile address</li>
+<li><strong>Built-ins</strong>: description, type</li>
+</ul>
+<p>Example hover for <code>fhe_add</code>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>fhe_add(a: encrypted&#x3C;T>, b: encrypted&#x3C;T>) -> encrypted&#x3C;T></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Homomorphic addition. Domain: E -> E.</span></span>
+<span class="line"><span>Precompile: 0x10. Gas: 8,000 (L1) / 400 pGas (Aster).</span></span>
+<span class="line"><span>ERC-8227 §3.2.</span></span></code></pre>
+<h2 id="autocomplete">Autocomplete</h2>
+<p>Context-aware completion:</p>
+<ul>
+<li>After <code>only </code> → suggests field names of type <code>address</code></li>
+<li>After <code>fhe_</code> → shows all FHE opcodes with signatures</li>
+<li>After <code>event </code> → shows declared events</li>
+<li>After <code>revert_with </code> → shows declared errors</li>
+<li>After <code>emit </code> → shows declared events</li>
+<li>Inside <code>amnesia { }</code> → shows <code>destroy()</code>, <code>on_destroy</code></li>
+<li>After <code>@</code> → shows available annotations (<code>pq_signed</code>, <code>prove_offchain</code>, <code>amnesia_eligible</code>)</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p>The LSP reads <code>covenant.toml</code> in the workspace root:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="toml"><code><span class="line"><span style="color:#24292E">[</span><span style="color:#6F42C1">lsp</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#6A737D"># Lint severity overrides (error/warning/hint/off)</span></span>
+<span class="line"><span style="color:#24292E">L-GAS-003 = </span><span style="color:#032F62">"off"</span><span style="color:#6A737D">          # disable string error lint</span></span>
+<span class="line"><span style="color:#24292E">L-SEC-005 = </span><span style="color:#032F62">"warning"</span><span style="color:#6A737D">       # downgrade PQ recommendation</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Inline hints</span></span>
+<span class="line"><span style="color:#24292E">inlay_hints = </span><span style="color:#005CC5">true</span></span>
+<span class="line"><span style="color:#24292E">domain_labels = </span><span style="color:#005CC5">true</span><span style="color:#6A737D">        # show P/E/A labels on expressions</span></span>
+<span class="line"><span style="color:#24292E">gas_estimates = </span><span style="color:#005CC5">true</span><span style="color:#6A737D">        # show gas cost hints on FHE ops</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Formatting</span></span>
+<span class="line"><span style="color:#24292E">indent = </span><span style="color:#032F62">"4spaces"</span><span style="color:#6A737D">          # or "2spaces", "tabs"</span></span>
+<span class="line"><span style="color:#24292E">trailing_newline = </span><span style="color:#005CC5">true</span></span>
+<span class="line"><span style="color:#24292E">max_line_length = </span><span style="color:#005CC5">100</span></span></code></pre>
+<h2 id="performance">Performance</h2>
+<p>The LSP is designed for large workspaces:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>Target</th></tr></thead><tbody><tr><td>First-open diagnostic latency</td><td>&#x3C; 500ms</td></tr><tr><td>On-type diagnostic latency</td><td>&#x3C; 100ms</td></tr><tr><td>Completion latency</td><td>&#x3C; 50ms</td></tr><tr><td>Go-to-definition</td><td>&#x3C; 20ms</td></tr><tr><td>Workspace indexing (100 files)</td><td>&#x3C; 5s</td></tr></tbody></table>
+<p>The LSP maintains an in-memory cache of all parsed contracts. Incremental re-parsing only re-analyzes the changed file and its dependents.</p>
+<h2 id="known-issues">Known Issues</h2>
+<ul>
+<li><strong>V0.7</strong>: Rename symbol does not work across external contract references (only within the same file/import tree). Fixed in V0.8.</li>
+<li><strong>V0.7</strong>: IntelliJ integration does not show inline domain labels. Workaround: use hover.</li>
+<li><strong>V0.7</strong>: Workspace symbols does not index contracts inside <code>node_modules</code>. By design; add <code>covenant.toml</code> to project root.</li>
+</ul>
+<h2 id="reporting-bugs">Reporting Bugs</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> lsp-report</span></span></code></pre>
+<p>This command generates a diagnostic bundle (LSP logs + contract snapshot) for filing issues at <a href="https://github.com/Valisthea/covenant-lang/issues">github.com/Valisthea/covenant-lang/issues</a>.</p>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/docs/reference/compiler/04-diagnostics">Diagnostics Catalog</a> — full L-code list</li>
+<li><a href="/docs/reference/compiler/01-pipeline">Compiler Pipeline</a> — how the LSP reuses compiler phases</li>
+<li><a href="/docs/getting-started/03-cli-reference">Getting Started: CLI Reference</a> — <code>covenant lsp</code> command</li>
+</ul>   </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

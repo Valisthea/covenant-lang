@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>UUPS Upgradeable - Covenant Docs</title><meta name="description" content="A contract that can be upgraded while keeping a single stable address, using the UUPS proxy pattern with automatic re-init protection."><meta property="og:title" content="UUPS Upgradeable - Covenant Docs"><meta property="og:description" content="A contract that can be upgraded while keeping a single stable address, using the UUPS proxy pattern with automatic re-init protection."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/cookbook/upgrades/01-uups-pattern"><link rel="stylesheet" href="/docs/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link active">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/docs/cookbook/01-overview">Cookbook</a> <span aria-hidden="true">/</span> <span>Upgrades</span> <span aria-hidden="true">/</span> <span>UUPS Upgradeable</span> </nav>  <!-- Last sync: 2026-04-23 -->
+<h1 id="uups-upgradeable">UUPS Upgradeable</h1>
+<h2 id="problem">Problem</h2>
+<p>I need my contract to be upgradeable (fix bugs, add features) while keeping the same address. I also need protection against the re-initialization vulnerability.</p>
+<h2 id="solution">Solution</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>upgradeable contract UpgradeableVault {</span></span>
+<span class="line"><span>    version 1 {</span></span>
+<span class="line"><span>        field owner: address = deployer</span></span>
+<span class="line"><span>        field balance: amount = 0 tokens</span></span>
+<span class="line"><span>        field initialized: bool = false</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        event Initialized(version: uint)</span></span>
+<span class="line"><span>        event Upgraded(new_impl: address indexed)</span></span>
+<span class="line"><span>        event Deposited(from: address indexed, amount: amount)</span></span>
+<span class="line"><span>        event Withdrawn(to: address indexed, amount: amount)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        error AlreadyInitialized()</span></span>
+<span class="line"><span>        error NotOwner()</span></span>
+<span class="line"><span>        error InsufficientBalance()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        action initialize(new_owner: address) {</span></span>
+<span class="line"><span>            given !initialized or revert_with AlreadyInitialized()</span></span>
+<span class="line"><span>            initialized = true</span></span>
+<span class="line"><span>            owner = new_owner</span></span>
+<span class="line"><span>            emit Initialized(1)</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        action deposit(amount: amount) {</span></span>
+<span class="line"><span>            balance = balance + amount</span></span>
+<span class="line"><span>            emit Deposited(caller, amount)</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        action withdraw(to: address, amount: amount) only owner {</span></span>
+<span class="line"><span>            given amount &#x3C;= balance or revert_with InsufficientBalance()</span></span>
+<span class="line"><span>            balance = balance - amount</span></span>
+<span class="line"><span>            transfer(to, amount)</span></span>
+<span class="line"><span>            emit Withdrawn(to, amount)</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        action upgrade_to(new_impl: address) only owner {</span></span>
+<span class="line"><span>            emit Upgraded(new_impl)</span></span>
+<span class="line"><span>            proxy_upgrade(new_impl)</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The <code>upgradeable contract</code> keyword generates:</p>
+<ol>
+<li>A proxy contract deployed to the stable address (stores state)</li>
+<li>An implementation contract (stores logic)</li>
+<li>A <code>__initialized</code> guard that prevents re-initialization after upgrade (OMEGA V4 finding resolved automatically)</li>
+</ol>
+<p>The <code>version 1 { }</code> block marks this as the first implementation. When V2 is written:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>upgradeable contract UpgradeableVault {</span></span>
+<span class="line"><span>    version 2 {</span></span>
+<span class="line"><span>        // inherits all V1 fields</span></span>
+<span class="line"><span>        field fee_bps: uint = 30   // new field</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        // V2 overrides withdraw with fee</span></span>
+<span class="line"><span>        action withdraw(to: address, amount: amount) only owner {</span></span>
+<span class="line"><span>            let fee = amount * fee_bps / 10000</span></span>
+<span class="line"><span>            let net = amount - fee</span></span>
+<span class="line"><span>            balance = balance - amount</span></span>
+<span class="line"><span>            transfer(to, net)</span></span>
+<span class="line"><span>            transfer(fee_collector, fee)</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        // V2 initializer runs once after upgrade</span></span>
+<span class="line"><span>        action initialize_v2(fee_collector: address) {</span></span>
+<span class="line"><span>            // compiler generates: given !__v2_initialized</span></span>
+<span class="line"><span>            fee_collector_addr = fee_collector</span></span>
+<span class="line"><span>        }</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h2 id="omega-v4-context">OMEGA V4 Context</h2>
+<p>The OMEGA V4 audit (Critical finding <strong>KSR-CVN-002</strong>) identified that upgradeable contracts without automatic re-init guards could be re-initialized after upgrade, transferring ownership. The Covenant compiler’s <code>upgradeable contract</code> construct generates a <code>__initialized_vN</code> flag for each version, preventing re-initialization automatically.</p>
+<h2 id="gas-estimate">Gas Estimate</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operation</th><th>Gas</th></tr></thead><tbody><tr><td>Proxy deployment</td><td>~200,000</td></tr><tr><td><code>initialize</code></td><td>~55,000</td></tr><tr><td><code>deposit</code></td><td>~30,000</td></tr><tr><td><code>withdraw</code></td><td>~45,000</td></tr><tr><td><code>upgrade_to</code></td><td>~35,000 (+ new impl deploy)</td></tr></tbody></table>
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+<ol>
+<li><strong>Manual re-init guard</strong>: Don’t add your own <code>initialized</code> check — the compiler generates one. Two checks create a logic conflict.</li>
+<li><strong>Storage collisions</strong>: New fields in V2 must be appended, never inserted. The compiler enforces this.</li>
+<li><strong>Upgrade without time-lock</strong>: Combine with <a href="/docs/cookbook/auth/02-time-locked-admin">Time-Locked Admin</a> for production protocols.</li>
+<li><strong>Upgrading implementation without proxy</strong>: <code>upgrade_to</code> updates the proxy’s implementation pointer. Never redeploy the proxy.</li>
+</ol>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/docs/cookbook/upgrades/02-beacon-pattern">Beacon Proxy Pattern</a></li>
+<li><a href="/docs/examples/12-uups-upgradeable">Example 12 — UUPS Upgradeable</a></li>
+<li><a href="/docs/security/critical-findings">Security: OMEGA V4 Findings</a></li>
+</ul>   </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

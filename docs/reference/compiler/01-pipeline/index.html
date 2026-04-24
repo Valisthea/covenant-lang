@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Compiler Pipeline - Covenant Docs</title><meta name="description" content="The ten phases of the Covenant compiler: from source text to verified bytecode."><meta property="og:title" content="Compiler Pipeline - Covenant Docs"><meta property="og:description" content="The ten phases of the Covenant compiler: from source text to verified bytecode."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/reference/compiler/01-pipeline"><link rel="stylesheet" href="/docs/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link active">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/docs/reference/ercs/01-overview">Reference</a> <span aria-hidden="true">/</span> <a href="/docs/reference/compiler/01-pipeline">Compiler</a> <span aria-hidden="true">/</span> <span>Compiler Pipeline</span> </nav>  <!-- Source: doc5-compiler-architecture.md chapters 1-19 -->
+<!-- Last sync: 2026-04-23 -->
+<h1 id="compiler-pipeline">Compiler Pipeline</h1>
+<p>The Covenant compiler (<code>covc</code>) transforms source files through ten sequential phases. Each phase has a well-defined input, output, and error class.</p>
+<h2 id="the-ten-phases">The Ten Phases</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>Phase</th><th>Input</th><th>Output</th><th>Error range</th></tr></thead><tbody><tr><td>1</td><td>Lexer</td><td>UTF-8 source</td><td>Token stream</td><td>E100–E199</td></tr><tr><td>2</td><td>Parser</td><td>Tokens</td><td>AST</td><td>E200–E299</td></tr><tr><td>3</td><td>Resolver</td><td>Unresolved AST</td><td>Bound AST</td><td>E300–E399</td></tr><tr><td>4</td><td>Typechecker</td><td>Bound AST</td><td>Typed AST</td><td>E400–E499</td></tr><tr><td>5</td><td>Privacy Flow</td><td>Typed AST</td><td>Domain-annotated AST</td><td>E500–E599</td></tr><tr><td>6</td><td>IR Builder</td><td>Annotated AST</td><td>SSA IR</td><td>E600–E699</td></tr><tr><td>7</td><td>Optimizer</td><td>SSA IR</td><td>Optimized IR</td><td>W700–W799</td></tr><tr><td>8</td><td>Backend</td><td>Optimized IR</td><td>Backend IR</td><td>E800–E899</td></tr><tr><td>9</td><td>Codegen</td><td>Backend IR</td><td>Bytecode + ABI</td><td>E800–E899</td></tr><tr><td>10</td><td>Metadata</td><td>Bytecode + ABI</td><td>.artifact.json</td><td>—</td></tr></tbody></table>
+<h2 id="phase-1--lexer">Phase 1 — Lexer</h2>
+<p><strong>Input</strong>: Raw UTF-8 source text<br>
+<strong>Output</strong>: Token stream<br>
+<strong>Error codes</strong>: E100–E199</p>
+<p>The lexer handles keywords, numeric literals (decimal, hex <code>0x…</code>, underscore separators), string literals, comments (<code>//</code> and <code>/* */</code>), and FHE type tokens (<code>encrypted&#x3C;</code>, <code>sealed</code>).</p>
+<p>Common errors:</p>
+<ul>
+<li><code>E101 UnexpectedCharacter</code> — invalid byte in source</li>
+<li><code>E102 UnterminatedString</code> — missing closing <code>"</code></li>
+<li><code>E103 InvalidEscape</code> — unknown escape sequence</li>
+<li><code>E104 OverflowLiteral</code> — integer literal exceeds any Covenant type</li>
+</ul>
+<h2 id="phase-2--parser">Phase 2 — Parser</h2>
+<p><strong>Input</strong>: Token stream<br>
+<strong>Output</strong>: AST (after desugaring)<br>
+<strong>Error codes</strong>: E200–E299</p>
+<p>A hand-written recursive-descent PEG parser. Desugaring rules:</p>
+<ul>
+<li><code>token Foo { }</code> → <code>contract Foo extends __ERC20Token { }</code></li>
+<li><code>encrypted token Foo { }</code> → <code>contract Foo extends __ERC8227Token { }</code></li>
+<li><code>only owner</code> → <code>given caller == owner or revert_with Unauthorized()</code></li>
+<li><code>when condition</code> → <code>given condition or revert_with PreconditionFailed()</code></li>
+</ul>
+<p>Common errors:</p>
+<ul>
+<li><code>E201 UnexpectedToken</code></li>
+<li><code>E202 MissingClosingBrace</code></li>
+<li><code>E203 InvalidFieldType</code></li>
+</ul>
+<h2 id="phase-3--resolver">Phase 3 — Resolver</h2>
+<p><strong>Input</strong>: AST with unresolved names<br>
+<strong>Output</strong>: AST with all names bound<br>
+<strong>Error codes</strong>: E300–E399</p>
+<p>Builds a scope tree, resolves imports (<code>use covenant::stdlib::*</code>), detects circular dependencies, and binds built-ins (<code>caller</code>, <code>block.timestamp</code>, <code>deployer</code>).</p>
+<p>Common errors:</p>
+<ul>
+<li><code>E301 UndefinedName</code></li>
+<li><code>E302 AmbiguousName</code></li>
+<li><code>E303 CircularDependency</code></li>
+<li><code>E310 PrivateFieldAccess</code></li>
+</ul>
+<h2 id="phase-4--typechecker">Phase 4 — Typechecker</h2>
+<p><strong>Input</strong>: Resolved AST<br>
+<strong>Output</strong>: Typed AST<br>
+<strong>Error codes</strong>: E400–E499</p>
+<p>Hindley-Milner extended for Covenant domain types: <code>amount</code> (non-negative, unit-tracked), <code>encrypted&#x3C;T></code> (FHE ciphertext), <code>pq_key</code> (2,592-byte opaque blob), <code>address</code>.</p>
+<p>Key type rules:</p>
+<ul>
+<li><code>encrypted&#x3C;T></code> cannot flow to plaintext without explicit <code>reveal</code></li>
+<li><code>pq_key</code> is immutable once assigned</li>
+<li>Constant <code>amount</code> arithmetic is overflow-checked at compile time</li>
+</ul>
+<p>Common errors:</p>
+<ul>
+<li><code>E401 TypeMismatch</code></li>
+<li><code>E402 EncryptedToPlaintext</code> — implicit ciphertext coercion</li>
+<li><code>E410 AmountOverflow</code></li>
+<li><code>E420 UnitMismatch</code></li>
+</ul>
+<h2 id="phase-5--privacy-flow-analyzer">Phase 5 — Privacy Flow Analyzer</h2>
+<p><strong>Input</strong>: Typed AST<br>
+<strong>Output</strong>: Domain-annotated AST<br>
+<strong>Error codes</strong>: E500–E599</p>
+<p>Enforces the two-domain model:</p>
+<ul>
+<li><strong>P domain</strong> — public, visible on-chain</li>
+<li><strong>E domain</strong> — encrypted FHE ciphertext</li>
+<li><strong>A domain</strong> — amnesia-eligible (inside <code>amnesia { }</code> blocks)</li>
+</ul>
+<p>E-domain values cannot flow to P-domain outputs without an authorized <code>reveal</code>. Amnesia-eligible fields cannot be read after the ceremony reaches DESTROYED.</p>
+<p>Common errors:</p>
+<ul>
+<li><code>E501 DomainViolation</code></li>
+<li><code>E502 RevealWithoutAuth</code></li>
+<li><code>E503 AmnesiaEscapeAttempt</code></li>
+<li><code>E510 CrossContractDomainLeak</code></li>
+</ul>
+<h2 id="phase-6--ir-builder">Phase 6 — IR Builder</h2>
+<p><strong>Input</strong>: Annotated typed AST<br>
+<strong>Output</strong>: SSA IR<br>
+<strong>Error codes</strong>: E600–E699</p>
+<p>Lowers AST to Static Single Assignment form. Each variable assigned exactly once; control flow uses phi nodes. See <a href="/docs/reference/compiler/02-ir">Intermediate Representation</a>.</p>
+<h2 id="phase-7--optimizer">Phase 7 — Optimizer</h2>
+<p><strong>Input</strong>: SSA IR<br>
+<strong>Output</strong>: Optimized SSA IR<br>
+<strong>Warning codes</strong>: W700–W799</p>
+<p>22 passes (not errors, cannot break compilation):</p>
+<ol>
+<li>Constant folding</li>
+<li>Dead code elimination</li>
+<li>Common subexpression elimination</li>
+<li>Guard inlining</li>
+<li>Bounded loop unrolling</li>
+<li>FHE operation batching</li>
+<li>Storage slot packing</li>
+<li>Event deduplication</li>
+<li>Revert string deduplication</li>
+<li>Gas cost canonicalization
+11–22. Backend-specific peephole passes</li>
+</ol>
+<p>Key warnings:</p>
+<ul>
+<li><code>W701 UnreachableCode</code></li>
+<li><code>W702 ConstantField</code></li>
+<li><code>W710 FHEDepthExceeded</code> — multiplication depth will require bootstrapping</li>
+</ul>
+<h2 id="phase-8--backend-selection">Phase 8 — Backend Selection</h2>
+<p><strong>Input</strong>: Optimized IR<br>
+<strong>Output</strong>: Backend-lowered IR<br>
+<strong>Error codes</strong>: E800–E899</p>
+<p>Available backends: <code>evm</code> (default), <code>aster</code>, <code>wasm</code> (experimental V0.8+). See <a href="/docs/reference/compiler/03-targets">Compiler Targets</a>.</p>
+<h2 id="phase-9--codegen">Phase 9 — Codegen</h2>
+<p>Produces raw EVM bytecode. Handles the selector dispatcher, constructor, PUSH/JUMPDEST layout. Aster backend emits Aster VM opcodes instead.</p>
+<h2 id="phase-10--metadata-emission">Phase 10 — Metadata Emission</h2>
+<p>Emits <code>.artifact.json</code>:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "compiler"</span><span style="color:#24292E">: </span><span style="color:#032F62">"covc 0.7.4"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "contract"</span><span style="color:#24292E">: </span><span style="color:#032F62">"MyContract"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "abi"</span><span style="color:#24292E">: [],</span></span>
+<span class="line"><span style="color:#005CC5">  "bytecode"</span><span style="color:#24292E">: </span><span style="color:#032F62">"0x608060..."</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "metadata"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">    "erc_compliance"</span><span style="color:#24292E">: [</span><span style="color:#032F62">"8227"</span><span style="color:#24292E">],</span></span>
+<span class="line"><span style="color:#005CC5">    "compliance_profile"</span><span style="color:#24292E">: </span><span style="color:#032F62">"CL2"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "optimizer"</span><span style="color:#24292E">: {</span><span style="color:#005CC5">"passes"</span><span style="color:#24292E">: </span><span style="color:#005CC5">22</span><span style="color:#24292E">},</span></span>
+<span class="line"><span style="color:#005CC5">    "audit"</span><span style="color:#24292E">: {</span><span style="color:#005CC5">"report"</span><span style="color:#24292E">: </span><span style="color:#032F62">"OMEGA V4"</span><span style="color:#24292E">, </span><span style="color:#005CC5">"findings"</span><span style="color:#24292E">: </span><span style="color:#005CC5">41</span><span style="color:#24292E">, </span><span style="color:#005CC5">"resolved"</span><span style="color:#24292E">: </span><span style="color:#005CC5">41</span><span style="color:#24292E">}</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<h2 id="running-individual-phases">Running Individual Phases</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> inspect</span><span style="color:#032F62"> ast</span><span style="color:#032F62"> ./src/Contract.cvt</span><span style="color:#6A737D">   # stop after parsing</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> check</span><span style="color:#032F62"> ./src/Contract.cvt</span><span style="color:#6A737D">          # stop after typechecking</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> inspect</span><span style="color:#032F62"> ir</span><span style="color:#032F62"> ./src/Contract.cvt</span><span style="color:#6A737D">    # emit optimized IR</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> build</span><span style="color:#032F62"> ./src/Contract.cvt</span><span style="color:#6A737D">          # full build</span></span></code></pre>
+<h2 id="performance-targets">Performance Targets</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase</th><th>Target (1000-line contract)</th></tr></thead><tbody><tr><td>Lexer + Parser</td><td>&#x3C; 50ms</td></tr><tr><td>Resolver</td><td>&#x3C; 30ms</td></tr><tr><td>Typechecker</td><td>&#x3C; 100ms</td></tr><tr><td>Privacy flow</td><td>&#x3C; 80ms</td></tr><tr><td>IR + Optimizer</td><td>&#x3C; 250ms</td></tr><tr><td>Codegen + Metadata</td><td>&#x3C; 140ms</td></tr><tr><td><strong>Total</strong></td><td><strong>&#x3C; 650ms</strong></td></tr></tbody></table>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/docs/reference/compiler/02-ir">Intermediate Representation</a></li>
+<li><a href="/docs/reference/compiler/03-targets">Compiler Targets</a></li>
+<li><a href="/docs/reference/compiler/04-diagnostics">Diagnostics Catalog</a></li>
+<li><a href="/docs/reference/lsp/01-lsp-overview">LSP Reference</a></li>
+</ul>  <nav class="doc-nav" aria-label="Page navigation"> <span></span> <a href="/docs/reference/compiler/02-ir" class="doc-nav-link next"><span>Next</span>Intermediate Representation</a> </nav> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

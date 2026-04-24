@@ -1,0 +1,393 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Intermediate Representation - Covenant Docs</title><meta name="description" content="The SSA-based IR used by the Covenant compiler: opcodes, types, and Covenant-specific extensions for FHE, ZK, PQ, and amnesia."><meta property="og:title" content="Intermediate Representation - Covenant Docs"><meta property="og:description" content="The SSA-based IR used by the Covenant compiler: opcodes, types, and Covenant-specific extensions for FHE, ZK, PQ, and amnesia."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/reference/compiler/02-ir"><link rel="stylesheet" href="/docs/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link active">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/docs/reference/ercs/01-overview">Reference</a> <span aria-hidden="true">/</span> <a href="/docs/reference/compiler/01-pipeline">Compiler</a> <span aria-hidden="true">/</span> <span>Intermediate Representation</span> </nav>  <!-- Source: doc5-compiler-architecture.md §4-§15 -->
+<!-- Last sync: 2026-04-23 -->
+<h1 id="intermediate-representation">Intermediate Representation</h1>
+<p>The Covenant compiler uses a Static Single Assignment (SSA) IR between the typechecker and the backend. The IR is the stable interface for compiler plugins, alternative backends, and tooling.</p>
+<h2 id="why-ssa">Why SSA?</h2>
+<p>In SSA form, every variable is assigned exactly once. This simplifies optimizations: dead code elimination becomes “remove definitions with no uses”; common subexpression elimination becomes “find identical definitions and merge them”.</p>
+<p>Covenant’s IR extends SSA with:</p>
+<ul>
+<li><strong>Privacy domain tags</strong> (<code>P</code>, <code>E</code>, <code>A</code>) on every value</li>
+<li><strong>Covenant-specific opcodes</strong> for FHE, ZK, PQ, and amnesia operations</li>
+<li><strong>Effect annotations</strong> (reads/writes storage slots, emits events, calls external)</li>
+</ul>
+<h2 id="ir-grammar">IR Grammar</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Program    := Function*</span></span>
+<span class="line"><span>Function   := "fn" Name "(" Param* ")" "->" Type "{" Block "}"</span></span>
+<span class="line"><span>Block      := Instr* Terminator</span></span>
+<span class="line"><span>Instr      := "%" Var "=" Opcode Arg* (":" Type)? ("@" Domain)?</span></span>
+<span class="line"><span>Terminator := "ret" Arg | "br" Label | "br_if" Arg Label Label | "revert" Arg?</span></span>
+<span class="line"><span>Arg        := "%" Var | Const</span></span>
+<span class="line"><span>Const      := IntLit | "true" | "false" | "null" | "0x" HexLit</span></span>
+<span class="line"><span>Domain     := "P" | "E" | "A"</span></span></code></pre>
+<h2 id="standard-opcodes">Standard Opcodes</h2>
+<h3 id="arithmetic-and-logic">Arithmetic and Logic</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Opcode</th><th>Description</th></tr></thead><tbody><tr><td><code>Add</code></td><td>Integer addition</td></tr><tr><td><code>Sub</code></td><td>Integer subtraction</td></tr><tr><td><code>Mul</code></td><td>Integer multiplication</td></tr><tr><td><code>Div</code></td><td>Integer division (reverts on zero)</td></tr><tr><td><code>Mod</code></td><td>Modulo</td></tr><tr><td><code>And</code></td><td>Bitwise AND</td></tr><tr><td><code>Or</code></td><td>Bitwise OR</td></tr><tr><td><code>Xor</code></td><td>Bitwise XOR</td></tr><tr><td><code>Shl</code></td><td>Shift left</td></tr><tr><td><code>Shr</code></td><td>Shift right</td></tr><tr><td><code>Not</code></td><td>Bitwise NOT</td></tr><tr><td><code>Eq</code></td><td>Equality comparison</td></tr><tr><td><code>Lt</code>, <code>Gt</code>, <code>Le</code>, <code>Ge</code></td><td>Ordered comparisons</td></tr></tbody></table>
+<h3 id="memory-and-storage">Memory and Storage</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Opcode</th><th>Description</th></tr></thead><tbody><tr><td><code>Load</code></td><td>Read a storage slot</td></tr><tr><td><code>Store</code></td><td>Write a storage slot</td></tr><tr><td><code>MapLoad</code></td><td>Read a mapping entry</td></tr><tr><td><code>MapStore</code></td><td>Write a mapping entry</td></tr><tr><td><code>Alloc</code></td><td>Allocate memory (transient)</td></tr><tr><td><code>MemLoad</code></td><td>Read from memory</td></tr><tr><td><code>MemStore</code></td><td>Write to memory</td></tr></tbody></table>
+<h3 id="control-flow">Control Flow</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Opcode</th><th>Description</th></tr></thead><tbody><tr><td><code>Phi</code></td><td>SSA phi node (merge values at join point)</td></tr><tr><td><code>Select</code></td><td>Conditional select (ternary)</td></tr><tr><td><code>Call</code></td><td>Internal function call</td></tr><tr><td><code>ExternalCall</code></td><td>Call to another contract</td></tr><tr><td><code>StaticCall</code></td><td>Read-only external call</td></tr><tr><td><code>Revert</code></td><td>Revert with error data</td></tr><tr><td><code>Return</code></td><td>Return from function</td></tr></tbody></table>
+<h3 id="events-and-errors">Events and Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Opcode</th><th>Description</th></tr></thead><tbody><tr><td><code>Emit</code></td><td>Emit an event</td></tr><tr><td><code>RevertWith</code></td><td>Revert with typed error</td></tr><tr><td><code>Require</code></td><td>Assert or revert</td></tr></tbody></table>
+<h2 id="covenant-specific-opcodes">Covenant-Specific Opcodes</h2>
+<h3 id="fhe-opcodes-erc-8227">FHE Opcodes (ERC-8227)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Opcode</th><th>Signature</th><th>Description</th></tr></thead><tbody><tr><td><code>FheEncrypt</code></td><td><code>(uint256, bytes32) -> bytes128</code></td><td>Encrypt plaintext with public key</td></tr><tr><td><code>FheDecrypt</code></td><td><code>(bytes128, address[]) -> uint256</code></td><td>Threshold decrypt</td></tr><tr><td><code>FheAdd</code></td><td><code>(bytes128, bytes128) -> bytes128</code></td><td>Homomorphic addition</td></tr><tr><td><code>FheSub</code></td><td><code>(bytes128, bytes128) -> bytes128</code></td><td>Homomorphic subtraction</td></tr><tr><td><code>FheMul</code></td><td><code>(bytes128, bytes128) -> bytes128</code></td><td>Homomorphic multiplication</td></tr><tr><td><code>FheCmp</code></td><td><code>(bytes128, bytes128) -> bytes128</code></td><td>Encrypted comparison</td></tr><tr><td><code>FheReencrypt</code></td><td><code>(bytes128, bytes32, bytes32) -> bytes128</code></td><td>Re-encrypt to different key</td></tr><tr><td><code>FheVerifyCt</code></td><td><code>(bytes128, bytes32) -> bool</code></td><td>Verify ciphertext is well-formed</td></tr></tbody></table>
+<p>All FHE opcodes are tagged <code>@E</code> in the IR. A <code>FheDecrypt</code> result is tagged <code>@P</code> only after an authorization check is verified by the privacy flow analyzer.</p>
+<h3 id="zk-opcodes-erc-8229">ZK Opcodes (ERC-8229)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Opcode</th><th>Signature</th><th>Description</th></tr></thead><tbody><tr><td><code>ZkVerify</code></td><td><code>(bytes, bytes32[]) -> bool</code></td><td>Verify a ZK proof against public signals</td></tr><tr><td><code>ZkProve</code></td><td><code>(bytes32, bytes[]) -> bytes</code></td><td>Generate a proof (off-chain WASM, returns handle)</td></tr><tr><td><code>NovaFold</code></td><td><code>(bytes32, bytes) -> bytes</code></td><td>Accumulate one Nova IVC step</td></tr><tr><td><code>NovaCompress</code></td><td><code>(bytes) -> bytes</code></td><td>Compress Nova accumulator to Halo2</td></tr><tr><td><code>SelectiveDisclose</code></td><td><code>(bytes128, address) -> bytes</code></td><td>Generate selective disclosure proof</td></tr></tbody></table>
+<h3 id="pq-opcodes-erc-8231">PQ Opcodes (ERC-8231)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Opcode</th><th>Signature</th><th>Description</th></tr></thead><tbody><tr><td><code>PqVerify</code></td><td><code>(bytes2600, bytes, bytes4627) -> bool</code></td><td>Verify Dilithium-5 signature</td></tr><tr><td><code>PqSign</code></td><td><code>(bytes4864, bytes) -> bytes4627</code></td><td>Sign with Dilithium-5 key (off-chain)</td></tr><tr><td><code>KyberEncap</code></td><td><code>(bytes1568) -> (bytes1568, bytes32)</code></td><td>Kyber key encapsulation</td></tr><tr><td><code>KyberDecap</code></td><td><code>(bytes1568, bytes1568) -> bytes32</code></td><td>Kyber decapsulation</td></tr></tbody></table>
+<h3 id="amnesia-opcodes-erc-8228">Amnesia Opcodes (ERC-8228)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Opcode</th><th>Signature</th><th>Description</th></tr></thead><tbody><tr><td><code>AmnesiaDestroy</code></td><td><code>(bytes32[]) -> ()</code></td><td>Zero storage slots and generate erasure proof</td></tr><tr><td><code>AmnesiaPhaseCheck</code></td><td><code>(bytes32) -> uint8</code></td><td>Read current ceremony phase</td></tr><tr><td><code>AmnesiaPhaseTransition</code></td><td><code>(bytes32, uint8) -> ()</code></td><td>Advance ceremony phase (reverts if invalid)</td></tr><tr><td><code>ShamirVerify</code></td><td><code>(bytes32, bytes32, bytes) -> bool</code></td><td>Verify a Shamir share commitment</td></tr><tr><td><code>VdfGenerate</code></td><td><code>(bytes32, uint64) -> bytes</code></td><td>Generate Wesolowski VDF output (off-chain)</td></tr><tr><td><code>VdfVerify</code></td><td><code>(bytes32, uint64, bytes) -> bool</code></td><td>Verify VDF proof</td></tr></tbody></table>
+<h2 id="ir-dump">IR Dump</h2>
+<p>Use <code>covenant inspect ir</code> to dump the IR for any contract:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> inspect</span><span style="color:#032F62"> ir</span><span style="color:#032F62"> ./src/Token.cvt</span></span></code></pre>
+<p>Example output for a simple <code>transfer</code> action:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>fn transfer(%to: address @P, %amount: uint256 @P) -> () {</span></span>
+<span class="line"><span>entry:</span></span>
+<span class="line"><span>  %caller_bal = MapLoad storage[0] %caller @P</span></span>
+<span class="line"><span>  %to_bal     = MapLoad storage[0] %to     @P</span></span>
+<span class="line"><span>  %ok         = Ge %caller_bal %amount @P</span></span>
+<span class="line"><span>  br_if %ok body revert_block</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>body:</span></span>
+<span class="line"><span>  %new_caller = Sub %caller_bal %amount @P</span></span>
+<span class="line"><span>  %new_to     = Add %to_bal     %amount @P</span></span>
+<span class="line"><span>  MapStore storage[0] %caller %new_caller</span></span>
+<span class="line"><span>  MapStore storage[0] %to     %new_to</span></span>
+<span class="line"><span>  Emit Transfer(%caller, %to, %amount)</span></span>
+<span class="line"><span>  ret</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>revert_block:</span></span>
+<span class="line"><span>  RevertWith InsufficientBalance()</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h2 id="optimizer-passes">Optimizer Passes</h2>
+<p>The 22 optimizer passes operate on this IR. The most impactful:</p>
+<p><strong>Constant Folding</strong>: Evaluates constant expressions at compile time.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>; Before:          ; After:</span></span>
+<span class="line"><span>%a = Add 5 3      %a = 8</span></span></code></pre>
+<p><strong>FHE Batching</strong>: Groups consecutive FHE operations into a single precompile batch call, saving 10,000+ gas:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>; Before:</span></span>
+<span class="line"><span>%r1 = FheAdd %a %b</span></span>
+<span class="line"><span>%r2 = FheAdd %r1 %c</span></span>
+<span class="line"><span>%r3 = FheMul %r2 %d</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>; After (batched into one precompile call):</span></span>
+<span class="line"><span>%r3 = FheBatch [FheAdd %a %b, FheAdd _, %c, FheMul _, %d]</span></span></code></pre>
+<p><strong>Storage Slot Packing</strong>: Adjacent fields of type <code>bool</code>, <code>uint8</code>, <code>uint16</code>, <code>uint32</code> are packed into a single 32-byte slot.</p>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/docs/reference/compiler/01-pipeline">Compiler Pipeline</a> — how the IR fits in the build</li>
+<li><a href="/docs/reference/compiler/03-targets">Compiler Targets</a> — how IR is lowered to bytecode</li>
+<li><a href="/docs/reference/compiler/04-diagnostics">Diagnostics Catalog</a> — error codes</li>
+</ul>  <nav class="doc-nav" aria-label="Page navigation"> <a href="/docs/reference/compiler/01-pipeline" class="doc-nav-link prev"><span>Previous</span>Compiler Pipeline</a> <a href="/docs/reference/compiler/03-targets" class="doc-nav-link next"><span>Next</span>Compiler Targets</a> </nav> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>ZK Airdrop - Covenant Docs</title><meta name="description" content="Distribute tokens to whitelisted addresses using a Merkle proof, without revealing the full whitelist on-chain."><meta property="og:title" content="ZK Airdrop - Covenant Docs"><meta property="og:description" content="Distribute tokens to whitelisted addresses using a Merkle proof, without revealing the full whitelist on-chain."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/cookbook/privacy/03-zk-airdrop"><link rel="stylesheet" href="/docs/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link active">ZK Airdrop</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/docs/cookbook/01-overview">Cookbook</a> <span aria-hidden="true">/</span> <span>Privacy</span> <span aria-hidden="true">/</span> <span>ZK Airdrop</span> </nav>  <!-- Last sync: 2026-04-23 -->
+<h1 id="zk-airdrop">ZK Airdrop</h1>
+<h2 id="problem">Problem</h2>
+<p>I need to airdrop tokens to 10,000 whitelisted addresses without publishing the list on-chain (to protect user privacy and prevent frontrunning).</p>
+<h2 id="solution">Solution</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>contract ZKAirdrop {</span></span>
+<span class="line"><span>    field owner: address = deployer</span></span>
+<span class="line"><span>    field merkle_root: bytes32</span></span>
+<span class="line"><span>    field token: address</span></span>
+<span class="line"><span>    field amount_per_claim: amount = 100 tokens</span></span>
+<span class="line"><span>    field deadline: time</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    field claimed: map&#x3C;address, bool></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    event Claimed(claimant: address indexed)</span></span>
+<span class="line"><span>    event RootUpdated(new_root: bytes32)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    error AlreadyClaimed()</span></span>
+<span class="line"><span>    error InvalidProof()</span></span>
+<span class="line"><span>    error AirdropExpired()</span></span>
+<span class="line"><span>    error AirdropNotStarted()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    action initialize(root: bytes32, token_addr: address, expiry: time) only owner {</span></span>
+<span class="line"><span>        merkle_root = root</span></span>
+<span class="line"><span>        token = token_addr</span></span>
+<span class="line"><span>        deadline = expiry</span></span>
+<span class="line"><span>        emit RootUpdated(root)</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    action claim(proof: bytes32[], leaf: bytes32) {</span></span>
+<span class="line"><span>        given block.timestamp &#x3C;= deadline or revert_with AirdropExpired()</span></span>
+<span class="line"><span>        given !claimed[caller] or revert_with AlreadyClaimed()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        // Verify the caller is in the whitelist</span></span>
+<span class="line"><span>        let computed_leaf = hash(caller, amount_per_claim)</span></span>
+<span class="line"><span>        given computed_leaf == leaf or revert_with InvalidProof()</span></span>
+<span class="line"><span>        given zk_verify(proof, [merkle_root, leaf]) or revert_with InvalidProof()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        claimed[caller] = true</span></span>
+<span class="line"><span>        external_transfer(token, caller, amount_per_claim)</span></span>
+<span class="line"><span>        emit Claimed(caller)</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    action update_root(new_root: bytes32) only owner {</span></span>
+<span class="line"><span>        merkle_root = new_root</span></span>
+<span class="line"><span>        emit RootUpdated(new_root)</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h2 id="explanation">Explanation</h2>
+<ul>
+<li><code>merkle_root</code> is a Keccak256 Merkle root of all <code>(address, amount)</code> pairs in the whitelist</li>
+<li><code>zk_verify(proof, [merkle_root, leaf])</code> verifies the Merkle inclusion proof — the proof is generated off-chain using the Covenant SDK</li>
+<li><code>computed_leaf = hash(caller, amount_per_claim)</code> binds the proof to both the caller and the expected amount, preventing someone from claiming a different amount</li>
+<li><code>claimed[caller]</code> prevents double-claims</li>
+</ul>
+<p>The whitelist itself never appears on-chain. Anyone with a proof can claim without revealing who else is on the list.</p>
+<h2 id="generating-proofs-off-chain">Generating Proofs (Off-Chain)</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { CovenantSDK } </span><span style="color:#D73A49">from</span><span style="color:#24292E"> \</span><span style="color:#032F62">'@covenant-lang/sdk</span><span style="color:#005CC5">\'</span><span style="color:#B31D28;font-style:italic">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> sdk</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> CovenantSDK</span><span style="color:#24292E">({ rpc: \</span><span style="color:#032F62">'https://rpc.sepolia.org</span><span style="color:#005CC5">\'</span><span style="color:#032F62"> })</span><span style="color:#B31D28;font-style:italic">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Build tree from whitelist</span></span>
+<span class="line"><span style="color:#24292E">const tree </span><span style="color:#D73A49">=</span><span style="color:#24292E"> sdk.merkle.</span><span style="color:#6F42C1">build</span><span style="color:#24292E">(whitelist.</span><span style="color:#6F42C1">map</span><span style="color:#24292E">(([</span><span style="color:#E36209">addr</span><span style="color:#24292E">, </span><span style="color:#E36209">amt</span><span style="color:#24292E">]) </span><span style="color:#D73A49">=></span><span style="color:#24292E"> </span></span>
+<span class="line"><span style="color:#24292E">  sdk.merkle.</span><span style="color:#6F42C1">leaf</span><span style="color:#24292E">(addr, amt)</span></span>
+<span class="line"><span style="color:#24292E">));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Generate proof for user</span></span>
+<span class="line"><span style="color:#24292E">const proof </span><span style="color:#D73A49">=</span><span style="color:#24292E"> tree.</span><span style="color:#6F42C1">getProof</span><span style="color:#24292E">(sdk.merkle.</span><span style="color:#6F42C1">leaf</span><span style="color:#24292E">(userAddress, amount));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// User calls claim(proof, leaf)</span></span>
+<span class="line"><span style="color:#D73A49">await</span><span style="color:#24292E"> contract.</span><span style="color:#6F42C1">claim</span><span style="color:#24292E">(proof, sdk.merkle.</span><span style="color:#6F42C1">leaf</span><span style="color:#24292E">(userAddress, amount));</span></span></code></pre>
+<h2 id="gas-estimate">Gas Estimate</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operation</th><th>Gas</th></tr></thead><tbody><tr><td><code>initialize</code></td><td>~60,000</td></tr><tr><td><code>claim</code> (10-level tree, 10k addresses)</td><td>~85,000</td></tr><tr><td><code>update_root</code></td><td>~30,000</td></tr></tbody></table>
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+<ol>
+<li><strong>Leaf collision</strong>: If <code>hash(addr, amount)</code> is not collision-resistant, two different inputs could produce the same leaf. Use <code>keccak256(abi.encode(addr, amount))</code>.</li>
+<li><strong>Missing deadline</strong>: Without a deadline, unclaimed tokens are locked forever. Add a <code>reclaim_unclaimed</code> action callable by owner after deadline.</li>
+<li><strong>Amount not bound to leaf</strong>: If the leaf is only <code>hash(addr)</code>, anyone can claim any amount. Always include the amount in the leaf.</li>
+<li><strong>Root updateable without timelock</strong>: Updating the root can change who is eligible. Use a timelock or immutable root after launch.</li>
+<li><strong>Re-entrancy on token transfer</strong>: The <code>claimed[caller] = true</code> before <code>external_transfer</code> follows CEI.</li>
+</ol>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/docs/reference/ercs/04-erc-8229-fhe-verify">ERC-8229 — FHE Verification Standard</a></li>
+<li><a href="/docs/examples/10-zero-knowledge-proofs">Example 10 — Zero-Knowledge Proofs</a></li>
+<li><a href="/docs/cookbook/privacy/01-sealed-bid-auction">Sealed-Bid Auction</a></li>
+</ul>   </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

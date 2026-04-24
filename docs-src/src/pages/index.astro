@@ -12,19 +12,23 @@ cd my-contract
 covenant build</code></pre>
   <h2>Browse</h2>
   <ul>
-    <li><a href="/getting-started/01-install">Getting Started</a> - Install the CLI and write your first contract</li>
-    <li><a href="/examples/01-hello-contract">By Example</a> - 15 annotated chapters from Hello Contract to Sepolia deployment</li>
-    <li><a href="/security/audit-report">Security</a> - OMEGA V4 audit: 41 findings, all resolved</li>
-    <li><a href="/glossary">Glossary</a> - 100+ terms: keywords, types, FHE primitives, ZK, PQ</li>
+    <li><a href="/docs/getting-started/01-install">Getting Started</a> — Install the CLI and write your first contract</li>
+    <li><a href="/docs/examples/01-hello-contract">By Example</a> — 15 annotated chapters from Hello Contract to Sepolia deployment</li>
+    <li><a href="/docs/reference/ercs/01-overview">ERCs (Styx Protocol)</a> — ERC-8227/8228/8229/8231 specifications</li>
+    <li><a href="/docs/reference/compiler/01-pipeline">Compiler</a> — Pipeline, IR, targets, diagnostics</li>
+    <li><a href="/docs/reference/lsp/01-lsp-overview">LSP</a> — IDE capabilities, 38+ lint detectors</li>
+    <li><a href="/docs/cookbook/01-overview">Cookbook</a> — 14 ready-to-deploy recipes: tokens, auth, privacy, upgrades</li>
+    <li><a href="/docs/security/audit-report">Security</a> — OMEGA V4 audit: 41 findings, all resolved</li>
+    <li><a href="/docs/glossary">Glossary</a> — 100+ terms: keywords, types, FHE primitives, ZK, PQ</li>
   </ul>
   <h2>V0.7 GA highlights</h2>
   <ul>
-    <li><strong>Post-quantum signatures</strong> - Dilithium3 (NIST FIPS 204), <code>@pq_signed</code></li>
-    <li><strong>FHE</strong> - <code>encrypted&lt;T&gt;</code>, <code>fhe_add</code>, <code>fhe_mul</code>, scheme-agnostic precompiles</li>
-    <li><strong>ZK proofs</strong> - <code>zk_prove</code> / <code>zk_verify</code>, Groth16 / PLONK / Halo2</li>
-    <li><strong>Cryptographic amnesia</strong> - <code>amnesia {{ }}</code> blocks, two-pass provable erasure</li>
-    <li><strong>Multi-target</strong> - EVM, Aster Chain (ID 1996), WASM</li>
-    <li><strong>LSP</strong> - 38+ lint detectors in VS Code</li>
-    <li><strong>OMEGA V4 audited</strong> - 41 findings, 5 Critical, all resolved</li>
+    <li><strong>Post-quantum signatures</strong> — Dilithium5 (NIST FIPS 204), <code>@pq_signed</code></li>
+    <li><strong>FHE</strong> — <code>encrypted&lt;T&gt;</code>, <code>fhe_add</code>, <code>fhe_mul</code>, ERC-8227 compliant</li>
+    <li><strong>ZK proofs</strong> — <code>zk_prove</code> / <code>zk_verify</code>, Nova IVC + Halo2, ERC-8229</li>
+    <li><strong>Cryptographic amnesia</strong> — <code>amnesia {{ }}</code> blocks, ERC-8228 ceremony lifecycle</li>
+    <li><strong>Multi-target</strong> — EVM, Aster Chain (ID 1996), WASM (experimental)</li>
+    <li><strong>LSP</strong> — 38+ lint detectors in VS Code, Neovim, IntelliJ</li>
+    <li><strong>OMEGA V4 audited</strong> — 41 findings, 5 Critical, all resolved</li>
   </ul>
 </DocsLayout>

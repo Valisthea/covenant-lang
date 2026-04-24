@@ -27,6 +27,36 @@ const nav = [
     { href: '/docs/examples/14-oracle-integration', label: '14 - Oracle Integration' },
     { href: '/docs/examples/15-deploy-to-sepolia', label: '15 - Deploy to Sepolia' },
   ]},
+  { title: 'ERCs (Styx Protocol)', links: [
+    { href: '/docs/reference/ercs/01-overview', label: 'Overview' },
+    { href: '/docs/reference/ercs/02-erc-8227-fhe', label: 'ERC-8227 — FHE Tokens' },
+    { href: '/docs/reference/ercs/03-erc-8228-amnesia', label: 'ERC-8228 — Amnesia' },
+    { href: '/docs/reference/ercs/04-erc-8229-fhe-verify', label: 'ERC-8229 — FHE Verify' },
+    { href: '/docs/reference/ercs/05-erc-8231-pq', label: 'ERC-8231 — Post-Quantum' },
+  ]},
+  { title: 'Compiler', links: [
+    { href: '/docs/reference/compiler/01-pipeline', label: 'Pipeline' },
+    { href: '/docs/reference/compiler/02-ir', label: 'IR Reference' },
+    { href: '/docs/reference/compiler/03-targets', label: 'Targets' },
+    { href: '/docs/reference/compiler/04-diagnostics', label: 'Diagnostics Catalog' },
+    { href: '/docs/reference/lsp/01-lsp-overview', label: 'LSP' },
+  ]},
+  { title: 'Cookbook', links: [
+    { href: '/docs/cookbook/01-overview', label: 'Overview' },
+    { href: '/docs/cookbook/tokens/01-mintable-token', label: 'Mintable Token' },
+    { href: '/docs/cookbook/tokens/02-burnable-token', label: 'Burnable Token' },
+    { href: '/docs/cookbook/tokens/03-confidential-payroll', label: 'Confidential Payroll' },
+    { href: '/docs/cookbook/auth/01-multi-sig-admin', label: 'Multi-Sig Admin' },
+    { href: '/docs/cookbook/auth/02-time-locked-admin', label: 'Time-Locked Admin' },
+    { href: '/docs/cookbook/auth/03-pq-signed-admin', label: 'PQ-Signed Admin' },
+    { href: '/docs/cookbook/upgrades/01-uups-pattern', label: 'UUPS Pattern' },
+    { href: '/docs/cookbook/upgrades/02-beacon-pattern', label: 'Beacon Pattern' },
+    { href: '/docs/cookbook/privacy/01-sealed-bid-auction', label: 'Sealed-Bid Auction' },
+    { href: '/docs/cookbook/privacy/02-private-voting', label: 'Private Voting' },
+    { href: '/docs/cookbook/privacy/03-zk-airdrop', label: 'ZK Airdrop' },
+    { href: '/docs/cookbook/integration/01-chainlink-oracle', label: 'Chainlink Oracle' },
+    { href: '/docs/cookbook/integration/02-erc20-bridge', label: 'ERC-20 Bridge' },
+  ]},
   { title: 'Security', links: [
     { href: '/docs/security/audit-report', label: 'Audit Report' },
     { href: '/docs/security/critical-findings', label: 'Critical Findings' },
@@ -47,7 +77,7 @@ const nav = [
     <div class="sidebar-section">
       <span class="sidebar-section-title">{section.title}</span>
       {section.links.map(link => (
-        <a href={link.href} class:list={['sidebar-link', { active: currentPath === link.href }]}>{link.label}</a>
+        <a href={link.href} class:list={['sidebar-link', { active: currentPath === link.href || currentPath.startsWith(link.href + '/') }]}>{link.label}</a>
       ))}
     </div>
   ))}

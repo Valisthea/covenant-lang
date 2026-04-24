@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>ERC-8229 — FHE Verification Standard - Covenant Docs</title><meta name="description" content="Standard for generating and verifying zero-knowledge proofs of correct FHE computation, enabling publicly auditable confidential contracts."><meta property="og:title" content="ERC-8229 — FHE Verification Standard - Covenant Docs"><meta property="og:description" content="Standard for generating and verifying zero-knowledge proofs of correct FHE computation, enabling publicly auditable confidential contracts."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/reference/ercs/04-erc-8229-fhe-verify"><link rel="stylesheet" href="/docs/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link active">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/docs/reference/ercs/01-overview">Reference</a> <span aria-hidden="true">/</span> <a href="/docs/reference/ercs/01-overview">ERCs</a> <span aria-hidden="true">/</span> <span>ERC-8229 — FHE Verification Standard</span> </nav>  <!-- Source: doc3-stdlib-spec.md §4, doc1-whitepaper.md §2.3 -->
+<!-- Last sync: 2026-04-23 -->
+<h1 id="erc-8229--fhe-verification-standard">ERC-8229 — FHE Verification Standard</h1>
+<p><strong>Summary</strong>: ERC-8229 defines how to prove — without revealing inputs — that an FHE computation was performed correctly. It combines Nova IVC (Incrementally Verifiable Computation) for unbounded circuits with Halo2 for efficient on-chain verification. The result: encrypted data can be processed by complex logic and any third party can verify the computation was honest.</p>
+<h2 id="the-problem-erc-8229-solves">The Problem ERC-8229 Solves</h2>
+<p>ERC-8227 gives you encrypted state. But who verifies the computation was correct? If a contract applies <code>fhe_mul(balance, rate)</code> to compute interest, the output is still encrypted — a malicious validator could substitute a different ciphertext and no one would know.</p>
+<p>ERC-8229 adds <strong>computational integrity</strong> to FHE:</p>
+<ul>
+<li>The computation is described as a circuit</li>
+<li>A ZK proof is generated that the circuit was applied correctly to the ciphertexts</li>
+<li>Any on-chain verifier can check the proof without seeing the inputs</li>
+</ul>
+<h2 id="covenant-surface">Covenant Surface</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Construct</th><th>Description</th></tr></thead><tbody><tr><td><code>verified_by(proof)</code></td><td>Assert that this computation is ZK-verified</td></tr><tr><td><code>selective_disclosure(field, to)</code></td><td>Reveal a specific field to a specific party with proof</td></tr><tr><td><code>@prove_offchain</code></td><td>Mark an action as requiring an off-chain proof</td></tr><tr><td><code>zk_prove(circuit, inputs)</code></td><td>Generate a proof (returns opaque proof handle)</td></tr><tr><td><code>zk_verify(proof, signal)</code></td><td>Verify a proof on-chain</td></tr></tbody></table>
+<h2 id="architecture">Architecture</h2>
+<p>ERC-8229 uses a two-layer proof system:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>FHE computation (off-chain)</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>Nova IVC folding        ← accumulates computation steps</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>Halo2 compression       ← compresses to constant-size proof</span></span>
+<span class="line"><span>        ↓</span></span>
+<span class="line"><span>BN254 on-chain verifier ← verifiable in ~550k gas</span></span></code></pre>
+<p><strong>Layer 1 — Nova IVC</strong>: Handles unbounded computation depth. Each step of the FHE computation is folded into an accumulator. No trusted setup required. Prover time: O(n) where n = number of computation steps.</p>
+<p><strong>Layer 2 — Halo2</strong>: Compresses the IVC accumulator into a constant-size proof (~4-8 KB). Uses the IPA commitment scheme over Pasta curves (Pallas/Vesta).</p>
+<p><strong>Dual-curve bridging</strong>: Pasta curves are efficient for proof generation but expensive to verify on BN254 (Ethereum’s native curve). ERC-8229 includes a Groth16 wrapping step that converts the Halo2 proof to BN254, enabling cheap EVM verification.</p>
+<h2 id="prove_offchain-annotation"><code>@prove_offchain</code> Annotation</h2>
+<p>For actions that are too compute-intensive for on-chain FHE:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>@prove_offchain</span></span>
+<span class="line"><span>action compute_interest(account: address) {</span></span>
+<span class="line"><span>    let balance = encrypted_balances[account]</span></span>
+<span class="line"><span>    let accrued = fhe_mul(balance, interest_rate)</span></span>
+<span class="line"><span>    encrypted_balances[account] = fhe_add(balance, accrued)</span></span>
+<span class="line"><span>    </span></span>
+<span class="line"><span>    verified_by(interest_proof)</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>When <code>@prove_offchain</code> is used:</p>
+<ol>
+<li>The action body is compiled to a WASM circuit (not EVM bytecode)</li>
+<li>Callers must supply a <code>proof</code> argument alongside their transaction</li>
+<li>The contract verifies the proof matches the state transition before accepting it</li>
+<li>Gas cost: circuit verification only (~550k gas), not the FHE computation</li>
+</ol>
+<p>The WASM circuit is embedded in the contract metadata so any party can generate proofs off-chain using the Covenant SDK.</p>
+<h2 id="selective-disclosure">Selective Disclosure</h2>
+<p><code>selective_disclosure</code> allows revealing one encrypted field to a specific party without revealing others:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>action audit_disclosure(auditor: address) only regulator {</span></span>
+<span class="line"><span>    selective_disclosure(transaction_amounts, auditor)</span></span>
+<span class="line"><span>    // Does NOT reveal counterparty identities</span></span>
+<span class="line"><span>    // Does NOT reveal balance positions</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>This generates a ZK proof that:</p>
+<ul>
+<li><code>transaction_amounts</code> is a subset of the contract’s FHE state</li>
+<li>The disclosure is authorized by the <code>regulator</code> address</li>
+<li>No other state was disclosed</li>
+</ul>
+<p>The proof size is ~6 KB. On Aster Chain, selective disclosure is a native operation (300ms).</p>
+<h2 id="trusted-setup-considerations">Trusted Setup Considerations</h2>
+<ul>
+<li><strong>Nova IVC</strong>: No trusted setup. Uses random oracle model.</li>
+<li><strong>Halo2 IPA</strong>: No trusted setup. Fully transparent.</li>
+<li><strong>Groth16 wrapper</strong>: Requires a one-time trusted setup per circuit. The Covenant Foundation runs a multi-party computation ceremony for the wrapper circuit. Ceremony transcript: <a href="https://github.com/Valisthea/covenant-trusted-setup">github.com/Valisthea/covenant-trusted-setup</a></li>
+</ul>
+<p>If you define custom circuits with <code>@prove_offchain</code>, you must either:</p>
+<ol>
+<li>Use the universal wrapper (covers 95% of use cases), or</li>
+<li>Run your own setup ceremony for circuits that exceed the wrapper’s size limit (>10M constraints)</li>
+</ol>
+<h2 id="proof-size-and-tradeoffs">Proof Size and Tradeoffs</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Proof system</th><th>Size</th><th>On-chain verification</th><th>Trusted setup</th></tr></thead><tbody><tr><td>Nova (raw)</td><td>~50 KB</td><td>Not directly (too large)</td><td>None</td></tr><tr><td>Halo2 IPA</td><td>~8 KB</td><td>~2M gas (expensive)</td><td>None</td></tr><tr><td>Groth16 (BN254 wrapped)</td><td>~200 bytes</td><td>~200k gas</td><td>Yes (MPC)</td></tr><tr><td>PLONK</td><td>~1 KB</td><td>~500k gas</td><td>Universal</td></tr></tbody></table>
+<p>Covenant V0.7 uses <strong>Groth16 wrapped</strong> by default for on-chain verification. The <code>--proof-system</code> flag lets you choose:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> build</span><span style="color:#005CC5"> --proof-system</span><span style="color:#032F62"> plonk</span><span style="color:#032F62"> ./src/DeFi.cvt</span></span></code></pre>
+<h2 id="precompile-addresses">Precompile Addresses</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Address</th><th>Name</th><th>Description</th><th>Gas</th></tr></thead><tbody><tr><td><code>0x30</code></td><td><code>zk_verify</code></td><td>Verify Groth16/PLONK/Halo2 proof</td><td>200,000–550,000</td></tr><tr><td><code>0x31</code></td><td><code>nova_fold</code></td><td>Accumulate one IVC step</td><td>80,000</td></tr><tr><td><code>0x32</code></td><td><code>nova_compress</code></td><td>Compress IVC accumulator to Halo2</td><td>400,000</td></tr><tr><td><code>0x33</code></td><td><code>selective_disclose</code></td><td>Generate selective disclosure proof</td><td>180,000</td></tr><tr><td><code>0x34</code></td><td><code>circuit_hash</code></td><td>Hash circuit to commitment</td><td>5,000</td></tr></tbody></table>
+<h2 id="gas-table">Gas Table</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operation</th><th>Gas</th></tr></thead><tbody><tr><td><code>zk_verify</code> (Groth16)</td><td>200,000</td></tr><tr><td><code>zk_verify</code> (PLONK)</td><td>500,000</td></tr><tr><td><code>zk_verify</code> (Halo2 IPA)</td><td>2,000,000</td></tr><tr><td><code>selective_disclose</code></td><td>180,000</td></tr><tr><td>Proof submission (calldata, 200 bytes)</td><td>200 × 16 = 3,200</td></tr></tbody></table>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/docs/examples/10-zero-knowledge-proofs">Example 10 — Zero-Knowledge Proofs</a></li>
+<li><a href="/docs/reference/ercs/02-erc-8227-fhe">ERC-8227 — Encrypted Tokens</a> — the FHE layer</li>
+<li><a href="/docs/reference/compiler/02-ir#zk-opcodes">Compiler — IR: ZK opcodes</a></li>
+<li><a href="/docs/cookbook/privacy/03-zk-airdrop">Cookbook — ZK Airdrop</a></li>
+<li><a href="/docs/glossary#zk-proof">Glossary: ZK proof</a>, <a href="/docs/glossary#nova">Nova IVC</a>, <a href="/docs/glossary#halo2">Halo2</a></li>
+</ul>  <nav class="doc-nav" aria-label="Page navigation"> <a href="/docs/reference/ercs/03-erc-8228-amnesia" class="doc-nav-link prev"><span>Previous</span>ERC-8228 — Cryptographic Amnesia</a> <a href="/docs/reference/ercs/05-erc-8231-pq" class="doc-nav-link next"><span>Next</span>ERC-8231 — Post-Quantum Key Registry</a> </nav> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

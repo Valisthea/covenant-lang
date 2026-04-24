@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Chainlink Oracle Integration - Covenant Docs</title><meta name="description" content="Fetch price data from a Chainlink aggregator and use it to trigger on-chain actions."><meta property="og:title" content="Chainlink Oracle Integration - Covenant Docs"><meta property="og:description" content="Fetch price data from a Chainlink aggregator and use it to trigger on-chain actions."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/cookbook/integration/01-chainlink-oracle"><link rel="stylesheet" href="/docs/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link active">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/docs/cookbook/01-overview">Cookbook</a> <span aria-hidden="true">/</span> <span>Integration</span> <span aria-hidden="true">/</span> <span>Chainlink Oracle Integration</span> </nav>  <!-- Last sync: 2026-04-23 -->
+<h1 id="chainlink-oracle-integration">Chainlink Oracle Integration</h1>
+<h2 id="problem">Problem</h2>
+<p>I need my contract to use real-world price data (e.g., ETH/USD) from Chainlink to trigger actions like liquidations or pricing.</p>
+<h2 id="solution">Solution</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>contract PriceTriggeredVault {</span></span>
+<span class="line"><span>    field owner: address = deployer</span></span>
+<span class="line"><span>    field price_feed: address          // Chainlink AggregatorV3Interface</span></span>
+<span class="line"><span>    field liquidation_threshold: uint  // e.g., 150 = 150% collateral ratio</span></span>
+<span class="line"><span>    field collateral: map&#x3C;address, amount></span></span>
+<span class="line"><span>    field debt: map&#x3C;address, amount></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    struct RoundData {</span></span>
+<span class="line"><span>        round_id: uint80</span></span>
+<span class="line"><span>        answer: int256</span></span>
+<span class="line"><span>        started_at: uint256</span></span>
+<span class="line"><span>        updated_at: uint256</span></span>
+<span class="line"><span>        answered_in_round: uint80</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    event Deposited(user: address indexed, amount: amount)</span></span>
+<span class="line"><span>    event Liquidated(user: address indexed, collateral: amount)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    error StalePrice()</span></span>
+<span class="line"><span>    error InsufficientCollateral()</span></span>
+<span class="line"><span>    error PriceFeedError()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    action deposit_collateral(amount: amount) {</span></span>
+<span class="line"><span>        collateral[caller] = collateral[caller] + amount</span></span>
+<span class="line"><span>        emit Deposited(caller, amount)</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    action liquidate(user: address) {</span></span>
+<span class="line"><span>        let price_data = get_price()</span></span>
+<span class="line"><span>        let col = collateral[user]</span></span>
+<span class="line"><span>        let dbt = debt[user]</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        // collateral_ratio = (collateral * price) / debt</span></span>
+<span class="line"><span>        // liquidate if ratio &#x3C; threshold</span></span>
+<span class="line"><span>        let ratio = (col * price_data) / dbt</span></span>
+<span class="line"><span>        given ratio &#x3C; liquidation_threshold or revert_with InsufficientCollateral()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        let seized = collateral[user]</span></span>
+<span class="line"><span>        collateral[user] = 0</span></span>
+<span class="line"><span>        debt[user] = 0</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        // Reward liquidator with 5% bonus</span></span>
+<span class="line"><span>        transfer(caller, seized * 105 / 100)</span></span>
+<span class="line"><span>        emit Liquidated(user, seized)</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    action get_price() returns (price: uint256) {</span></span>
+<span class="line"><span>        let round = static_call(price_feed, "latestRoundData()")</span></span>
+<span class="line"><span>            as RoundData</span></span>
+<span class="line"><span>            or revert_with PriceFeedError()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        // Stale price check: reject if updated > 1 hour ago</span></span>
+<span class="line"><span>        given block.timestamp - round.updated_at &#x3C;= 3600 or revert_with StalePrice()</span></span>
+<span class="line"><span>        given round.answer > 0 or revert_with PriceFeedError()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>        return round.answer as uint256</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<h2 id="explanation">Explanation</h2>
+<ul>
+<li><code>static_call(price_feed, "latestRoundData()")</code> calls the Chainlink aggregator read-only</li>
+<li>The stale price check (1 hour) is critical — stale prices can cause incorrect liquidations</li>
+<li>Chainlink returns an <code>int256</code> (can be negative during errors) — always check <code>> 0</code></li>
+<li>The 5% liquidation bonus incentivizes keepers to call <code>liquidate</code></li>
+</ul>
+<h2 id="chainlink-price-feed-addresses">Chainlink Price Feed Addresses</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Pair</th><th>Sepolia</th><th>Ethereum Mainnet</th></tr></thead><tbody><tr><td>ETH/USD</td><td><code>0x694AA1769357215DE4FAC081bf1f309aDC325306</code></td><td><code>0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419</code></td></tr><tr><td>BTC/USD</td><td><code>0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43</code></td><td><code>0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88b</code></td></tr><tr><td>LINK/USD</td><td><code>0xc59E3633BAAC79493d908e63626716e204a45EdF</code></td><td><code>0x2c1d072e956AFFC0D435Cb7AC38EF18d24d9127c</code></td></tr></tbody></table>
+<h2 id="gas-estimate">Gas Estimate</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operation</th><th>Gas</th></tr></thead><tbody><tr><td><code>deposit_collateral</code></td><td>~35,000</td></tr><tr><td><code>liquidate</code></td><td>~85,000</td></tr><tr><td><code>get_price</code> (static call)</td><td>~5,000</td></tr></tbody></table>
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+<ol>
+<li><strong>Missing stale price check</strong>: Always verify <code>updated_at</code> is recent. A 1-hour window is common; adjust for the asset’s heartbeat.</li>
+<li><strong>Using <code>answer</code> as price directly</strong>: Chainlink returns 8 decimal places for USD pairs. Divide by <code>1e8</code> or scale appropriately.</li>
+<li><strong>No fallback oracle</strong>: If Chainlink goes down, your contract is stuck. Consider a secondary oracle or circuit breaker.</li>
+<li><strong>Liquidation with stale price</strong>: A stale price can allow underwater positions to remain open or force-liquidate healthy ones.</li>
+<li><strong>Integer overflow in ratio calculation</strong>: Multiply before divide. Use <code>uint256</code> throughout.</li>
+</ol>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/docs/examples/14-oracle-integration">Example 14 — Oracle Integration</a></li>
+<li><a href="/docs/cookbook/auth/02-time-locked-admin">Time-Locked Admin</a> — for circuit breakers</li>
+</ul>   </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

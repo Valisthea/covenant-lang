@@ -1,0 +1,727 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Diagnostics Catalog - Covenant Docs</title><meta name="description" content="Complete catalog of Covenant compiler error codes (E), warning codes (W), and LSP lint codes (L)."><meta property="og:title" content="Diagnostics Catalog - Covenant Docs"><meta property="og:description" content="Complete catalog of Covenant compiler error codes (E), warning codes (W), and LSP lint codes (L)."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/reference/compiler/04-diagnostics"><link rel="stylesheet" href="/docs/_astro/DocsLayout.HagV-WbL.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link active">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/docs/reference/ercs/01-overview">Reference</a> <span aria-hidden="true">/</span> <a href="/docs/reference/compiler/01-pipeline">Compiler</a> <span aria-hidden="true">/</span> <span>Diagnostics Catalog</span> </nav>  <!-- Source: doc5-compiler-architecture.md §19, doc9-cli-ux-spec.md §12 -->
+<!-- Last sync: 2026-04-23 -->
+<h1 id="diagnostics-catalog">Diagnostics Catalog</h1>
+<p>The Covenant compiler uses a unified diagnostic system with three categories:</p>
+<ul>
+<li><strong>E-codes</strong> — errors that halt compilation</li>
+<li><strong>W-codes</strong> — warnings (compilation continues, but output may be suboptimal or risky)</li>
+<li><strong>L-codes</strong> — LSP lint detectors (IDE-only, 38+ rules, do not affect CLI build)</li>
+</ul>
+<h2 id="diagnostic-format">Diagnostic Format</h2>
+<p>All diagnostics follow the <a href="https://github.com/zesterer/ariadne">ariadne</a> format — color-coded spans with source context:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>error[E401]: type mismatch</span></span>
+<span class="line"><span>  --> src/Token.cvt:14:20</span></span>
+<span class="line"><span>   |</span></span>
+<span class="line"><span>14 |     let payout = salary + bonus</span></span>
+<span class="line"><span>   |                          ^^^^^ expected `encrypted&#x3C;uint256>`, found `uint256`</span></span>
+<span class="line"><span>   |</span></span>
+<span class="line"><span>   = note: use `fhe_add(salary, bonus)` for homomorphic addition</span></span></code></pre>
+<p>All diagnostics include:</p>
+<ul>
+<li>Code (<code>E401</code>, <code>W702</code>, <code>L-UNR-001</code>)</li>
+<li>Message</li>
+<li>Source span(s)</li>
+<li>Optional <code>note</code> with fix suggestion</li>
+<li>Optional <code>help</code> with documentation link</li>
+</ul>
+<h2 id="json-format-for-tooling">JSON Format (for tooling)</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> check</span><span style="color:#005CC5"> --format</span><span style="color:#032F62"> json</span><span style="color:#032F62"> ./src/Token.cvt</span></span></code></pre>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "diagnostics"</span><span style="color:#24292E">: [</span></span>
+<span class="line"><span style="color:#24292E">    {</span></span>
+<span class="line"><span style="color:#005CC5">      "code"</span><span style="color:#24292E">: </span><span style="color:#032F62">"E401"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "severity"</span><span style="color:#24292E">: </span><span style="color:#032F62">"error"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "message"</span><span style="color:#24292E">: </span><span style="color:#032F62">"type mismatch"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "span"</span><span style="color:#24292E">: { </span><span style="color:#005CC5">"file"</span><span style="color:#24292E">: </span><span style="color:#032F62">"src/Token.cvt"</span><span style="color:#24292E">, </span><span style="color:#005CC5">"start"</span><span style="color:#24292E">: [</span><span style="color:#005CC5">14</span><span style="color:#24292E">, </span><span style="color:#005CC5">20</span><span style="color:#24292E">], </span><span style="color:#005CC5">"end"</span><span style="color:#24292E">: [</span><span style="color:#005CC5">14</span><span style="color:#24292E">, </span><span style="color:#005CC5">25</span><span style="color:#24292E">] },</span></span>
+<span class="line"><span style="color:#005CC5">      "note"</span><span style="color:#24292E">: </span><span style="color:#032F62">"use fhe_add(salary, bonus) for homomorphic addition"</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  ]</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<h2 id="e-codes--errors">E-Codes — Errors</h2>
+<h3 id="e100e199-lexer-errors">E100–E199: Lexer Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>E101</td><td>UnexpectedCharacter</td><td>Invalid byte in source file</td></tr><tr><td>E102</td><td>UnterminatedString</td><td>String literal not closed before end of line</td></tr><tr><td>E103</td><td>InvalidEscape</td><td>Unrecognized escape sequence in string</td></tr><tr><td>E104</td><td>OverflowLiteral</td><td>Integer literal too large for any Covenant type</td></tr><tr><td>E105</td><td>InvalidHexLiteral</td><td>Malformed hex literal (odd number of digits)</td></tr><tr><td>E110</td><td>InvalidUnicodeCodepoint</td><td><code>\u{...}</code> escape out of valid Unicode range</td></tr></tbody></table>
+<h3 id="e200e299-parser-errors">E200–E299: Parser Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>E201</td><td>UnexpectedToken</td><td>Token not valid at current parse position</td></tr><tr><td>E202</td><td>MissingClosingBrace</td><td>Unmatched <code>{</code></td></tr><tr><td>E203</td><td>InvalidFieldType</td><td>Type expression could not be parsed</td></tr><tr><td>E204</td><td>DuplicateField</td><td>Two fields with the same name in one contract</td></tr><tr><td>E205</td><td>DuplicateAction</td><td>Two actions with the same name</td></tr><tr><td>E206</td><td>InvalidGuardPlacement</td><td>Guard clause not at start of action</td></tr><tr><td>E207</td><td>EmptyContract</td><td>Contract body has no fields or actions</td></tr><tr><td>E210</td><td>DesugarFailed</td><td>Desugaring rule precondition not met</td></tr><tr><td>E220</td><td>InvalidAmnesiaBlock</td><td><code>amnesia { }</code> contains non-destructible constructs</td></tr></tbody></table>
+<h3 id="e300e399-resolver-errors">E300–E399: Resolver Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>E301</td><td>UndefinedName</td><td>Identifier not declared in any enclosing scope</td></tr><tr><td>E302</td><td>AmbiguousName</td><td>Name resolves to multiple declarations</td></tr><tr><td>E303</td><td>CircularDependency</td><td>Import cycle detected</td></tr><tr><td>E304</td><td>UnresolvedImport</td><td><code>use</code> path not found</td></tr><tr><td>E305</td><td>SelfImport</td><td>Contract imports itself</td></tr><tr><td>E310</td><td>PrivateFieldAccess</td><td>External access to private field</td></tr><tr><td>E311</td><td>ImmutableWrite</td><td>Write to an immutable (<code>const</code>) field</td></tr><tr><td>E320</td><td>BuiltinShadow</td><td>User-defined name shadows a built-in</td></tr></tbody></table>
+<h3 id="e400e499-typechecker-errors">E400–E499: Typechecker Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>E401</td><td>TypeMismatch</td><td>Expression type incompatible with context</td></tr><tr><td>E402</td><td>EncryptedToPlaintext</td><td>Implicit E-domain to P-domain coercion</td></tr><tr><td>E403</td><td>PlaintextToEncryptedContext</td><td>Unencrypted value in encrypted-only context</td></tr><tr><td>E404</td><td>InvalidFHEOperand</td><td>FHE opcode applied to non-encrypted value</td></tr><tr><td>E405</td><td>PQKeyImmutable</td><td>Attempt to reassign a <code>pq_key</code> field</td></tr><tr><td>E406</td><td>AddressZero</td><td>Literal <code>address(0)</code> used where disallowed</td></tr><tr><td>E410</td><td>AmountOverflow</td><td>Constant amount arithmetic overflows uint256</td></tr><tr><td>E411</td><td>NegativeAmount</td><td><code>amount</code> type cannot be negative</td></tr><tr><td>E420</td><td>UnitMismatch</td><td>Mixing incompatible amount units</td></tr><tr><td>E430</td><td>InvalidEventField</td><td>Event field type cannot be indexed (too large)</td></tr><tr><td>E440</td><td>ReturnTypeMismatch</td><td>Action return type does not match declaration</td></tr></tbody></table>
+<h3 id="e500e599-privacy-flow-errors">E500–E599: Privacy Flow Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>E501</td><td>DomainViolation</td><td>E-domain value flows to P-domain output</td></tr><tr><td>E502</td><td>RevealWithoutAuth</td><td><code>reveal</code> missing authorization guard</td></tr><tr><td>E503</td><td>AmnesiaEscapeAttempt</td><td>A-domain field accessed after DESTROYED phase</td></tr><tr><td>E504</td><td>UnauthorizedDecrypt</td><td><code>fhe_decrypt</code> called without validator auth</td></tr><tr><td>E505</td><td>SelectiveDisclosureScope</td><td><code>selective_disclosure</code> used outside authorized action</td></tr><tr><td>E510</td><td>CrossContractDomainLeak</td><td>External call passes E-domain to non-ERC-8227 contract</td></tr><tr><td>E511</td><td>EventDataLeak</td><td>E-domain value emitted in event data</td></tr></tbody></table>
+<h3 id="e600e699-ir-builder-errors">E600–E699: IR Builder Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>E601</td><td>InfiniteLoop</td><td>Unbounded loop without exit condition</td></tr><tr><td>E602</td><td>StackOverflow</td><td>Estimated stack depth exceeds EVM limit (1024)</td></tr><tr><td>E603</td><td>ContractSizeExceeded</td><td>Generated bytecode exceeds 24 KB (EIP-170)</td></tr><tr><td>E604</td><td>InvalidPhi</td><td>Phi node has wrong number of predecessors</td></tr><tr><td>E610</td><td>FHEDepthLimit</td><td>Multiplication depth exceeds BFV capacity (requires bootstrapping)</td></tr><tr><td>E620</td><td>AmnesiaPhaseViolation</td><td>A-domain operation outside valid ceremony phase</td></tr></tbody></table>
+<h3 id="e800e899-backend--codegen-errors">E800–E899: Backend / Codegen Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>E801</td><td>UnsupportedOpcode</td><td>IR opcode not supported by selected backend</td></tr><tr><td>E802</td><td>PrecompileUnavailable</td><td>Required precompile not available on target chain</td></tr><tr><td>E803</td><td>ABIEncodingError</td><td>ABI encoding of type not possible</td></tr><tr><td>E810</td><td>AsterFeatureUnavailable</td><td>Feature requires Aster Chain (not EVM)</td></tr><tr><td>E811</td><td>WASMUnsupported</td><td>Feature not yet supported in WASM backend</td></tr></tbody></table>
+<h3 id="e900e999-internal-compiler-errors">E900–E999: Internal Compiler Errors</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>E999</td><td>InternalError</td><td>Compiler bug — please report with <code>covenant bug-report</code></td></tr></tbody></table>
+<h2 id="w-codes--warnings">W-Codes — Warnings</h2>
+<h3 id="w300w399-resolver-warnings">W300–W399: Resolver Warnings</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>W301</td><td>Shadowing</td><td>Name shadows an outer scope declaration</td></tr><tr><td>W302</td><td>UnusedImport</td><td>Imported name never used</td></tr><tr><td>W303</td><td>UnusedField</td><td>Field declared but never read or written</td></tr></tbody></table>
+<h3 id="w400w499-typechecker-warnings">W400–W499: Typechecker Warnings</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>W401</td><td>ImplicitConversion</td><td>Widening conversion applied implicitly</td></tr><tr><td>W410</td><td>UnusedReturnValue</td><td>Action return value discarded at call site</td></tr></tbody></table>
+<h3 id="w500w599-privacy-warnings">W500–W599: Privacy Warnings</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>W501</td><td>RevealToAll</td><td><code>reveal field to all</code> exposes encrypted state globally</td></tr><tr><td>W502</td><td>AmnesiaExternalCall</td><td>External call inside <code>on_destroy</code> hook (reentrancy risk)</td></tr><tr><td>W503</td><td>PartialDestruction</td><td><code>amnesia</code> block has fields not listed in any <code>destroy()</code></td></tr></tbody></table>
+<h3 id="w700w799-optimizer-warnings">W700–W799: Optimizer Warnings</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td>W701</td><td>UnreachableCode</td><td>Branch that can never be taken</td></tr><tr><td>W702</td><td>ConstantField</td><td>Field only ever assigned once (consider <code>const</code>)</td></tr><tr><td>W703</td><td>ExpensiveGasPattern</td><td>Detected pattern with known high gas cost</td></tr><tr><td>W710</td><td>FHEDepthExceeded</td><td>Multiplication depth near BFV limit</td></tr><tr><td>W711</td><td>FHEBatchMissed</td><td>Adjacent FHE ops not batched (optimizer limitation)</td></tr></tbody></table>
+<h2 id="l-codes--lsp-lint-detectors">L-Codes — LSP Lint Detectors</h2>
+<p>The LSP runs 38 lint detectors in the IDE. These never block compilation but appear as squiggles/hints.</p>
+<h3 id="security-lints-l-sec-">Security Lints (L-SEC-*)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Description</th></tr></thead><tbody><tr><td>L-SEC-001</td><td>Missing <code>only</code> guard on state-modifying action</td></tr><tr><td>L-SEC-002</td><td>Unchecked external call return value</td></tr><tr><td>L-SEC-003</td><td>Reentrancy risk: external call before state update</td></tr><tr><td>L-SEC-004</td><td>Unrestricted <code>destroy()</code> outside ceremony</td></tr><tr><td>L-SEC-005</td><td><code>pq_signed</code> missing on high-value action (> 1M token threshold)</td></tr><tr><td>L-SEC-006</td><td><code>admin</code> field can be changed by <code>admin</code> itself (no 2-step transfer)</td></tr><tr><td>L-SEC-007</td><td>FHE multiplication depth > 6 (bootstrapping cost warning)</td></tr><tr><td>L-SEC-008</td><td>Hardcoded address (should use a field)</td></tr><tr><td>L-SEC-009</td><td>Missing <code>ReentrancyGuard</code> on action with external call</td></tr><tr><td>L-SEC-010</td><td>Integer division before multiplication (precision loss)</td></tr></tbody></table>
+<h3 id="privacy-lints-l-pvt-">Privacy Lints (L-PVT-*)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Description</th></tr></thead><tbody><tr><td>L-PVT-001</td><td>Event emits encrypted value without confidential flag</td></tr><tr><td>L-PVT-002</td><td><code>reveal</code> without time-lock or deadline</td></tr><tr><td>L-PVT-003</td><td>Selective disclosure to <code>all</code> (defeats privacy)</td></tr><tr><td>L-PVT-004</td><td>Map key (address) exposed in events</td></tr><tr><td>L-PVT-005</td><td>Cross-contract domain leak potential</td></tr></tbody></table>
+<h3 id="style-lints-l-sty-">Style Lints (L-STY-*)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Description</th></tr></thead><tbody><tr><td>L-STY-001</td><td>Action name should be <code>snake_case</code></td></tr><tr><td>L-STY-002</td><td>Field name should be <code>snake_case</code></td></tr><tr><td>L-STY-003</td><td>Contract name should be <code>PascalCase</code></td></tr><tr><td>L-STY-004</td><td>Missing <code>description</code> on public action</td></tr><tr><td>L-STY-005</td><td>Magic number (use named constant)</td></tr><tr><td>L-STY-006</td><td>Redundant <code>given true</code> guard</td></tr><tr><td>L-STY-007</td><td>Empty <code>amnesia { }</code> block</td></tr></tbody></table>
+<h3 id="gas-lints-l-gas-">Gas Lints (L-GAS-*)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Description</th></tr></thead><tbody><tr><td>L-GAS-001</td><td><code>map&#x3C;address, bool></code> for whitelists (use <code>set&#x3C;address></code>)</td></tr><tr><td>L-GAS-002</td><td>Unnecessary storage read in loop</td></tr><tr><td>L-GAS-003</td><td>String error message (use typed error instead)</td></tr><tr><td>L-GAS-004</td><td>Event emission in loop (high gas risk)</td></tr><tr><td>L-GAS-005</td><td><code>fhe_encrypt</code> inside loop</td></tr></tbody></table>
+<h3 id="correctness-lints-l-cor-">Correctness Lints (L-COR-*)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Code</th><th>Description</th></tr></thead><tbody><tr><td>L-COR-001</td><td>Comparison with <code>address(0)</code> without null check</td></tr><tr><td>L-COR-002</td><td>Overflow-unsafe arithmetic in <code>unchecked</code> block</td></tr><tr><td>L-COR-003</td><td>Missing zero-check on <code>amount</code> parameter</td></tr><tr><td>L-COR-004</td><td>Action callable during ceremony DESTROYED phase</td></tr><tr><td>L-COR-005</td><td><code>on_destroy</code> hook modifies state after <code>destroy()</code></td></tr><tr><td>L-COR-006</td><td><code>total_supply</code> updated but not mirroring <code>balances</code> sum</td></tr><tr><td>L-COR-007</td><td>Guard relies on <code>block.timestamp</code> (miner-manipulable, ±15s)</td></tr><tr><td>L-COR-008</td><td>Self-transfer allowed (may inflate event logs)</td></tr></tbody></table>
+<h2 id="suppressing-diagnostics">Suppressing Diagnostics</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Suppress a specific warning for one line</span></span>
+<span class="line"><span>#[allow(W301)]</span></span>
+<span class="line"><span>let shadow = outer_name</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Suppress for an entire action</span></span>
+<span class="line"><span>#[allow(W702, L-GAS-001)]</span></span>
+<span class="line"><span>action expensive_init() only deployer { ... }</span></span></code></pre>
+<p>Using <code>#[allow(...)]</code> on an E-code is a compile error — errors cannot be suppressed.</p>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="/docs/reference/compiler/01-pipeline">Compiler Pipeline</a> — which phase emits which codes</li>
+<li><a href="/docs/reference/lsp/01-lsp-overview">LSP Reference</a> — how lint codes appear in the IDE</li>
+<li><a href="/docs/security/known-pitfalls">Security: Known Pitfalls</a> — common patterns behind L-SEC-* lints</li>
+</ul>  <nav class="doc-nav" aria-label="Page navigation"> <a href="/docs/reference/compiler/03-targets" class="doc-nav-link prev"><span>Previous</span>Compiler Targets</a> <span></span> </nav> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>
