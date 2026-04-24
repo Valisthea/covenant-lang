@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Syntax Mapping - Covenant Docs</title><meta name="description" content="A side-by-side translation of Solidity syntax to Covenant — contracts, fields, actions, guards, events, constructors, and visibility."><meta property="og:title" content="Syntax Mapping - Covenant Docs"><meta property="og:description" content="A side-by-side translation of Solidity syntax to Covenant — contracts, fields, actions, guards, events, constructors, and visibility."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/migration/from-solidity/02-syntax-mapping"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Syntax Mapping","description":"A side-by-side translation of Solidity syntax to Covenant — contracts, fields, actions, guards, events, constructors, and visibility.","url":"https://covenant-lang.org/docs/migration/from-solidity/02-syntax-mapping","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Covenant Language Documentation","url":"https://covenant-lang.org/docs"},"publisher":{"@type":"Organization","name":"Covenant Language","url":"https://covenant-lang.org"}}</script><link rel="stylesheet" href="/docs/_astro/DocsLayout.CNjVq_g-.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Tokens</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Cookbook Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/tokens/04-rebase-token" class="sidebar-link">Rebase Token</a><a href="/docs/cookbook/tokens/05-vesting-schedule" class="sidebar-link">Vesting Schedule</a><a href="/docs/cookbook/tokens/06-capped-supply" class="sidebar-link">Capped Supply</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Auth &amp; Upgrades</span> <a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/auth/04-guardian-recovery" class="sidebar-link">Guardian Recovery</a><a href="/docs/cookbook/auth/05-role-based-access" class="sidebar-link">Role-Based Access</a><a href="/docs/cookbook/auth/06-emergency-pause" class="sidebar-link">Emergency Pause</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/upgrades/03-diamond-storage" class="sidebar-link">Diamond Storage</a><a href="/docs/cookbook/upgrades/04-migration-scripts" class="sidebar-link">Migration Scripts</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Privacy &amp; Integration</span> <a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/privacy/04-confidential-lending" class="sidebar-link">Confidential Lending</a><a href="/docs/cookbook/privacy/05-private-identity" class="sidebar-link">Private Identity</a><a href="/docs/cookbook/privacy/06-shielded-token-bridge" class="sidebar-link">Shielded Bridge</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a><a href="/docs/cookbook/integration/03-safe-multisig" class="sidebar-link">Safe Multisig</a><a href="/docs/cookbook/integration/04-uniswap-v4-hook" class="sidebar-link">Uniswap V4 Hook</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Testing</span> <a href="/docs/cookbook/testing/01-inline-tests" class="sidebar-link">Inline Tests</a><a href="/docs/cookbook/testing/02-fuzz-testing" class="sidebar-link">Fuzz Testing</a><a href="/docs/cookbook/testing/03-invariant-testing" class="sidebar-link">Invariant Testing</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Migration</span> <a href="/docs/migration/from-solidity/01-overview" class="sidebar-link">From Solidity — Overview</a><a href="/docs/migration/from-solidity/02-syntax-mapping" class="sidebar-link active">Syntax Mapping</a><a href="/docs/migration/from-solidity/03-type-system" class="sidebar-link">Type System</a><a href="/docs/migration/from-solidity/04-patterns" class="sidebar-link">Common Patterns</a><a href="/docs/migration/from-solidity/05-tooling-equivalents" class="sidebar-link">Tooling Equivalents</a><a href="/docs/migration/from-solidity/06-porting-checklist" class="sidebar-link">Porting Checklist</a><a href="/docs/migration/between-versions/v07-to-v08" class="sidebar-link">V0.7 → V0.8 (Draft)</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a><a href="/docs/changelog" class="sidebar-link">Changelog</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/migration/from-solidity/01-overview">Migration</a> <span aria-hidden="true">/</span> <span>From Solidity</span> <span aria-hidden="true">/</span> <span>Syntax Mapping</span> </nav>  <!-- Last sync: 2026-04-23 -->
+<h1 id="syntax-mapping">Syntax Mapping</h1>
+<p>This page is the literal translation table. Every section shows the same idea in both languages. If you skim only one page of this guide, make it this one — the rest builds on the vocabulary introduced here.</p>
+<h2 id="contract-declaration">Contract declaration</h2>
+<p>The top-level container is still called a <code>contract</code>. Covenant additionally offers <code>token</code> as a specialized variant with the ERC-20-shaped fields prewired.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="solidity"><code><span class="line"><span style="color:#6A737D">// Solidity</span></span>
+<span class="line"><span style="color:#D73A49">pragma</span><span style="color:#22863A"> solidity</span><span style="color:#005CC5"> ^0.8.24</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">contract</span><span style="color:#6F42C1"> Vault</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // ...</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Covenant</span></span>
+<span class="line"><span>contract Vault {</span></span>
+<span class="line"><span>    // ...</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>There is no pragma line. The Covenant compiler pins the language version via <code>covenant.toml</code>.</p>
+<h2 id="state-variables">State variables</h2>
+<p>Solidity puts the type before the name. Covenant follows the Rust/TypeScript convention: <code>field name: type</code>. This reads more naturally with generics and nested types.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="solidity"><code><span class="line"><span style="color:#6A737D">// Solidity</span></span>
+<span class="line"><span style="color:#005CC5">uint256</span><span style="color:#D73A49"> public</span><span style="color:#24292E"> totalSupply;</span></span>
+<span class="line"><span style="color:#005CC5">address</span><span style="color:#D73A49"> public</span><span style="color:#24292E"> owner;</span></span>
+<span class="line"><span style="color:#D73A49">mapping</span><span style="color:#24292E">(</span><span style="color:#005CC5">address</span><span style="color:#D73A49"> =></span><span style="color:#005CC5"> uint256</span><span style="color:#24292E">) </span><span style="color:#D73A49">public</span><span style="color:#24292E"> balances;</span></span></code></pre>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Covenant</span></span>
+<span class="line"><span>field total_supply: amount</span></span>
+<span class="line"><span>field owner: address</span></span>
+<span class="line"><span>field balances: mapping&#x3C;address, amount></span></span></code></pre>
+<p>Two things changed beyond syntax:</p>
+<ul>
+<li><code>uint256</code> holding a balance became <code>amount</code>. <code>amount</code> is still 256 bits under the hood, but it carries decimals metadata the compiler uses in unit checks. For plain counters, <code>u256</code> is still available.</li>
+<li><code>public</code> is implicit for state variables — the compiler synthesizes a read accessor. If you do not want one, mark the field <code>@private</code>.</li>
+</ul>
+<h2 id="functions--actions">Functions → actions</h2>
+<p>Covenant renames <code>function</code> to <code>action</code>. The rename is not cosmetic: actions have slightly stricter rules than Solidity functions (no silent reentrancy, explicit state-mutation classification, guards are first-class).</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="solidity"><code><span class="line"><span style="color:#6A737D">// Solidity</span></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> deposit</span><span style="color:#24292E">(</span><span style="color:#005CC5">uint256</span><span style="color:#E36209"> amount</span><span style="color:#24292E">) </span><span style="color:#D73A49">external</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">    require</span><span style="color:#24292E">(amount </span><span style="color:#D73A49">></span><span style="color:#005CC5"> 0</span><span style="color:#24292E">, </span><span style="color:#032F62">"zero"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">    balances[</span><span style="color:#005CC5">msg.sender</span><span style="color:#24292E">] </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> amount;</span></span>
+<span class="line"><span style="color:#D73A49">    emit</span><span style="color:#6F42C1"> Deposit</span><span style="color:#24292E">(</span><span style="color:#005CC5">msg.sender</span><span style="color:#24292E">, amount);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Covenant</span></span>
+<span class="line"><span>action deposit(value: amount) {</span></span>
+<span class="line"><span>    given value > 0 or revert_with ZeroDeposit()</span></span>
+<span class="line"><span>    balances[caller] += value</span></span>
+<span class="line"><span>    emit Deposit(caller, value)</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>Things to notice:</p>
+<ul>
+<li><code>msg.sender</code> became <code>caller</code>. Also available: <code>origin</code> (tx-level), <code>self</code> (contract’s own address).</li>
+<li><code>require(cond, "msg")</code> became <code>given cond or revert_with Err()</code>. Errors are typed — see below.</li>
+<li>There is no explicit <code>external</code>. Visibility is public-by-default for actions; add <code>@internal</code> to restrict.</li>
+</ul>
+<h2 id="modifiers--guards">Modifiers → guards</h2>
+<p>Solidity modifiers wrap a function body with <code>_;</code>. Covenant <code>guard</code> blocks are declarative boolean predicates — they say what must be true, not how to branch.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="solidity"><code><span class="line"><span style="color:#6A737D">// Solidity</span></span>
+<span class="line"><span style="color:#D73A49">modifier</span><span style="color:#6F42C1"> onlyOwner</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#D73A49">    require</span><span style="color:#24292E">(</span><span style="color:#005CC5">msg.sender</span><span style="color:#D73A49"> ==</span><span style="color:#24292E"> owner, </span><span style="color:#032F62">"not owner"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#005CC5">    _</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> withdraw</span><span style="color:#24292E">(</span><span style="color:#005CC5">uint256</span><span style="color:#E36209"> n</span><span style="color:#24292E">) </span><span style="color:#D73A49">external</span><span style="color:#6F42C1"> onlyOwner</span><span style="color:#24292E"> { ... }</span></span></code></pre>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Covenant</span></span>
+<span class="line"><span>guard only_owner {</span></span>
+<span class="line"><span>    caller == owner or revert_with NotOwner()</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>action withdraw(n: amount) requires only_owner { ... }</span></span></code></pre>
+<p>Guards can also be applied with the built-in shorthand <code>only owner</code> when the field is literally named <code>owner</code>.</p>
+<h2 id="events-and-errors">Events and errors</h2>
+<p>Events look identical. The difference is that <code>emit</code> is always required (Solidity is lenient about this in some positions) and errors are typed values rather than strings.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="solidity"><code><span class="line"><span style="color:#6A737D">// Solidity</span></span>
+<span class="line"><span style="color:#D73A49">event</span><span style="color:#6F42C1"> Deposit</span><span style="color:#24292E">(</span><span style="color:#005CC5">address</span><span style="color:#D73A49"> indexed</span><span style="color:#E36209"> from</span><span style="color:#24292E">, </span><span style="color:#005CC5">uint256</span><span style="color:#E36209"> amount</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">error</span><span style="color:#6F42C1"> ZeroDeposit</span><span style="color:#24292E">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> f</span><span style="color:#24292E">() </span><span style="color:#D73A49">external</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#24292E"> (</span><span style="color:#005CC5">msg</span><span style="color:#24292E">.value </span><span style="color:#D73A49">==</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">) </span><span style="color:#D73A49">revert</span><span style="color:#6F42C1"> ZeroDeposit</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">    emit</span><span style="color:#6F42C1"> Deposit</span><span style="color:#24292E">(</span><span style="color:#005CC5">msg.sender</span><span style="color:#24292E">, </span><span style="color:#005CC5">msg</span><span style="color:#24292E">.value);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Covenant</span></span>
+<span class="line"><span>event Deposit(from: address indexed, value: amount)</span></span>
+<span class="line"><span>error ZeroDeposit()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>action f() payable {</span></span>
+<span class="line"><span>    given sent > 0 or revert_with ZeroDeposit()</span></span>
+<span class="line"><span>    emit Deposit(caller, sent)</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>Custom errors are zero-cost (as in Solidity 0.8.4+) and selector-encoded. The compiler rejects <code>revert_with</code> of an undeclared error.</p>
+<h2 id="require--given"><code>require</code> → <code>given</code></h2>
+<p>This is the single most common translation you’ll do:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="solidity"><code><span class="line"><span style="color:#D73A49">require</span><span style="color:#24292E">(balance </span><span style="color:#D73A49">>=</span><span style="color:#24292E"> n, </span><span style="color:#032F62">"insufficient"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">require</span><span style="color:#24292E">(</span><span style="color:#005CC5">block</span><span style="color:#24292E">.timestamp </span><span style="color:#D73A49">></span><span style="color:#24292E"> unlockAt, </span><span style="color:#032F62">"locked"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">require</span><span style="color:#24292E">(to </span><span style="color:#D73A49">!=</span><span style="color:#005CC5"> address</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">), </span><span style="color:#032F62">"zero addr"</span><span style="color:#24292E">);</span></span></code></pre>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>given balance >= n or revert_with Insufficient()</span></span>
+<span class="line"><span>given now > unlock_at or revert_with Locked()</span></span>
+<span class="line"><span>given to != address(0) or revert_with ZeroAddress()</span></span></code></pre>
+<p>Multiple guards can be grouped:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>given {</span></span>
+<span class="line"><span>    balance >= n,</span></span>
+<span class="line"><span>    now > unlock_at,</span></span>
+<span class="line"><span>    to != address(0),</span></span>
+<span class="line"><span>} or revert_with Invalid()</span></span></code></pre>
+<h2 id="constructors--deploy-block">Constructors → <code>deploy</code> block</h2>
+<p>Covenant separates construction from regular actions. A <code>deploy</code> block runs once at contract creation and is the only place <code>field</code> values marked as immutable can be assigned.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="solidity"><code><span class="line"><span style="color:#6A737D">// Solidity</span></span>
+<span class="line"><span style="color:#D73A49">constructor</span><span style="color:#24292E">(</span><span style="color:#005CC5">address</span><span style="color:#24292E"> _owner, </span><span style="color:#005CC5">uint256</span><span style="color:#24292E"> _cap) {</span></span>
+<span class="line"><span style="color:#24292E">    owner </span><span style="color:#D73A49">=</span><span style="color:#24292E"> _owner;</span></span>
+<span class="line"><span style="color:#24292E">    cap </span><span style="color:#D73A49">=</span><span style="color:#24292E"> _cap;</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Covenant</span></span>
+<span class="line"><span>deploy(initial_owner: address, initial_cap: amount) {</span></span>
+<span class="line"><span>    owner = initial_owner</span></span>
+<span class="line"><span>    cap = initial_cap</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>The <code>deploy</code> block does not return anything and cannot be re-entered.</p>
+<h2 id="visibility-modifiers">Visibility modifiers</h2>
+<p>Solidity has four: <code>public</code>, <code>external</code>, <code>internal</code>, <code>private</code>. Covenant collapses these:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Solidity</th><th>Covenant</th></tr></thead><tbody><tr><td><code>public</code> / <code>external</code> (action)</td><td>default (no annotation)</td></tr><tr><td><code>internal</code></td><td><code>@internal</code></td></tr><tr><td><code>private</code></td><td><code>@private</code></td></tr><tr><td><code>public</code> (state var)</td><td>default (read accessor synthesized)</td></tr><tr><td><code>private</code> (state var)</td><td><code>@private</code></td></tr></tbody></table>
+<p>In practice you write fewer annotations. When you <em>do</em> see <code>@internal</code>, it is a deliberate statement that this code is not part of the contract’s public surface.</p>
+<h2 id="summary-card">Summary card</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Solidity              Covenant</span></span>
+<span class="line"><span>-----------------------------------------</span></span>
+<span class="line"><span>contract              contract / token</span></span>
+<span class="line"><span>uint256 x             field x: u256 / amount</span></span>
+<span class="line"><span>function              action</span></span>
+<span class="line"><span>modifier              guard</span></span>
+<span class="line"><span>require(c,"m")        given c or revert_with E()</span></span>
+<span class="line"><span>event / emit          event / emit (same)</span></span>
+<span class="line"><span>error                 error (same, always typed)</span></span>
+<span class="line"><span>constructor           deploy</span></span>
+<span class="line"><span>msg.sender            caller</span></span>
+<span class="line"><span>address payable       address</span></span>
+<span class="line"><span>public (default)      (default)</span></span>
+<span class="line"><span>internal              @internal</span></span></code></pre>
+<p>With this vocabulary in hand, move on to the type system — the subtler differences live there.</p>   <aside class="doc-feedback" aria-label="Feedback"> <p>Found an issue with this page? <a href="https://github.com/covenant-lang/covenant/issues/new?title=Docs%20feedback%3A%20Syntax%20Mapping&#38;body=Page%3A%20https%3A%2F%2Fcovenant-lang.org%2Fdocs%2Fmigration%2Ffrom-solidity%2F02-syntax-mapping%0A%0A**What%20could%20be%20clearer%3F**%0A%0A%0A**Suggestion%3A**%0A&#38;labels=docs" target="_blank" rel="noopener noreferrer">Open a docs issue on GitHub &rarr;</a></p> </aside> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Tooling Equivalents - Covenant Docs</title><meta name="description" content="Mapping your Solidity workflow — Hardhat, Foundry, solc, slither, Remix — to the covenant CLI and its built-in tools."><meta property="og:title" content="Tooling Equivalents - Covenant Docs"><meta property="og:description" content="Mapping your Solidity workflow — Hardhat, Foundry, solc, slither, Remix — to the covenant CLI and its built-in tools."><meta property="og:image" content="https://covenant-lang.org/og-image.png"><link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><link rel="canonical" href="https://covenant-lang.org/docs/migration/from-solidity/05-tooling-equivalents"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Tooling Equivalents","description":"Mapping your Solidity workflow — Hardhat, Foundry, solc, slither, Remix — to the covenant CLI and its built-in tools.","url":"https://covenant-lang.org/docs/migration/from-solidity/05-tooling-equivalents","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Covenant Language Documentation","url":"https://covenant-lang.org/docs"},"publisher":{"@type":"Organization","name":"Covenant Language","url":"https://covenant-lang.org"}}</script><link rel="stylesheet" href="/docs/_astro/DocsLayout.CNjVq_g-.css"></head> <body> <header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link">Examples</a> <a href="/docs/" class="nav-link active">Docs</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout"> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Tokens</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Cookbook Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/tokens/04-rebase-token" class="sidebar-link">Rebase Token</a><a href="/docs/cookbook/tokens/05-vesting-schedule" class="sidebar-link">Vesting Schedule</a><a href="/docs/cookbook/tokens/06-capped-supply" class="sidebar-link">Capped Supply</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Auth &amp; Upgrades</span> <a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/auth/04-guardian-recovery" class="sidebar-link">Guardian Recovery</a><a href="/docs/cookbook/auth/05-role-based-access" class="sidebar-link">Role-Based Access</a><a href="/docs/cookbook/auth/06-emergency-pause" class="sidebar-link">Emergency Pause</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/upgrades/03-diamond-storage" class="sidebar-link">Diamond Storage</a><a href="/docs/cookbook/upgrades/04-migration-scripts" class="sidebar-link">Migration Scripts</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Privacy &amp; Integration</span> <a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/privacy/04-confidential-lending" class="sidebar-link">Confidential Lending</a><a href="/docs/cookbook/privacy/05-private-identity" class="sidebar-link">Private Identity</a><a href="/docs/cookbook/privacy/06-shielded-token-bridge" class="sidebar-link">Shielded Bridge</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a><a href="/docs/cookbook/integration/03-safe-multisig" class="sidebar-link">Safe Multisig</a><a href="/docs/cookbook/integration/04-uniswap-v4-hook" class="sidebar-link">Uniswap V4 Hook</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Testing</span> <a href="/docs/cookbook/testing/01-inline-tests" class="sidebar-link">Inline Tests</a><a href="/docs/cookbook/testing/02-fuzz-testing" class="sidebar-link">Fuzz Testing</a><a href="/docs/cookbook/testing/03-invariant-testing" class="sidebar-link">Invariant Testing</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Migration</span> <a href="/docs/migration/from-solidity/01-overview" class="sidebar-link">From Solidity — Overview</a><a href="/docs/migration/from-solidity/02-syntax-mapping" class="sidebar-link">Syntax Mapping</a><a href="/docs/migration/from-solidity/03-type-system" class="sidebar-link">Type System</a><a href="/docs/migration/from-solidity/04-patterns" class="sidebar-link">Common Patterns</a><a href="/docs/migration/from-solidity/05-tooling-equivalents" class="sidebar-link active">Tooling Equivalents</a><a href="/docs/migration/from-solidity/06-porting-checklist" class="sidebar-link">Porting Checklist</a><a href="/docs/migration/between-versions/v07-to-v08" class="sidebar-link">V0.7 → V0.8 (Draft)</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a><a href="/docs/changelog" class="sidebar-link">Changelog</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.Do2a9OMx.js"></script> <main class="docs-main" id="main-content"> <article class="docs-content" data-pagefind-body> <nav class="breadcrumb" aria-label="Breadcrumb"> <a href="/docs/">Docs</a>  <span aria-hidden="true">/</span> <a href="/migration/from-solidity/01-overview">Migration</a> <span aria-hidden="true">/</span> <span>From Solidity</span> <span aria-hidden="true">/</span> <span>Tooling Equivalents</span> </nav>  <!-- Last sync: 2026-04-23 -->
+<h1 id="tooling-equivalents">Tooling Equivalents</h1>
+<p>You have muscle memory for a Solidity workflow. You know the shape of a Hardhat project, the feel of <code>forge test -vvv</code>, and the rhythm of running Slither before a PR. This page maps each of those to Covenant.</p>
+<p>The short version: most of the Solidity ecosystem’s separate tools are one binary in Covenant. You do not install a test runner, a linter, and a static analyzer separately.</p>
+<h2 id="tool-by-tool-mapping">Tool-by-tool mapping</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Solidity</th><th>Covenant</th><th>Notes</th></tr></thead><tbody><tr><td>Hardhat / Foundry (project mgmt)</td><td><code>covenant</code> CLI</td><td>One binary; project layout is conventional, not configurable per-tool</td></tr><tr><td><code>solc</code> (compiler)</td><td><code>covenant build</code></td><td>Compiler is a subcommand, not a separate binary</td></tr><tr><td><code>forge test</code> / <code>hardhat test</code></td><td><code>covenant test</code></td><td>Tests live inline in <code>test "name" { ... }</code> blocks</td></tr><tr><td><code>forge fuzz</code> / Echidna</td><td><code>covenant fuzz</code></td><td>Property-based fuzzing built in; uses the same <code>invariant</code> syntax</td></tr><tr><td>Slither / Mythril</td><td><code>covenant audit</code></td><td>Static analyzer; runs by default in CI templates</td></tr><tr><td>Foundry <code>cast</code></td><td><code>covenant call</code> / <code>covenant send</code></td><td>RPC calls and transactions</td></tr><tr><td><code>forge script</code> (deploys)</td><td><code>covenant deploy</code></td><td>Deterministic deploy scripts declared in <code>deploy.cov</code> files</td></tr><tr><td>Remix IDE</td><td><code>covenant init --example</code> (for now)</td><td>A hosted playground is on the roadmap — not yet shipped</td></tr><tr><td>OpenZeppelin Upgrades plugin</td><td><code>covenant migrate</code></td><td>Verifies storage-layout compatibility against the previous version</td></tr><tr><td><code>abigen</code> / typechain</td><td><code>covenant bindings --lang {ts,rs,py}</code></td><td>Generates typed client bindings</td></tr></tbody></table>
+<h2 id="the-covenant-cli-at-a-glance">The <code>covenant</code> CLI at a glance</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> new</span><span style="color:#032F62"> my-project</span><span style="color:#6A737D">        # scaffold a new project</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> build</span><span style="color:#6A737D">                 # compile</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> test</span><span style="color:#6A737D">                  # run unit tests</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> test</span><span style="color:#005CC5"> --match</span><span style="color:#032F62"> deposit</span><span style="color:#6A737D">  # filter tests</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> fuzz</span><span style="color:#005CC5"> --runs</span><span style="color:#005CC5"> 10000</span><span style="color:#6A737D">     # property-based fuzzing</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> audit</span><span style="color:#6A737D">                 # static analysis (was: slither)</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> bench</span><span style="color:#6A737D">                 # gas snapshots; diffs against previous run</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> bindings</span><span style="color:#005CC5"> --lang</span><span style="color:#032F62"> ts</span><span style="color:#6A737D">    # typed client bindings</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> migrate</span><span style="color:#6A737D">               # storage-layout diff vs. previous deploy</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> deploy</span><span style="color:#005CC5"> --network</span><span style="color:#032F62"> mainnet</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> call</span><span style="color:#D73A49"> &#x3C;</span><span style="color:#032F62">add</span><span style="color:#24292E">r</span><span style="color:#D73A49">></span><span style="color:#032F62"> balance_of</span><span style="color:#24292E">(</span><span style="color:#6F42C1">0x...</span><span style="color:#24292E">)</span></span></code></pre>
+<p>Every subcommand shares one config file: <code>covenant.toml</code>.</p>
+<h2 id="covenanttoml--a-minimal-project-file"><code>covenant.toml</code> — a minimal project file</h2>
+<p>This is roughly the Covenant equivalent of <code>hardhat.config.ts</code> + <code>foundry.toml</code> + <code>.slither.config.json</code> combined:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="toml"><code><span class="line"><span style="color:#24292E">[</span><span style="color:#6F42C1">project</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">name    = </span><span style="color:#032F62">"my-vault"</span></span>
+<span class="line"><span style="color:#24292E">version = </span><span style="color:#032F62">"0.1.0"</span></span>
+<span class="line"><span style="color:#6A737D"># Pin the language version explicitly — no ^ ranges.</span></span>
+<span class="line"><span style="color:#24292E">language = </span><span style="color:#032F62">"0.7"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">[</span><span style="color:#6F42C1">build</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#6A737D"># Output directory for compiled artifacts.</span></span>
+<span class="line"><span style="color:#24292E">out = </span><span style="color:#032F62">"target"</span></span>
+<span class="line"><span style="color:#6A737D"># Optimizer passes. 0 = debug, 3 = release.</span></span>
+<span class="line"><span style="color:#24292E">optimize = </span><span style="color:#005CC5">3</span></span>
+<span class="line"><span style="color:#6A737D"># Emit storage-layout JSON for upgrade checks.</span></span>
+<span class="line"><span style="color:#24292E">emit_layout = </span><span style="color:#005CC5">true</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">[</span><span style="color:#6F42C1">test</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#6A737D"># Default number of fuzz runs per property test.</span></span>
+<span class="line"><span style="color:#24292E">fuzz_runs = </span><span style="color:#005CC5">1000</span></span>
+<span class="line"><span style="color:#6A737D"># Fail the suite if any test exceeds this gas.</span></span>
+<span class="line"><span style="color:#24292E">gas_ceiling = </span><span style="color:#005CC5">2_000_000</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">[</span><span style="color:#6F42C1">audit</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#6A737D"># Which rule families to run. "all" is the default.</span></span>
+<span class="line"><span style="color:#24292E">rules = [</span><span style="color:#032F62">"reentrancy"</span><span style="color:#24292E">, </span><span style="color:#032F62">"oracle"</span><span style="color:#24292E">, </span><span style="color:#032F62">"auth"</span><span style="color:#24292E">, </span><span style="color:#032F62">"overflow"</span><span style="color:#24292E">, </span><span style="color:#032F62">"fhe"</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#6A737D"># Rules whose findings should block CI.</span></span>
+<span class="line"><span style="color:#24292E">deny  = [</span><span style="color:#032F62">"reentrancy"</span><span style="color:#24292E">, </span><span style="color:#032F62">"auth"</span><span style="color:#24292E">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">[</span><span style="color:#6F42C1">networks</span><span style="color:#24292E">.</span><span style="color:#6F42C1">mainnet</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">rpc      = </span><span style="color:#032F62">"https://rpc.covenant.network"</span></span>
+<span class="line"><span style="color:#24292E">chain_id = </span><span style="color:#005CC5">8443</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">[</span><span style="color:#6F42C1">networks</span><span style="color:#24292E">.</span><span style="color:#6F42C1">testnet</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">rpc      = </span><span style="color:#032F62">"https://testnet-rpc.covenant.network"</span></span>
+<span class="line"><span style="color:#24292E">chain_id = </span><span style="color:#005CC5">84430</span></span></code></pre>
+<p>A fresh project from <code>covenant new</code> comes with sensible defaults — you usually only edit <code>[networks]</code> and <code>[audit]</code>.</p>
+<h2 id="project-layout">Project layout</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>my-project/</span></span>
+<span class="line"><span>├── covenant.toml</span></span>
+<span class="line"><span>├── src/</span></span>
+<span class="line"><span>│   ├── Vault.cov</span></span>
+<span class="line"><span>│   └── lib/</span></span>
+<span class="line"><span>│       └── math.cov</span></span>
+<span class="line"><span>├── tests/          # optional — tests can also live inline in src</span></span>
+<span class="line"><span>│   └── integration.cov</span></span>
+<span class="line"><span>├── scripts/</span></span>
+<span class="line"><span>│   └── deploy.cov</span></span>
+<span class="line"><span>└── target/         # build output (gitignored)</span></span></code></pre>
+<p>No separate <code>contracts/</code> and <code>test/</code> directories. Tests live wherever it is convenient — inline <code>test "..."</code> blocks in the same file as the contract, or in a <code>tests/</code> folder for multi-contract scenarios.</p>
+<h2 id="tests-inline-not-in-a-side-file">Tests inline, not in a side file</h2>
+<p>A Foundry test file lives beside the contract. A Covenant test block lives <em>inside</em> the contract’s source file (though a separate file also works). This is deliberate: tests are the contract’s executable documentation.</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>contract Vault {</span></span>
+<span class="line"><span>    field balances: mapping&#x3C;address, amount></span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    action deposit(value: amount) payable { balances[caller] += value }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    test "deposit increments balance" {</span></span>
+<span class="line"><span>        let alice = address(0xA11CE)</span></span>
+<span class="line"><span>        impersonate(alice) { deposit(100) }</span></span>
+<span class="line"><span>        assert balances[alice] == 100</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    fuzz "deposit is monotonic" (value: amount) {</span></span>
+<span class="line"><span>        let before = balances[caller]</span></span>
+<span class="line"><span>        deposit(value)</span></span>
+<span class="line"><span>        assert balances[caller] >= before</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    invariant "total supply conserved" {</span></span>
+<span class="line"><span>        balances.sum() == total_deposited</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>Run them with <code>covenant test</code>. Fuzz and invariant blocks are picked up by <code>covenant fuzz</code> for longer runs in CI.</p>
+<h2 id="covenant-audit-is-not-optional"><code>covenant audit</code> is not optional</h2>
+<p>Slither is a community tool you remember to run. <code>covenant audit</code> is a first-class subcommand wired into the default CI template. It runs:</p>
+<ul>
+<li>Reentrancy analysis (aware of <code>@nonreentrant</code>).</li>
+<li>Authorization gap detection (actions that mutate money-typed fields without a <code>guard</code>).</li>
+<li>Oracle price-freshness lints (for any field typed <code>price_feed</code>).</li>
+<li>Overflow / decimals-mismatch checks.</li>
+<li>FHE-specific checks (accidental plaintext leak via events, key-rotation staleness).</li>
+</ul>
+<p>CI defaults to failing the build on findings in the <code>deny</code> list from <code>covenant.toml</code>.</p>
+<h2 id="what-about-remix">What about Remix?</h2>
+<p>A hosted playground is on the roadmap, but not yet shipped. Until then, the closest equivalent is:</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> init</span><span style="color:#005CC5"> --example</span><span style="color:#032F62"> erc20</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> init</span><span style="color:#005CC5"> --example</span><span style="color:#032F62"> vault</span></span>
+<span class="line"><span style="color:#6F42C1">covenant</span><span style="color:#032F62"> init</span><span style="color:#005CC5"> --example</span><span style="color:#032F62"> sealed-bid</span></span></code></pre>
+<p>Each spins up a ready-to-run project with tests already passing — useful for exploring a pattern without wiring up a full project.</p>
+<h2 id="moving-an-existing-foundry-project">Moving an existing Foundry project</h2>
+<p>Pragmatic import path:</p>
+<ol>
+<li><code>covenant new --from-foundry ./my-foundry-project</code> — scaffolds a Covenant project with your Solidity sources copied into <code>legacy/</code>.</li>
+<li>Port contracts one at a time into <code>src/</code>, starting with leaf contracts (no dependencies).</li>
+<li>Use <code>covenant migrate --reference legacy/out/Foo.json</code> to check that storage layout matches, if you’re preserving upgradeability.</li>
+<li>Run <code>covenant audit</code> and <code>covenant test</code> at each step.</li>
+</ol>
+<p>Most of the rest of this guide (especially the porting checklist on the next page) assumes this is how you’re working: incrementally, with both codebases side by side.</p>   <aside class="doc-feedback" aria-label="Feedback"> <p>Found an issue with this page? <a href="https://github.com/covenant-lang/covenant/issues/new?title=Docs%20feedback%3A%20Tooling%20Equivalents&#38;body=Page%3A%20https%3A%2F%2Fcovenant-lang.org%2Fdocs%2Fmigration%2Ffrom-solidity%2F05-tooling-equivalents%0A%0A**What%20could%20be%20clearer%3F**%0A%0A%0A**Suggestion%3A**%0A&#38;labels=docs" target="_blank" rel="noopener noreferrer">Open a docs issue on GitHub &rarr;</a></p> </aside> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repository</span> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://covenant-lang.org/manifesto.html#architecture" class="footer-link">Architecture spec</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.7 GA &mdash; stable for early-adopter production use.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0</span> </div> </footer> </body></html>
