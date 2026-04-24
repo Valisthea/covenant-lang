@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 const { title, description = 'Covenant language documentation.', prev, next, breadcrumb } = Astro.props;
 const currentPath = Astro.url.pathname;
@@ -61,6 +62,11 @@ const jsonLd = {
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="canonical" href={canonical}/>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}/>
+  {/* SPA-style navigation — eliminates the page-unload blank canvas that was
+      causing the random dark flash. Combined with transition:persist on the
+      sidebar/header below, navigation becomes instant DOM swaps with zero
+      re-paint of the chrome. */}
+  <ClientRouter />
   {/* Restore sidebar scroll position as early as possible (before the sidebar paints),
       so clicking a link on a deeply-scrolled sidebar doesn't snap it back to top on the next page. */}
   <script is:inline>
@@ -93,9 +99,9 @@ const jsonLd = {
   </script>
 </head>
 <body>
-  <Header currentPath={currentPath}/>
+  <Header currentPath={currentPath} transition:persist="site-header"/>
   <div class="docs-layout">
-    <Sidebar currentPath={currentPath}/>
+    <Sidebar currentPath={currentPath} transition:persist="docs-sidebar"/>
     <main class="docs-main" id="main-content">
       <article class="docs-content" data-pagefind-body>
         {breadcrumb && (
