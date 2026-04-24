@@ -1,0 +1,49 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+<DocsLayout title="Changelog" description="Version history for the Covenant language, compiler, and documentation."
+  breadcrumb={[{label:'Changelog'}]}>
+  <h1>Changelog</h1>
+  <p class="lede">Version history for the Covenant language, compiler, and standard library. Semantic versioning applies to the language spec and stable CLI surface; internal compiler details may change between minor versions.</p>
+
+  <h2 id="v0-7-0">v0.7.0 — 2026-04-23 <span class="tag tag-ga">GA</span></h2>
+  <p><strong>First general-availability release.</strong> Language spec is frozen for the 0.7.x line. Compiler OMEGA V4 audit complete — all 41 findings resolved.</p>
+  <ul>
+    <li>New Styx Protocol ERCs: <a href="/docs/reference/ercs/02-erc-8227-fhe">8227 (FHE Tokens)</a>, <a href="/docs/reference/ercs/03-erc-8228-amnesia">8228 (Amnesia)</a>, <a href="/docs/reference/ercs/04-erc-8229-fhe-verify">8229 (FHE Verify)</a>, <a href="/docs/reference/ercs/05-erc-8231-pq">8231 (Post-Quantum)</a>.</li>
+    <li>Compiler: Nova IVC + Halo2 + Groth16 wrapping in the ZK backend.</li>
+    <li>LSP v1: hover, go-to-definition, diagnostics, completion, formatting.</li>
+    <li>Cookbook: 30+ production-ready recipes across tokens, auth, upgrades, privacy, integration, testing.</li>
+    <li>Migration guide from Solidity.</li>
+  </ul>
+
+  <h2 id="v0-6-0">v0.6.0 — 2026-01-15</h2>
+  <ul>
+    <li>Introduced <code>amnesia {'{}'}</code> block with three-phase cleanup semantics.</li>
+    <li>CRYSTALS-Dilithium-5 (FIPS 204) as default signature scheme under <code>@pq_signed</code>.</li>
+    <li>BFV ciphertext serialization stabilized.</li>
+    <li>Breaking: renamed <code>encrypt</code> builtin to <code>fhe_encrypt</code> for consistency.</li>
+  </ul>
+
+  <h2 id="v0-5-0">v0.5.0 — 2025-10-02</h2>
+  <ul>
+    <li>First public testnet release.</li>
+    <li>Core language: <code>token</code>, <code>contract</code>, <code>field</code>, <code>action</code>, <code>guard</code>, <code>event</code>, <code>error</code>.</li>
+    <li><code>covenant</code> CLI shipped with <code>build</code>, <code>test</code>, <code>deploy</code>.</li>
+  </ul>
+
+  <h2 id="unreleased">Unreleased — v0.8.0 (in development)</h2>
+  <p>Planned for Q3 2026. See the <a href="/docs/migration/between-versions/v0.7-to-v0.8">V0.7 → V0.8 migration draft</a>.</p>
+  <ul>
+    <li>WASM target stabilization (currently gated under <code>--experimental-wasm</code>).</li>
+    <li><code>@async_action</code> keyword for multi-block actions.</li>
+    <li>Revised FHE API with explicit BFV parameter selection.</li>
+    <li>Improved compiler diagnostics (serde-compatible JSON format).</li>
+  </ul>
+
+  <style>
+    .tag { font-size: 8.5pt; padding: 2px 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; font-family: var(--font-mono); }
+    .tag-ga { background: #1a7f37; color: #fff; }
+    h2 { margin-top: 2em; }
+    .lede { color: var(--ink-faint); font-style: italic; }
+  </style>
+</DocsLayout>

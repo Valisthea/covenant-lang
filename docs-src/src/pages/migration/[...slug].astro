@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from 'astro:content';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+export async function getStaticPaths() {
+  const pages = await getCollection('migration');
+  return pages.map(entry => ({
+    params: { slug: entry.id.replace(/\.mdx?$/, '') },
+    props: { entry }
+  }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const rawSlug = entry.id.replace(/\.mdx?$/, '');
+const category = rawSlug.includes('/') ? rawSlug.split('/')[0] : null;
+const categoryLabel = category === 'from-solidity'
+  ? 'From Solidity'
+  : category === 'between-versions'
+    ? 'Between Versions'
+    : null;
+---
+<DocsLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  breadcrumb={[
+    {label:'Migration',href:'/migration/from-solidity/01-overview'},
+    ...(categoryLabel ? [{label:categoryLabel}] : []),
+    {label:entry.data.title}
+  ]}>
+  <Content />
+</DocsLayout>

@@ -76,5 +76,13 @@ footer#site-footer{border-top:1px solid var(--ink);padding:48px 0 40px;grid-colu
 .doc-nav-link.prev::before{content:"<- "}.doc-nav-link.next::after{content:" ->"}
 .doc-nav-link span{display:block;font-size:7pt;color:var(--ink-faint);margin-bottom:2px;letter-spacing:0}
 .doc-nav-link:hover span{color:rgba(255,255,255,.7)}
-@media(max-width:768px){#site-header{padding:0 20px}nav.header-nav{gap:16px}.docs-layout{grid-template-columns:1fr}#docs-sidebar{display:none}.docs-main{grid-column:1}.docs-content{padding:32px 20px 60px}.footer-inner{grid-template-columns:1fr;gap:24px;padding:0 20px}.footer-bottom{flex-direction:column;gap:8px;padding:16px 20px 0;text-align:center}}
-@media(max-width:480px){nav.header-nav .nav-link:not(.nav-link-cta){display:none}}
+.doc-feedback{margin-top:2.5rem;padding:12px 16px;background:var(--paper-alt);border-left:3px solid var(--rule);font-family:var(--font-mono);font-size:8.5pt;color:var(--ink-mute)}
+.doc-feedback p{margin:0;font-size:inherit;color:inherit}
+.doc-feedback a{color:var(--accent)}
+.search-result-item{display:block;padding:8px 0;border-bottom:1px solid var(--rule-faint);text-decoration:none}
+.search-result-item:last-child{border-bottom:none}
+.search-result-title{font-family:var(--font-sans);font-size:9pt;font-weight:500;color:var(--ink)}
+.search-result-excerpt{font-family:var(--font-sans);font-size:8pt;color:var(--ink-faint);margin-top:2px;line-height:1.4}
+@media(max-width:768px){#site-header{padding:0 20px}nav.header-nav{gap:16px}.docs-layout{grid-template-columns:1fr}#docs-sidebar{display:none}.docs-main{grid-column:1}.docs-content{padding:32px 20px 60px;max-width:100%}.footer-inner{grid-template-columns:1fr;gap:24px;padding:0 20px}.footer-bottom{flex-direction:column;gap:8px;padding:16px 20px 0;text-align:center}pre{padding:1rem;font-size:.78rem}h1{font-size:1.85rem}h2{font-size:1.4rem}h3{font-size:1.15rem}table{font-size:9pt;display:block;overflow-x:auto}}
+@media(max-width:480px){nav.header-nav .nav-link:not(.nav-link-cta){display:none}.docs-content{padding:24px 16px 40px}.doc-nav{flex-direction:column;gap:.5rem}.doc-nav-link{max-width:100%}}
+@media(max-width:375px){.header-brand-name{font-size:9pt}h1{font-size:1.6rem}pre{font-size:.72rem;padding:.75rem}}

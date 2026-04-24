@@ -6,6 +6,28 @@ import '../styles/global.css';
 const { title, description = 'Covenant language documentation.', prev, next, breadcrumb } = Astro.props;
 const currentPath = Astro.url.pathname;
 const pageTitle = title ? title + ' - Covenant Docs' : 'Covenant Docs';
+const canonical = 'https://covenant-lang.org' + currentPath;
+const issueTitle = encodeURIComponent('Docs feedback: ' + (title ?? currentPath));
+const issueBody = encodeURIComponent('Page: ' + canonical + '\n\n**What could be clearer?**\n\n\n**Suggestion:**\n');
+const feedbackUrl = 'https://github.com/covenant-lang/covenant/issues/new?title=' + issueTitle + '&body=' + issueBody + '&labels=docs';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title ?? 'Covenant Docs',
+  description,
+  url: canonical,
+  inLanguage: 'en',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'Covenant Language Documentation',
+    url: 'https://covenant-lang.org/docs',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Covenant Language',
+    url: 'https://covenant-lang.org',
+  },
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -21,7 +43,8 @@ const pageTitle = title ? title + ' - Covenant Docs' : 'Covenant Docs';
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="canonical" href={"https://covenant-lang.org" + currentPath}/>
+  <link rel="canonical" href={canonical}/>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}/>
 </head>
 <body>
   <Header currentPath={currentPath}/>
@@ -47,6 +70,9 @@ const pageTitle = title ? title + ' - Covenant Docs' : 'Covenant Docs';
             {next ? <a href={next.href} class="doc-nav-link next"><span>Next</span>{next.label}</a> : <span/>}
           </nav>
         )}
+        <aside class="doc-feedback" aria-label="Feedback">
+          <p>Found an issue with this page? <a href={feedbackUrl} target="_blank" rel="noopener noreferrer">Open a docs issue on GitHub &rarr;</a></p>
+        </aside>
       </article>
     </main>
   </div>

@@ -42,4 +42,8 @@ export const collections = {
     loader: glob({ pattern: '**/*.md', base: './src/content/cookbook' }),
     schema: base,
   }),
+  migration: defineCollection({
+    loader: glob({ pattern: '**/*.md', base: './src/content/migration' }),
+    schema: base,
+  }),
 };
