@@ -30,19 +30,25 @@ const jsonLd = {
 };
 ---
 <!doctype html>
-<html lang="en">
+{/* Inline style on <html> applies BEFORE any stylesheet or meta is parsed —
+    this is the only way to guarantee the first paint is light, not the UA's
+    default-dark blank canvas (Chrome Auto Dark Mode, Edge dark, etc.). */}
+<html lang="en" style="color-scheme:light only;background:#fcfbf8;color:#1a1a1a">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="color-scheme" content="light"/>
+  <meta name="color-scheme" content="light only"/>
+  <meta name="supported-color-schemes" content="light"/>
   <meta name="theme-color" content="#fcfbf8"/>
-  {/* Critical inline styles — paints the page in its final colors before the external CSS arrives.
-      Prevents the dark-background FOUC users were seeing during navigation. */}
+  {/* Critical inline styles — paint the entire above-the-fold layout in its final
+      colors before the external CSS arrives. Prevents the dark-background FOUC. */}
   <style>
-    html,body{background:#fcfbf8;color:#1a1a1a}
-    html{color-scheme:light}
-    body{font-family:'Inter',system-ui,-apple-system,sans-serif;margin:0;min-height:100vh}
+    html{color-scheme:light only;background:#fcfbf8;color:#1a1a1a;forced-color-adjust:none}
+    body{background:#fcfbf8;color:#1a1a1a;font-family:'Inter',system-ui,-apple-system,sans-serif;margin:0;min-height:100vh}
+    #site-header{position:fixed;top:0;left:0;right:0;height:60px;background:#fcfbf8;border-bottom:1px solid rgba(26,26,26,.10);z-index:1000}
     #docs-sidebar{background:#fcfbf8}
+    .docs-layout{background:#fcfbf8;min-height:100vh;padding-top:60px}
+    main,article,aside,footer{background:#fcfbf8}
   </style>
   <title>{pageTitle}</title>
   <meta name="description" content={description}/>
