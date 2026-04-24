@@ -6,6 +6,17 @@ import DocsLayout from '../layouts/DocsLayout.astro';
   <h1>Changelog</h1>
   <p class="lede">Version history for the Covenant language, compiler, and standard library. Semantic versioning applies to the language spec and stable CLI surface; internal compiler details may change between minor versions.</p>
 
+  <h2 id="v0-8-0">v0.8.0 — 2026-04-24 <span class="tag tag-ga">GA</span></h2>
+  <p><strong>WASM + Amnesia + Bridge + Advanced Optimizations.</strong> V0.8 rolls up V0.7.1 (WebAssembly backend + Cryptographic Amnesia) and V0.7.2 (Bridge module + Advanced Optimizations) into a single GA milestone. Fully backward compatible with V0.7 at the source level; OMEGA V4 audit findings remain resolved. Three targets (EVM, Aster Chain, WebAssembly) and a 22-crate workspace (was 19).</p>
+  <ul>
+    <li><strong>WebAssembly backend</strong> — <code>covenant build contract.cov --target-chain wasm</code> produces deterministic, <code>wasmparser::validate</code>-clean output. Runs in browsers and in <code>wasmtime</code> / <code>wasmer</code>.</li>
+    <li><strong>Cryptographic amnesia complete</strong> — Wesolowski VDF, Shamir secret sharing, and keccak-bound destruction proofs lowered to dedicated precompiles at <code>0x124–0x127</code>. Externally verifiable in pure Python via <code>tools/verify_destruction_proof.py</code>.</li>
+    <li><strong>Cross-chain bridge module</strong> — <code>bridge … anchored_on [...]</code> synthesizes four canonical functions per bridge artifact (<code>local_chain</code>, <code>nonce_for</code>, <code>mark_processed</code>, <code>is_processed</code>) and emits one artifact per anchored chain. Per-pair nonce anti-replay, validator-set Merkle commitments, threshold ECDSA attestations.</li>
+    <li><strong>Advanced optimizer</strong> — FHE coalescing, <code>@precompute(keccak(...))</code> compile-time hash evaluation, noise-budget tracking (<code>W701</code> / <code>W702</code>), <code>@batch_up_to(N)</code> bounded-loop annotation with <code>W406</code> actionability check. <strong>15–30 % pGas reduction</strong> on FHE-heavy contracts.</li>
+    <li><strong>CLI bench</strong> — <code>covenant bench --baseline gas_baselines.json …</code> performs gas-regression checks against a committed baseline. Exits non-zero on regressions &gt; 5 %.</li>
+    <li><strong>Migration guide</strong> — <a href="/docs/migration/between-versions/v07-to-v08">V0.7 → V0.8 migration</a>.</li>
+  </ul>
+
   <h2 id="v0-7-0">v0.7.0 — 2026-04-23 <span class="tag tag-ga">GA</span></h2>
   <p><strong>First general-availability release.</strong> Language spec is frozen for the 0.7.x line. Compiler OMEGA V4 audit complete — all 41 findings resolved.</p>
   <ul>
@@ -31,13 +42,15 @@ import DocsLayout from '../layouts/DocsLayout.astro';
     <li><code>covenant</code> CLI shipped with <code>build</code>, <code>test</code>, <code>deploy</code>.</li>
   </ul>
 
-  <h2 id="unreleased">Unreleased — v0.8.0 (in development)</h2>
-  <p>Planned for Q3 2026. See the <a href="/docs/migration/between-versions/v0.7-to-v0.8">V0.7 → V0.8 migration draft</a>.</p>
+  <h2 id="unreleased">Unreleased — v0.8.x follow-ups (in development)</h2>
+  <p>Planned for Q3 2026. Additive to V0.8 GA; no breaking changes.</p>
   <ul>
-    <li>WASM target stabilization (currently gated under <code>--experimental-wasm</code>).</li>
-    <li><code>@async_action</code> keyword for multi-block actions.</li>
-    <li>Revised FHE API with explicit BFV parameter selection.</li>
-    <li>Improved compiler diagnostics (serde-compatible JSON format).</li>
+    <li>Generic <code>Loop</code> opcode — unblocks true <code>@batch_up_to(N)</code> unrolling.</li>
+    <li>Aggregate operator surface syntax (<code>.sum</code>, <code>.count</code>, <code>.max</code>, <code>.argmax_by_address</code>); IR-level lowering plan already reusable via <code>covenant-stdlib::aggregates::lower_aggregate_plan</code>.</li>
+    <li>Real TFHE key-switching precompile <code>0x0128</code>.</li>
+    <li>Dilithium / BLS validator signatures for the bridge module (ECDSA secp256k1 is the V0.8 wire format).</li>
+    <li>Full Aster SDK lowering, replacing the <code>COV7\x01</code> placeholder artifacts.</li>
+    <li>Halo2 destruction-proof variant (optional; the V0.8 keccak256 scheme remains canonical for ERC-8228).</li>
   </ul>
 
   <style>

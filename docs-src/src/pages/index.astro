@@ -1,15 +1,25 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
 ---
-<DocsLayout title="Covenant Language Documentation" description="Official documentation for Covenant - post-quantum, FHE, ZK smart contract language.">
+<DocsLayout title="Covenant Language Documentation — V0.8 GA" description="Official documentation for Covenant V0.8 GA — post-quantum, FHE, ZK smart contract language with WebAssembly, cross-chain bridges, and cryptographic amnesia.">
+  <div style="border:1px solid #7C3AED;background:#faf7ff;padding:14px 18px;margin-bottom:24px;font-family:'Inter',sans-serif;font-size:10.5pt;">
+    <strong style="font-family:'JetBrains Mono',monospace;font-size:8.5pt;letter-spacing:0.1em;text-transform:uppercase;color:#7C3AED;">V0.8 GA · April 2026</strong>
+    <p style="margin:6px 0 0 0;color:#3d3d3d;">These docs cover <strong>Covenant V0.8 GA</strong> — WebAssembly target, cross-chain bridges, complete cryptographic amnesia, and a 15–30 % pGas reduction on FHE-heavy contracts. <a href="/docs/migration/between-versions/v07-to-v08" style="color:#7C3AED;">V0.7 → V0.8 migration guide</a>. V0.7 content is frozen in the <code>v0.7.0</code> git tag.</p>
+  </div>
   <h1>Covenant Language Docs</h1>
   <p style="font-family:'EB Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--ink-mute);margin-bottom:2rem;">where cryptographic guarantees become language primitives</p>
-  <p>Covenant is a declarative smart contract language that compiles to EVM bytecode. Post-quantum signatures, FHE, zero-knowledge proofs, and cryptographic amnesia are first-class language primitives.</p>
+  <p>Covenant is a declarative smart contract language that compiles to EVM bytecode, Aster Chain, and WebAssembly. Post-quantum signatures, FHE, zero-knowledge proofs, and cryptographic amnesia are first-class language primitives.</p>
   <h2>Quick start</h2>
-  <pre><code>cargo install covenant-cli
-covenant new my-contract
-cd my-contract
-covenant build</code></pre>
+  <pre><code># build from source (silent-deploy — crates.io publish deferred)
+git clone https://github.com/Valisthea/covenant-lang
+cd covenant-lang
+cargo build --release --bin covenant
+
+# compile for EVM (default)
+./target/release/covenant build my-contract.cov
+
+# compile to WebAssembly (new in V0.8)
+./target/release/covenant build my-contract.cov --target-chain wasm</code></pre>
   <h2>Browse</h2>
   <ul>
     <li><a href="/docs/getting-started/01-install">Getting Started</a> — Install the CLI and write your first contract</li>
@@ -21,14 +31,17 @@ covenant build</code></pre>
     <li><a href="/docs/security/audit-report">Security</a> — OMEGA V4 audit: 41 findings, all resolved</li>
     <li><a href="/docs/glossary">Glossary</a> — 100+ terms: keywords, types, FHE primitives, ZK, PQ</li>
   </ul>
-  <h2>V0.7 GA highlights</h2>
+  <h2>V0.8 GA highlights</h2>
   <ul>
+    <li><strong>WebAssembly backend</strong> — <code>--target-chain wasm</code>, deterministic, <code>wasmparser</code>-clean, <em>new in V0.8</em></li>
+    <li><strong>Cross-chain bridges</strong> — <code>bridge … anchored_on [...]</code>, per-pair nonce anti-replay, ECDSA attestations, <em>new in V0.8</em></li>
+    <li><strong>Cryptographic amnesia (complete)</strong> — Wesolowski VDF + Shamir SSS + keccak-bound destruction proofs at precompiles <code>0x124–0x127</code>, <em>new in V0.8</em></li>
+    <li><strong>Advanced optimizer</strong> — FHE coalescing, <code>@precompute</code>, noise-budget warnings, <strong>15–30 % pGas reduction</strong> on FHE-heavy contracts</li>
+    <li><strong>Multi-target</strong> — EVM (default), Aster Chain (ID 1996), WebAssembly</li>
     <li><strong>Post-quantum signatures</strong> — Dilithium5 (NIST FIPS 204), <code>@pq_signed</code></li>
     <li><strong>FHE</strong> — <code>encrypted&lt;T&gt;</code>, <code>fhe_add</code>, <code>fhe_mul</code>, ERC-8227 compliant</li>
     <li><strong>ZK proofs</strong> — <code>zk_prove</code> / <code>zk_verify</code>, Nova IVC + Halo2, ERC-8229</li>
-    <li><strong>Cryptographic amnesia</strong> — <code>amnesia {{ }}</code> blocks, ERC-8228 ceremony lifecycle</li>
-    <li><strong>Multi-target</strong> — EVM, Aster Chain (ID 1996), WASM (experimental)</li>
-    <li><strong>LSP</strong> — 38+ lint detectors in VS Code, Neovim, IntelliJ</li>
-    <li><strong>OMEGA V4 audited</strong> — 41 findings, 5 Critical, all resolved</li>
+    <li><strong>LSP</strong> — 21+ security detectors in VS Code, Neovim, IntelliJ</li>
+    <li><strong>OMEGA V4 audited</strong> — 41 findings, 5 Critical, all resolved; remain resolved in V0.8</li>
   </ul>
 </DocsLayout>

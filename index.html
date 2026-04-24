@@ -6,7 +6,7 @@
 <script>if(location.hostname==='examples.covenant-lang.org')location.replace('https://covenant-lang.org/examples/');if(location.hostname==='docs.covenant-lang.org')location.replace('https://covenant-lang.org/docs/');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Covenant — Cryptographic guarantees as language primitives</title>
-<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.6 GA — audited compiler, LSP, VS Code extension live.">
+<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.8 GA — WebAssembly target, cross-chain bridges, complete cryptographic amnesia, 15–30 % pGas reduction on FHE-heavy contracts.">
 <meta name="author" content="Kairos Lab">
 <link rel="canonical" href="https://covenant-lang.org/">
 <!-- Favicons -->
@@ -22,7 +22,7 @@
 <meta property="og:url" content="https://covenant-lang.org/">
 <meta property="og:site_name" content="Covenant">
 <meta property="og:title" content="Covenant — Cryptographic guarantees as language primitives">
-<meta property="og:description" content="A smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.6 GA — audited compiler, LSP, VS Code extension live.">
+<meta property="og:description" content="A smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.8 GA — WebAssembly target, cross-chain bridges, complete cryptographic amnesia.">
 <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -1094,7 +1094,7 @@ a:focus-visible, button:focus-visible {
       </svg>
     </div>
     <span class="header-brand-name">Covenant</span>
-    <span class="header-badge">V0.7 GA</span>
+    <span class="header-badge">V0.8 GA</span>
   </a>
 
   <div class="header-spacer"></div>
@@ -1232,7 +1232,7 @@ a:focus-visible, button:focus-visible {
   <div class="section-header">
     <span class="section-num">02 — Audited</span>
     <h2 class="section-title" id="audited-title">OMEGA V4 — full audit, all findings resolved</h2>
-    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 security audit — 41 findings across all severity levels. Every finding is resolved. The audit report and full writeup are public.</p>
+    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 security audit — 41 findings across all severity levels. Every finding is resolved. All OMEGA V4 findings remain resolved in V0.8, which introduces no new critical or high findings. The audit report and full writeup are public.</p>
   </div>
 
   <div class="audit-stats reveal">
@@ -1282,7 +1282,7 @@ a:focus-visible, button:focus-visible {
   <div class="audit-actions reveal">
     <a href="/audit" class="btn-primary">Read the full audit writeup →</a>
     <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener" class="btn-secondary" style="margin-left:1rem;">PoCs on GitHub →</a>
-    <a href="#install" class="btn-secondary" style="margin-left:1rem;">Install V0.7 →</a>
+    <a href="#install" class="btn-secondary" style="margin-left:1rem;">Install V0.8 →</a>
   </div>
 </section>
 </div>
@@ -1374,38 +1374,50 @@ a:focus-visible, button:focus-visible {
   <div class="section-header">
     <span class="section-num">04 — Install</span>
     <h2 class="section-title" id="install-title">Get the audited compiler</h2>
-    <p class="body-text">Covenant V0.6 GA ships a full toolchain: compiler, CLI, LSP, and VS Code extension. One command to start.</p>
+    <p class="body-text">Covenant V0.8 GA ships a full toolchain: compiler, CLI, LSP, VS Code extension, and a gas-regression benchmark. Three targets (EVM, Aster Chain, WebAssembly). One command to start.</p>
   </div>
 
   <div class="install-cmd-wrap reveal">
-    <code class="install-cmd"><span class="cm"># one command</span>
-cargo install covenant-cli</code>
-    <button class="install-cmd-copy" onclick="navigator.clipboard.writeText('cargo install covenant-cli').then(()=>{this.textContent='Copied';setTimeout(()=>{this.textContent='Copy'},1500)})">Copy</button>
+    <code class="install-cmd"><span class="cm"># build from source (silent-deploy — crates.io publish deferred)</span>
+git clone https://github.com/Valisthea/covenant-lang &amp;&amp; cd covenant-lang &amp;&amp; cargo build --release --bin covenant</code>
+    <button class="install-cmd-copy" onclick="navigator.clipboard.writeText('git clone https://github.com/Valisthea/covenant-lang && cd covenant-lang && cargo build --release --bin covenant').then(()=>{this.textContent='Copied';setTimeout(()=>{this.textContent='Copy'},1500)})">Copy</button>
   </div>
 
   <div class="install-cards reveal">
     <div class="install-card">
       <span class="install-card-eyebrow">Compiler + CLI</span>
       <span class="install-card-title">Cargo</span>
-      <span class="install-card-note">Rust 1.76+ · ~15,000 lines · OMEGA V4 audited</span>
-      <pre class="install-code"><span class="cm"># install</span>
-cargo install covenant-cli
+      <span class="install-card-note">Rust 1.75+ · 22-crate workspace · OMEGA V4 audited</span>
+      <pre class="install-code"><span class="cm"># build</span>
+cargo build --release --bin covenant
 
 <span class="cm"># verify</span>
-covenant --version
-<span class="cm"># Covenant V0.6.0 (OMEGA V4 audited)</span></pre>
+./target/release/covenant --version
+<span class="cm"># covenant 0.8.0</span>
+
+<span class="cm"># compile for EVM (default)</span>
+covenant build contract.cov
+
+<span class="cm"># compile to WebAssembly</span>
+covenant build contract.cov \
+  --target-chain wasm
+
+<span class="cm"># gas-regression benchmark</span>
+covenant bench \
+  --baseline gas_baselines.json \
+  contract.cov</pre>
     </div>
 
     <div class="install-card">
       <span class="install-card-eyebrow">Editor</span>
       <span class="install-card-title">VS Code Extension</span>
-      <span class="install-card-note">Syntax · LSP · 21 security detectors</span>
-      <pre class="install-code"><span class="cm"># marketplace</span>
-kairos-lab.covenant-lang
-
-<span class="cm"># or via CLI</span>
+      <span class="install-card-note">Syntax · LSP · 21+ security detectors</span>
+      <pre class="install-code"><span class="cm"># VSIX attached to the GitHub release</span>
 code --install-extension \
-  kairos-lab.covenant-lang</pre>
+  covenant-lang-0.8.0.vsix
+
+<span class="cm"># or via marketplace (post V1.0 GA)</span>
+kairos-lab.covenant-lang</pre>
     </div>
   </div>
 
@@ -1418,6 +1430,53 @@ code --install-extension \
     <a href="https://github.com/Valisthea/covenant-lang/blob/main/INSTALL.md" target="_blank" rel="noopener" class="btn-secondary">Full install docs →</a>
     <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary">Audit report →</a>
   </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     WHAT'S NEW IN V0.8
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section class="section" id="whats-new" aria-labelledby="whats-new-title">
+  <div class="section-header">
+    <span class="section-num">04b — What's new</span>
+    <h2 class="section-title" id="whats-new-title">What's new in V0.8</h2>
+    <p class="body-text">V0.8 rolls up V0.7.1 (WASM + Amnesia) and V0.7.2 (Bridge + Optimizations) into a single GA milestone. Fully backward compatible at the source level — existing V0.7 <code>.cov</code> files compile unchanged.</p>
+  </div>
+
+  <div class="ships-grid reveal" role="list" aria-label="V0.8 highlights">
+
+    <div class="ship-card" role="listitem">
+      <span class="ship-title">WebAssembly Backend</span>
+      <span class="ship-sub"><code>--target-chain wasm</code> · deterministic · <code>wasmparser</code>-clean</span>
+      <span class="ship-badge">NEW · V0.8</span>
+    </div>
+
+    <div class="ship-card" role="listitem">
+      <span class="ship-title">Cross-Chain Bridges</span>
+      <span class="ship-sub">Per-pair nonce anti-replay · validator-set Merkle commitments · ECDSA attestations</span>
+      <span class="ship-badge">NEW · V0.8</span>
+    </div>
+
+    <div class="ship-card" role="listitem">
+      <span class="ship-title">Amnesia Ceremonies</span>
+      <span class="ship-sub">Wesolowski VDF + Shamir SSS + keccak-bound destruction proofs (precompiles <code>0x124–0x127</code>)</span>
+      <span class="ship-badge">NEW · V0.8</span>
+    </div>
+
+    <div class="ship-card" role="listitem">
+      <span class="ship-title">Advanced Optimizations</span>
+      <span class="ship-sub">FHE coalescing · compile-time hash precomputation · noise-budget warnings · 15–30 % pGas reduction</span>
+      <span class="ship-badge">NEW · V0.8</span>
+    </div>
+
+  </div>
+
+  <p class="body-text reveal" style="margin-top: 24px; font-style: italic;">
+    <a href="https://github.com/Valisthea/covenant-lang/blob/main/RELEASE_NOTES_v0.8.md" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; border-bottom: 1px solid transparent; transition: border-color 0.15s;" onmouseover="this.style.borderBottomColor='var(--accent)'" onmouseout="this.style.borderBottomColor='transparent'">Read the V0.8 release notes →</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/Valisthea/covenant-lang/blob/main/docs/migration-v0.7-to-v0.8.md" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">V0.7 → V0.8 migration guide →</a>
+  </p>
 </section>
 </div>
 
@@ -1459,11 +1518,11 @@ code --install-extension \
       </div>
       <div class="deploy-meta-col">
         <span class="deploy-meta-label">Compiler</span>
-        <span class="deploy-meta-value">Covenant V0.6</span>
+        <span class="deploy-meta-value">Covenant V0.8</span>
       </div>
       <div class="deploy-meta-col">
         <span class="deploy-meta-label">Language</span>
-        <span class="deploy-meta-value">Rust · ~15,000 lines</span>
+        <span class="deploy-meta-value">Rust · 22-crate workspace</span>
       </div>
     </div>
 
@@ -1483,8 +1542,8 @@ code --install-extension \
 
     <div class="ship-card">
       <span class="ship-title">Compiler</span>
-      <span class="ship-sub">Rust · ~15,000 lines · 18 crates</span>
-      <span class="ship-badge">V0.6 · Shipped</span>
+      <span class="ship-sub">Rust · 22-crate workspace · EVM + Aster + WASM</span>
+      <span class="ship-badge">V0.8 · Shipped</span>
     </div>
 
     <div class="ship-card">
@@ -1495,14 +1554,38 @@ code --install-extension \
 
     <div class="ship-card">
       <span class="ship-title">CLI</span>
-      <span class="ship-sub">870+ tests · compile, check, deploy, test</span>
-      <span class="ship-badge">V0.5 · Shipped</span>
+      <span class="ship-sub">compile, check, deploy, test, bench · gas-regression baseline</span>
+      <span class="ship-badge">V0.8 · Shipped</span>
     </div>
 
     <div class="ship-card">
       <span class="ship-title">LSP + Linter</span>
       <span class="ship-sub">21+ security detectors · VS Code</span>
       <span class="ship-badge">V0.6 · Shipped</span>
+    </div>
+
+    <div class="ship-card">
+      <span class="ship-title">WebAssembly Backend</span>
+      <span class="ship-sub"><code>--target-chain wasm</code> · deterministic</span>
+      <span class="ship-badge">V0.8 · Shipped</span>
+    </div>
+
+    <div class="ship-card">
+      <span class="ship-title">Cross-Chain Bridge</span>
+      <span class="ship-sub">Per-pair nonce anti-replay · one artifact per anchored chain</span>
+      <span class="ship-badge">V0.8 · Shipped</span>
+    </div>
+
+    <div class="ship-card">
+      <span class="ship-title">Amnesia Ceremonies</span>
+      <span class="ship-sub">VDF + Shamir + externally-verifiable destruction proofs</span>
+      <span class="ship-badge">V0.8 · Shipped</span>
+    </div>
+
+    <div class="ship-card">
+      <span class="ship-title">Audit</span>
+      <span class="ship-sub">OMEGA V4 · 41 findings · all resolved, valid in V0.8</span>
+      <span class="ship-badge">CLEARED</span>
     </div>
 
   </div>
@@ -1563,7 +1646,7 @@ code --install-extension \
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-closing">V0.6 GA — stable for early-adopter production use. Roadmap: V0.7 (Aster Chain adapter), V1.0 (full production).</p>
+    <p class="footer-closing">V0.8 GA — stable for early-adopter production use. Roadmap: V0.8.x follow-ups (Loop opcode, aggregate surface syntax, real TFHE KSK, Dilithium validator sigs, full Aster SDK), V1.0 (full production, second external audit).</p>
     <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0</span>
   </div>
 </footer>
