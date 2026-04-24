@@ -228,6 +228,42 @@ section.doc-section {
   color: var(--accent); display: block; margin-bottom: 6px;
 }
 
+.section-header-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 6px; flex-wrap: wrap;
+}
+.section-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 2px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.section-badge-foundational {
+  color: var(--ink-mute);
+  background: var(--rule-faint);
+  border: 1px solid var(--rule);
+}
+.section-badge-living {
+  color: var(--accent);
+  background: var(--accent-faint);
+  border: 1px solid var(--accent-soft);
+  position: relative;
+}
+.section-badge-living::before {
+  content: ""; display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+@keyframes pulse-badge {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50%      { opacity: 1;   transform: scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-badge-living::before { animation: none; opacity: 1; }
+}
+
 h2.section-title {
   font-family: 'EB Garamond', serif;
   font-size: 26pt; font-weight: 500;
@@ -494,7 +530,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
 <header id="cover" role="banner">
   <div class="cover-topbar" aria-label="Document header">
     <span>KAIROS LAB · PROJECT DOCUMENT</span>
-    <span>v2.1 · APRIL 2026 · V0.1 SHIPPED</span>
+    <span>v3.0 · APRIL 2026 · V0.7 GA · V0.8 IN DEVELOPMENT</span>
   </div>
 
   <div class="cover-center">
@@ -512,7 +548,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     <h1 class="cover-title" id="cover-title" aria-label="Covenant"></h1>
     <p class="cover-subtitle">where cryptographic guarantees become language primitives</p>
     <div class="cover-bar" id="cover-bar" aria-hidden="true"></div>
-    <p class="cover-desc">A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Version 0.1 Basics is live — the first public Covenant contract has deployed on Ethereum Sepolia.</p>
+    <p class="cover-desc">A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Version 0.7 General Availability shipped April 2026 — language spec frozen for the 0.7.x line, OMEGA V4 audit complete (41 findings, all critical/high resolved). V0.8 is in active development.</p>
   </div>
 
   <footer class="cover-footer" aria-label="Document metadata">
@@ -528,19 +564,25 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <!-- 01 — PREAMBLE -->
   <section class="doc-section" id="section-01" aria-labelledby="s01-title">
     <div class="reveal">
-      <span class="section-num">01</span>
+      <div class="section-header-row">
+        <span class="section-num">01</span>
+        <span class="section-badge section-badge-foundational" title="Foundational — permanent philosophical content">Foundational</span>
+      </div>
       <h2 class="section-title" id="s01-title">Preamble</h2>
     </div>
     <div class="preamble-block reveal">
       <span class="preamble-label">Preamble</span>
-      <p class="preamble-text">Covenant is a smart contract language in active development. Version 0.1 Basics shipped April 2026; the first public contract is deployed on Ethereum Sepolia. This document describes the language design, its cryptographic substrate, and the roadmap to production readiness. The specifications herein are published under CC0-1.0; the compiler is Apache-2.0. We write in the present tense where implementations exist, and in the conditional where they are planned. The reader is invited to distinguish the two.</p>
+      <p class="preamble-text">Covenant is a smart contract language. Version 0.7 reached General Availability in April 2026 — the language spec is frozen for the 0.7.x line and the compiler has cleared the OMEGA V4 external audit (41 findings, all critical/high resolved). Version 0.8 is in active development. This document describes the language design, its cryptographic substrate, and the trajectory toward V1.0. The specifications herein are published under CC0-1.0; the compiler is Apache-2.0. We write in the present tense where implementations exist, and in the conditional where they are planned. The reader is invited to distinguish the two.</p>
     </div>
   </section>
 
   <!-- 02 — WHY -->
   <section class="doc-section" id="section-02" aria-labelledby="s02-title">
     <div class="reveal">
-      <span class="section-num">02</span>
+      <div class="section-header-row">
+        <span class="section-num">02</span>
+        <span class="section-badge section-badge-foundational" title="Foundational — permanent philosophical content">Foundational</span>
+      </div>
       <h2 class="section-title" id="s02-title">Why a declarative language for cryptography</h2>
     </div>
 
@@ -576,7 +618,10 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <!-- 03 — ARCHITECTURE -->
   <section class="doc-section" id="architecture" aria-labelledby="s03-title">
     <div class="reveal">
-      <span class="section-num">03</span>
+      <div class="section-header-row">
+        <span class="section-num">03</span>
+        <span class="section-badge section-badge-foundational" title="Foundational — permanent philosophical content">Foundational</span>
+      </div>
       <h2 class="section-title" id="s03-title">Architecture: four cryptographic layers</h2>
     </div>
 
@@ -664,15 +709,18 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <!-- 04 — WHAT SHIPS -->
   <section class="doc-section" id="section-04" aria-labelledby="s04-title">
     <div class="reveal">
-      <span class="section-num">04</span>
+      <div class="section-header-row">
+        <span class="section-num">04</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.7</span>
+      </div>
       <h2 class="section-title" id="s04-title">What ships today</h2>
     </div>
-    <p class="lead-text reveal">Version 0.1 Basics shipped April 2026. The first public Covenant contract is live on Ethereum Sepolia.</p>
+    <p class="lead-text reveal">Version 0.7 General Availability shipped April 2026. The language spec is frozen for the 0.7.x line. The compiler has cleared the OMEGA V4 external audit. Documentation, cookbook, and migration guide are production-ready.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--rule);margin:28px 0;" class="reveal" role="list">
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Compiler</span>
-        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">Rust · ~15,000 lines</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">GA · V0.1</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">Rust · Nova IVC + Halo2 + Groth16</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">GA · V0.7</span>
         <a style="font-family:'JetBrains Mono',monospace;font-size:8.5pt;color:var(--accent);text-decoration:none;display:block;margin-top:8px;" href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener">github.com/Valisthea/covenant-lang</a>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
@@ -682,15 +730,28 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
         <a style="font-family:'JetBrains Mono',monospace;font-size:8.5pt;color:var(--accent);text-decoration:none;" href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">sepolia.etherscan.io ↗</a>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
-        <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Codex</span>
-        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">20 working examples · 4 tiers</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">V0.4 · COMPLETE</span>
+        <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Documentation</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">72 pages · 30+ cookbook recipes</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">V0.7 · GA</span>
+        <a style="font-family:'JetBrains Mono',monospace;font-size:8.5pt;color:var(--accent);text-decoration:none;display:block;margin-top:8px;" href="https://covenant-lang.org/docs" target="_blank" rel="noopener">covenant-lang.org/docs ↗</a>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Tooling</span>
-        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">CLI + LSP + Security Linter</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--rule);color:var(--ink-mute);padding:2px 8px;">V0.5 · V0.6 IN PROGRESS</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">CLI + LSP v1 + Security Linter</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">V0.7 · GA</span>
         <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">810+ tests · 21+ detectors · VS Code extension</p>
+      </div>
+      <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
+        <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Security Audit</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">OMEGA V4 · 41 findings</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">CLEARED · V0.7</span>
+        <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">All critical and high findings resolved (KSR-CVN-001 amnesia phase, KSR-CVN-002 UUPS re-init).</p>
+      </div>
+      <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
+        <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">License Policy</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">Scheme-agnostic FHE + open standard</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">RATIFIED · V0.7</span>
+        <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">Specs CC0-1.0; compiler Apache-2.0; FHE backends are pluggable to avoid scheme lock-in.</p>
       </div>
     </div>
   </section>
@@ -698,7 +759,10 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <!-- 05 — ROADMAP -->
   <section class="doc-section" id="section-05" aria-labelledby="s05-title">
     <div class="reveal">
-      <span class="section-num">05</span>
+      <div class="section-header-row">
+        <span class="section-num">05</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.7</span>
+      </div>
       <h2 class="section-title" id="s05-title">Trajectory</h2>
     </div>
     <p class="body-text reveal">What follows is the public roadmap. Shipped phases are marked accordingly. The current phase is distinguished by a live indicator on the left margin.</p>
@@ -713,14 +777,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.5 CLI</span><span class="roadmap-phase-date">Q2 2026</span><span class="rs rs-shipped">Shipped</span></div>
       <div class="roadmap-content reveal"><span class="roadmap-content-title">Command-line toolchain</span><p class="roadmap-content-text">The CLI provides compile, check, deploy, and test subcommands. 810+ tests cover the full language surface. Minimal and composable by design.</p></div>
 
-      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.6 LSP + LINTER</span><span class="roadmap-phase-date">Q2–Q3 2026</span><span class="rs rs-progress">In Progress</span></div>
-      <div class="roadmap-content current reveal"><span class="roadmap-content-title">Language server and security analysis</span><p class="roadmap-content-text">LSP implementation brings Covenant to VS Code and any LSP-compatible editor. The security linter ships with 21+ detectors covering the most common classes of cryptographic misuse. This is the current active phase.</p></div>
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.6 LSP + LINTER</span><span class="roadmap-phase-date">Q3 2026</span><span class="rs rs-shipped">Shipped</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Language server and security analysis</span><p class="roadmap-content-text">LSP v1 brings Covenant to VS Code and any LSP-compatible editor (hover, go-to-definition, completion, formatting). The security linter ships with 21+ detectors covering the most common classes of cryptographic misuse.</p></div>
 
-      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.7 SECURITY</span><span class="roadmap-phase-date">Q3 2026</span><span class="rs rs-planned">Planned</span></div>
-      <div class="roadmap-content reveal"><span class="roadmap-content-title">Security primitives, tiers 1 and 2</span><p class="roadmap-content-text">Implementation of the full security primitive set from Doc 16: tier 1 (access control, reentrancy, overflow) and tier 2 (flash loan resistance, oracle manipulation). Language-level, not library-level.</p></div>
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.7 GA</span><span class="roadmap-phase-date">April 2026</span><span class="rs rs-shipped">Shipped</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">General availability — spec frozen, audit cleared</span><p class="roadmap-content-text">The 0.7.x language spec is frozen. OMEGA V4 external audit complete with all critical/high findings resolved. Styx Protocol ERCs 8227/8228/8229/8231 normative. Documentation, 30+ cookbook recipes, and Solidity migration guide are production-ready.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.8 ASYNC + FHE API</span><span class="roadmap-phase-date">Q3 2026</span><span class="rs rs-progress">In Progress</span></div>
+      <div class="roadmap-content current reveal"><span class="roadmap-content-title">Multi-block actions, revised FHE interface</span><p class="roadmap-content-text">The <code>@async_action</code> keyword enables actions that span multiple blocks with explicit continuation semantics. The FHE API is revised to expose BFV parameter selection explicitly. Compiler diagnostics migrate to a serde-compatible JSON format. This is the current active phase.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.9 WASM</span><span class="roadmap-phase-date">Q4 2026</span><span class="rs rs-planned">Planned</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">WASM target stabilization</span><p class="roadmap-content-text">The WASM backend — currently gated under <code>--experimental-wasm</code> — graduates to a first-class target. Covenant contracts compile to WASM for non-EVM substrates while preserving the privacy-flow checker's guarantees across targets.</p></div>
 
       <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V1.0 PRODUCTION</span><span class="roadmap-phase-date">Q1 2027</span><span class="rs rs-planned">Planned</span></div>
-      <div class="roadmap-content reveal"><span class="roadmap-content-title">Post-external-audit release</span><p class="roadmap-content-text">V1.0 follows a full external security audit of compiler and runtime. Semantic versioning guarantee takes effect: no breaking changes without a major version increment.</p></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Post-external-audit release</span><p class="roadmap-content-text">V1.0 follows a second full external audit covering the WASM backend and async action semantics. Semantic versioning guarantee takes effect: no breaking changes without a major version increment.</p></div>
 
       <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V1.5 FORMAL</span><span class="roadmap-phase-date">Q3 2027</span><span class="rs rs-planned">Planned</span></div>
       <div class="roadmap-content reveal"><span class="roadmap-content-title">Formal verification artifacts</span><p class="roadmap-content-text">Coq and Lean proofs of the Covenant type system's key invariants. A mechanically verified proof that the privacy flow checker is sound relative to the operational semantics. We state the goal here as a public commitment.</p></div>
@@ -730,7 +800,10 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <!-- 06 — POSITIONING -->
   <section class="doc-section" id="section-06" aria-labelledby="s06-title">
     <div class="reveal">
-      <span class="section-num">06</span>
+      <div class="section-header-row">
+        <span class="section-num">06</span>
+        <span class="section-badge section-badge-foundational" title="Foundational — permanent philosophical content">Foundational</span>
+      </div>
       <h2 class="section-title" id="s06-title">Why Covenant is not another smart contract language</h2>
     </div>
     <p class="body-text reveal">The question arises. A number of projects have occupied adjacent positions. The distinctions are not trivial.</p>
@@ -744,10 +817,19 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <!-- 07 — HOW TO READ -->
   <section class="doc-section" id="section-07" aria-labelledby="s07-title">
     <div class="reveal">
-      <span class="section-num">07</span>
+      <div class="section-header-row">
+        <span class="section-num">07</span>
+        <span class="section-badge section-badge-foundational" title="Foundational — permanent philosophical content">Foundational</span>
+      </div>
       <h2 class="section-title" id="s07-title">How to read this document</h2>
     </div>
     <p class="body-text reveal">This site is both a project document and a living specification. The sections on language design and architecture are normative: any deviation between the compiler and this document is a compiler bug. The roadmap sections are informative: they describe our intentions, which are subject to revision.</p>
+    <p class="body-text reveal">We distinguish two kinds of sections explicitly, via badges next to each section number:</p>
+    <ul class="reveal" style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-soft);line-height:1.7;padding-left:20px;margin-bottom:24px;">
+      <li style="margin-bottom:10px;"><span class="section-badge section-badge-foundational" style="margin-right:8px;">Foundational</span> — the permanent argument: what Covenant <em>is</em>, why a language-level approach, the four-layer architecture of Styx Protocol. These sections change only when the philosophy changes, which is rarely.</li>
+      <li><span class="section-badge section-badge-living" style="margin-right:8px;">Living · V0.7</span> — the current state: what has shipped, what is in flight, what is planned. These sections update with each release. The pulsing indicator marks the active version.</li>
+    </ul>
+    <p class="body-text reveal">When you read this manifesto, the <em>Foundational</em> sections describe what we are building and why. The <em>Living</em> sections describe where we are on the road to V1.0. Together they form a single document — but they evolve on different timescales.</p>
     <p class="body-text reveal">The specifications published here are released under <strong>CC0-1.0</strong>. You may use them, fork them, implement them independently, and publish derivative work without attribution. The compiler implementation is released under <strong>Apache-2.0</strong>.</p>
 
     <div class="license-diagram reveal" aria-label="License structure" role="img">
@@ -776,7 +858,10 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <!-- 08 — CONTRIBUTE -->
   <section class="doc-section" id="section-08" aria-labelledby="s08-title">
     <div class="reveal">
-      <span class="section-num">08</span>
+      <div class="section-header-row">
+        <span class="section-num">08</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.7</span>
+      </div>
       <h2 class="section-title" id="s08-title">Invitation to contribute</h2>
     </div>
     <p class="body-text reveal">Covenant is early. We have a working compiler, a deployed contract, a test suite, and a roadmap. We are selectively seeking collaborators in four areas.</p>
@@ -795,7 +880,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       <li style="margin-bottom:10px;"><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Authorship</strong> — every technical contribution is credited publicly in release notes, documentation, and academic publications produced from this work.</li>
       <li style="margin-bottom:10px;"><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Research visibility</strong> — Covenant operates in the open. Contributors build a verifiable portfolio on a project of non-trivial technical ambition.</li>
       <li style="margin-bottom:10px;"><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Priority consideration for future paid roles</strong> — when funding becomes available (whether via grants, foundation support, or consulting revenue), contributors who shipped meaningful work receive first refusal on paid positions.</li>
-      <li><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Reference letters</strong> — for academic and industrial applications, we provide detailed reference letters documenting the specific technical work completed.</li>
+      <li style="margin-bottom:10px;"><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Reference letters</strong> — for academic and industrial applications, we provide detailed reference letters documenting the specific technical work completed.</li>
+      <li><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Access to the production codebase</strong> — vetted contributors receive read/write access to the private working branches of the compiler, runtime, and unreleased protocol drafts, ahead of public publication. The signal of seriousness is access.</li>
     </ul>
 
     <h3 class="sub-title reveal" style="font-size:13pt;">What we cannot offer</h3>
@@ -813,7 +899,10 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
   <!-- 09 — CONTACT -->
   <section class="doc-section" id="section-09" aria-labelledby="s09-title">
     <div class="reveal">
-      <span class="section-num">09</span>
+      <div class="section-header-row">
+        <span class="section-num">09</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.7</span>
+      </div>
       <h2 class="section-title" id="s09-title">Contact</h2>
     </div>
     <div class="contact-grid reveal">
