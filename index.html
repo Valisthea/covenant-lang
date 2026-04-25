@@ -171,6 +171,23 @@ nav.header-nav {
   background-color: var(--paper);
 }
 
+/* ── Hero video background ── */
+#hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0.13;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  #hero-video { display: none; }
+}
+
 .hero-inner {
   max-width: 760px;
   width: 100%;
@@ -1116,6 +1133,12 @@ a:focus-visible, button:focus-visible {
      HERO
      ═══════════════════════════════════════════ -->
 <section id="hero" aria-label="Covenant — hero">
+
+  <!-- Background video (test) -->
+  <video id="hero-video" autoplay loop muted playsinline preload="auto" aria-hidden="true">
+    <source src="uploads/hero-bg.mp4" type="video/mp4">
+  </video>
+
   <div class="hero-inner">
 
     <div class="hero-logo">
