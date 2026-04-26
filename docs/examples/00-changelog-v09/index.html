@@ -1,0 +1,118 @@
+<!DOCTYPE html> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1.0"> <meta name="color-scheme" content="light only"> <meta name="supported-color-schemes" content="light"> <meta name="theme-color" content="#fcfbf8">   <title>V0.9.0 Changelog - Covenant Docs</title> <meta name="description" content="Production-real cryptographic primitives on Sepolia · ERC-721 + ERC-8231 auto-synthesis · Foundry-class CLI · OMEGA V5 audit cleared."> <meta property="og:title" content="V0.9.0 Changelog - Covenant Docs"> <meta property="og:description" content="Production-real cryptographic primitives on Sepolia · ERC-721 + ERC-8231 auto-synthesis · Foundry-class CLI · OMEGA V5 audit cleared."> <meta property="og:image" content="https://covenant-lang.org/og-image.png"> <link rel="icon" href="https://covenant-lang.org/favicon.svg" type="image/svg+xml"> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"> <link rel="canonical" href="https://covenant-lang.org/docs/examples/00-changelog-v09"> <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"V0.9.0 Changelog","description":"Production-real cryptographic primitives on Sepolia · ERC-721 + ERC-8231 auto-synthesis · Foundry-class CLI · OMEGA V5 audit cleared.","url":"https://covenant-lang.org/docs/examples/00-changelog-v09","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Covenant Language Documentation","url":"https://covenant-lang.org/docs"},"publisher":{"@type":"Organization","name":"Covenant Language","url":"https://covenant-lang.org"}}</script>  <meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/docs/_astro/ClientRouter.astro_astro_type_script_index_0_lang.Bh4wqtPV.js"></script>  <script>
+    (function(){
+      try{
+        var k='covenant-docs-sidebar-scroll';
+        var saved=sessionStorage.getItem(k);
+        if(saved!==null){
+          var apply=function(){
+            var s=document.getElementById('docs-sidebar');
+            if(s){s.scrollTop=parseInt(saved,10)||0;}
+          };
+          if(document.readyState==='loading'){
+            document.addEventListener('DOMContentLoaded',apply,{once:true});
+          }else{apply();}
+        }
+        // Persist before navigation away.
+        document.addEventListener('click',function(e){
+          var a=e.target && e.target.closest && e.target.closest('#docs-sidebar a');
+          if(!a) return;
+          var s=document.getElementById('docs-sidebar');
+          if(s) sessionStorage.setItem(k,String(s.scrollTop));
+        },true);
+        window.addEventListener('pagehide',function(){
+          var s=document.getElementById('docs-sidebar');
+          if(s) sessionStorage.setItem(k,String(s.scrollTop));
+        });
+      }catch(_){/* sessionStorage blocked — silently ignore */}
+    })();
+  </script>  <link rel="stylesheet" href="/docs/_astro/changelog.DQVvh85o.css"><script type="module" src="/docs/_astro/page.ZXyU73wm.js"></script><header id="site-header"> <a href="/docs/" class="header-brand" aria-label="Covenant Docs home"> <div class="header-logo-wrap" aria-hidden="true"> <svg width="32" height="32" viewBox="0 0 96 96" id="header-svg"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED" id="header-square"></rect> </svg> </div> <span class="header-brand-name">Covenant</span> <span class="header-badge">Docs</span> <span class="header-badge header-badge-version" style="margin-left:6px;background:#7C3AED;color:#fff;font-weight:600;">V0.9 GA</span> </a> <div class="header-spacer"></div> <nav class="header-nav" aria-label="Primary navigation"> <a href="https://covenant-lang.org/manifesto.html" class="nav-link">Manifesto</a> <a href="https://covenant-lang.org/#architecture" class="nav-link">Architecture</a> <a href="https://covenant-lang.org/#audited" class="nav-link">Audit</a> <a href="/docs/getting-started/01-install" class="nav-link">Install</a> <a href="/docs/examples/01-hello-contract" class="nav-link active">Examples</a> <a href="/docs/" class="nav-link">Docs</a> <a href="https://playground.covenant-lang.org" target="_blank" rel="noopener" class="nav-link" style="color:#7C3AED;font-weight:600;">Playground &#x2197;</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="nav-link">GitHub</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="nav-link-cta">&#x2197; @Covenant_Lang</a> </nav> </header> <script type="module">const s=document.getElementById("site-header");if(s){const e=()=>s.classList.toggle("scrolled",window.scrollY>10);window.addEventListener("scroll",e,{passive:!0}),e()}const l=document.getElementById("header-square");if(l){let e=1,t=1;setInterval(()=>{e+=t*.004,e>=1.12&&(t=-1),e<=.88&&(t=1),l.setAttribute("transform",`translate(48,48) scale(${e}) translate(-48,-48)`)},40)}</script> <div class="docs-layout" data-astro-cid-mw7aashj> <aside id="docs-sidebar" aria-label="Documentation navigation"> <div class="search-wrap"> <input id="search-input" type="search" placeholder="Search docs..." autocomplete="off" aria-label="Search"> <div id="search-results" aria-live="polite"></div> </div> <div class="sidebar-section"> <span class="sidebar-section-title">Getting Started</span> <a href="/docs/getting-started/01-install" class="sidebar-link">01 - Installation</a><a href="/docs/getting-started/02-first-contract" class="sidebar-link">02 - First Contract</a><a href="/docs/getting-started/03-cli-reference" class="sidebar-link">03 - CLI Reference</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Fundamentals</span> <a href="/docs/examples/01-hello-contract" class="sidebar-link">01 - Hello Contract</a><a href="/docs/examples/02-fields-and-storage" class="sidebar-link">02 - Fields &amp; Storage</a><a href="/docs/examples/03-actions-events-errors" class="sidebar-link">03 - Actions, Events &amp; Errors</a><a href="/docs/examples/04-guards" class="sidebar-link">04 - Guards</a><a href="/docs/examples/05-external-calls" class="sidebar-link">05 - External Calls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Standards</span> <a href="/docs/examples/06-erc20-token" class="sidebar-link">06 - ERC-20 Token</a><a href="/docs/examples/07-fhe-basics" class="sidebar-link">07 - FHE Basics</a><a href="/docs/examples/08-encrypted-token" class="sidebar-link">08 - Encrypted Token</a><a href="/docs/examples/09-post-quantum-signatures" class="sidebar-link">09 - Post-Quantum Sigs</a><a href="/docs/examples/10-zero-knowledge-proofs" class="sidebar-link">10 - Zero-Knowledge Proofs</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Advanced</span> <a href="/docs/examples/11-cryptographic-amnesia" class="sidebar-link">11 - Cryptographic Amnesia</a><a href="/docs/examples/12-uups-upgradeable" class="sidebar-link">12 - UUPS Upgradeable</a><a href="/docs/examples/13-beacon-proxy" class="sidebar-link">13 - Beacon Proxy</a><a href="/docs/examples/14-oracle-integration" class="sidebar-link">14 - Oracle Integration</a><a href="/docs/examples/15-deploy-to-sepolia" class="sidebar-link">15 - Deploy to Sepolia</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">ERCs (Styx Protocol)</span> <a href="/docs/reference/ercs/01-overview" class="sidebar-link">Overview</a><a href="/docs/reference/ercs/02-erc-8227-fhe" class="sidebar-link">ERC-8227 — FHE Tokens</a><a href="/docs/reference/ercs/03-erc-8228-amnesia" class="sidebar-link">ERC-8228 — Amnesia</a><a href="/docs/reference/ercs/04-erc-8229-fhe-verify" class="sidebar-link">ERC-8229 — FHE Verify</a><a href="/docs/reference/ercs/05-erc-8231-pq" class="sidebar-link">ERC-8231 — Post-Quantum</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Compiler</span> <a href="/docs/reference/compiler/01-pipeline" class="sidebar-link">Pipeline</a><a href="/docs/reference/compiler/02-ir" class="sidebar-link">IR Reference</a><a href="/docs/reference/compiler/03-targets" class="sidebar-link">Targets</a><a href="/docs/reference/compiler/04-diagnostics" class="sidebar-link">Diagnostics Catalog</a><a href="/docs/reference/lsp/01-lsp-overview" class="sidebar-link">LSP</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Tokens</span> <a href="/docs/cookbook/01-overview" class="sidebar-link">Cookbook Overview</a><a href="/docs/cookbook/tokens/01-mintable-token" class="sidebar-link">Mintable Token</a><a href="/docs/cookbook/tokens/02-burnable-token" class="sidebar-link">Burnable Token</a><a href="/docs/cookbook/tokens/03-confidential-payroll" class="sidebar-link">Confidential Payroll</a><a href="/docs/cookbook/tokens/04-rebase-token" class="sidebar-link">Rebase Token</a><a href="/docs/cookbook/tokens/05-vesting-schedule" class="sidebar-link">Vesting Schedule</a><a href="/docs/cookbook/tokens/06-capped-supply" class="sidebar-link">Capped Supply</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Auth &amp; Upgrades</span> <a href="/docs/cookbook/auth/01-multi-sig-admin" class="sidebar-link">Multi-Sig Admin</a><a href="/docs/cookbook/auth/02-time-locked-admin" class="sidebar-link">Time-Locked Admin</a><a href="/docs/cookbook/auth/03-pq-signed-admin" class="sidebar-link">PQ-Signed Admin</a><a href="/docs/cookbook/auth/04-guardian-recovery" class="sidebar-link">Guardian Recovery</a><a href="/docs/cookbook/auth/05-role-based-access" class="sidebar-link">Role-Based Access</a><a href="/docs/cookbook/auth/06-emergency-pause" class="sidebar-link">Emergency Pause</a><a href="/docs/cookbook/upgrades/01-uups-pattern" class="sidebar-link">UUPS Pattern</a><a href="/docs/cookbook/upgrades/02-beacon-pattern" class="sidebar-link">Beacon Pattern</a><a href="/docs/cookbook/upgrades/03-diamond-storage" class="sidebar-link">Diamond Storage</a><a href="/docs/cookbook/upgrades/04-migration-scripts" class="sidebar-link">Migration Scripts</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Privacy &amp; Integration</span> <a href="/docs/cookbook/privacy/01-sealed-bid-auction" class="sidebar-link">Sealed-Bid Auction</a><a href="/docs/cookbook/privacy/02-private-voting" class="sidebar-link">Private Voting</a><a href="/docs/cookbook/privacy/03-zk-airdrop" class="sidebar-link">ZK Airdrop</a><a href="/docs/cookbook/privacy/04-confidential-lending" class="sidebar-link">Confidential Lending</a><a href="/docs/cookbook/privacy/05-private-identity" class="sidebar-link">Private Identity</a><a href="/docs/cookbook/privacy/06-shielded-token-bridge" class="sidebar-link">Shielded Bridge</a><a href="/docs/cookbook/integration/01-chainlink-oracle" class="sidebar-link">Chainlink Oracle</a><a href="/docs/cookbook/integration/02-erc20-bridge" class="sidebar-link">ERC-20 Bridge</a><a href="/docs/cookbook/integration/03-safe-multisig" class="sidebar-link">Safe Multisig</a><a href="/docs/cookbook/integration/04-uniswap-v4-hook" class="sidebar-link">Uniswap V4 Hook</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Cookbook — Testing</span> <a href="/docs/cookbook/testing/01-inline-tests" class="sidebar-link">Inline Tests</a><a href="/docs/cookbook/testing/02-fuzz-testing" class="sidebar-link">Fuzz Testing</a><a href="/docs/cookbook/testing/03-invariant-testing" class="sidebar-link">Invariant Testing</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Migration</span> <a href="/docs/migration/from-solidity/01-overview" class="sidebar-link">From Solidity — Overview</a><a href="/docs/migration/from-solidity/02-syntax-mapping" class="sidebar-link">Syntax Mapping</a><a href="/docs/migration/from-solidity/03-type-system" class="sidebar-link">Type System</a><a href="/docs/migration/from-solidity/04-patterns" class="sidebar-link">Common Patterns</a><a href="/docs/migration/from-solidity/05-tooling-equivalents" class="sidebar-link">Tooling Equivalents</a><a href="/docs/migration/from-solidity/06-porting-checklist" class="sidebar-link">Porting Checklist</a><a href="/docs/migration/between-versions/v07-to-v08" class="sidebar-link">V0.7 → V0.8</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Security</span> <a href="/docs/security/audit-report" class="sidebar-link">Audit Report</a><a href="/docs/security/critical-findings" class="sidebar-link">Critical Findings</a><a href="/docs/security/secure-patterns" class="sidebar-link">Secure Patterns</a><a href="/docs/security/known-pitfalls" class="sidebar-link">Known Pitfalls</a> </div><div class="sidebar-section"> <span class="sidebar-section-title">Reference</span> <a href="/docs/glossary" class="sidebar-link">Glossary</a><a href="/docs/changelog" class="sidebar-link">Changelog</a> </div> </aside> <script type="module" src="/docs/_astro/Sidebar.astro_astro_type_script_index_0_lang.0q6_VQyP.js"></script> <main class="docs-main" id="main-content" data-astro-cid-mw7aashj> <article class="docs-content" data-pagefind-body data-astro-cid-mw7aashj> <nav class="breadcrumb" aria-label="Breadcrumb" data-astro-cid-mw7aashj> <a href="/docs/" data-astro-cid-mw7aashj>Docs</a>  <span aria-hidden="true" data-astro-cid-mw7aashj>/</span> <a href="/docs/examples/01-hello-contract" data-astro-cid-mw7aashj>Examples</a> <span aria-hidden="true" data-astro-cid-mw7aashj>/</span> <span data-astro-cid-mw7aashj>V0.9.0 Changelog</span> </nav>  <h1 id="v090-ga-changelog">V0.9.0 GA Changelog</h1>
+<p>The production-real release. Cryptographic primitives execute on Sepolia for the first time. Three new top-level constructs. Foundry-class CLI tooling. OMEGA V5 audit cleared.</p>
+<p><strong>Tag:</strong> <a href="https://github.com/Valisthea/covenant/releases/tag/v0.9.0">v0.9.0</a><br>
+<strong>Released:</strong> April 2026<br>
+<strong>Compatibility:</strong> Fully backward-compatible with V0.8 source. No breaking changes.</p>
+<h2 id="helper-contract-bridge">Helper-Contract Bridge</h2>
+<p>Cryptographic primitives now route to dedicated helper contracts on each target chain. The compiler embeds CREATE2-deterministic helper addresses based on <code>--target-chain</code>.</p>
+<ul>
+<li><strong>CeremonyHelper</strong> — real ERC-8228 lifecycle on Sepolia (setup → submit_share → finalize → destroy)</li>
+<li><strong>FHEHelper</strong> — mocked TFHE (deterministic, gas-cheap; real Zama integration at V1.0)</li>
+<li><strong>PQHelper</strong> — mocked Dilithium-5 verify (correct interface, simplified logic; real at V1.0)</li>
+<li><strong>ZKHelper</strong> — mocked Halo2 verifier (correct interface; real at V1.0)</li>
+<li>All four deployed via deterministic CREATE2 on Sepolia</li>
+<li>Compiler routes to helper addresses per <code>--target-chain</code> flag</li>
+</ul>
+<p>Resolves KSR-CVN-005 (V0.8 OMEGA V4: no executor at OP_CALL precompiles on Sepolia).</p>
+<h2 id="new-top-level-constructs">New Top-Level Constructs</h2>
+<p>V0.9 brings the construct count from 14 to 17:</p>
+<ul>
+<li><strong><code>nft</code></strong> — ERC-721 auto-synthesis (515-line synthesizer, 11 functions)</li>
+<li><strong><code>registry</code></strong> — ERC-8231 auto-synthesis (340-line synthesizer, 5 functions)</li>
+<li><strong><code>interface</code></strong> — declares external contract surfaces for typed cross-contract calls</li>
+</ul>
+<p>See <a href="/docs/examples/16-nft">16-nft</a>, <a href="/docs/examples/17-registry">17-registry</a>, <a href="/docs/examples/18-external-call">18-external-call</a>.</p>
+<h2 id="cli-tooling">CLI Tooling</h2>
+<p>Foundry-class developer ergonomics:</p>
+<ul>
+<li><code>covenant test</code> — per-test isolation, watch mode (<code>--watch</code>), name-heuristic coverage (<code>--coverage</code>)</li>
+<li><code>covenant fmt</code> — canonical formatting, <code>--check</code> for CI</li>
+<li><code>covenant doctor</code> — 9 environment probes</li>
+<li><code>covenant lint</code> — 6-rule Solidity-ism detector (L001–L006)</li>
+<li><code>covenant init</code> — scaffold from template (token, ceremony, defi)</li>
+<li><code>covenant explain &#x3C;code></code> — long-form diagnostic explanations</li>
+<li><code>covenant build --target-chain {mockchain|sepolia|aster}</code> — per-chain helper embedding</li>
+</ul>
+<p>See <a href="/docs/getting-started/03-cli-reference">CLI reference</a>.</p>
+<h2 id="diagnostics--linter">Diagnostics + Linter</h2>
+<ul>
+<li>LSP gains <code>goto_definition</code> and <code>find_definition_at()</code></li>
+<li>6-rule linter (<code>covenant-lint</code>):
+<ul>
+<li>L001 — <code>mapping(...)</code> → <code>map&#x3C;...></code></li>
+<li>L002 — <code>function</code> → <code>action</code></li>
+<li>L003 — <code>// comment</code> → <code>-- comment</code></li>
+<li>L004 — <code>require(...)</code> → <code>given</code> / <code>revert_with</code></li>
+<li>L005 — <code>pragma solidity</code> → drop</li>
+<li>L006 — <code>import "..."</code> → drop or replace</li>
+</ul>
+</li>
+<li>Configure via <code>.covenantlint.json</code></li>
+</ul>
+<h2 id="playground">Playground</h2>
+<ul>
+<li>Cross-tab sync via BroadcastChannel</li>
+<li>IndexedDB persistence (state survives refresh)</li>
+<li>Named event display (human-readable instead of raw hex topics)</li>
+<li>12+ verified examples including <code>nft</code>, <code>registry</code>, <code>interface</code></li>
+<li>12+ guided tour lessons</li>
+</ul>
+<h2 id="audit--omega-v5">Audit — OMEGA V5</h2>
+<ul>
+<li>10 verifications, all GO</li>
+<li>1206 tests passing (1172 Rust unit/integration + 34 Foundry)</li>
+<li>0 clippy warnings on <code>-D warnings</code></li>
+<li>9 audit fixtures compile end-to-end on both MockChain and Sepolia</li>
+<li>5 bugs caught empirically during the audit cycle, all fixed before tag</li>
+</ul>
+<p><a href="https://github.com/Valisthea/covenant/blob/main/OMEGA_V5_AUDIT_REPORT.md">Full report</a></p>
+<h2 id="milestones">Milestones</h2>
+<ul>
+<li><strong>M0</strong> — First Covenant contract on Sepolia (<a href="https://sepolia.etherscan.io/address/0xab083fc4">0xab083fc4…</a>)</li>
+<li><strong>M1</strong> — First ceremony destruction on Sepolia (<a href="https://sepolia.etherscan.io/address/0x2FB87d54">0x2FB87d54…</a>)</li>
+</ul>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>FHE / PQ / ZK helpers are mocked (correct interfaces, simplified logic). Real crypto lands in V1.0.</li>
+<li>Aster Chain: codegen ready, deploy gated on factory verification (M2 milestone).</li>
+<li>1 cargo audit advisory (idna transitive via tower-lsp) — accepted residual, no IDN code path.</li>
+</ul>
+<h2 id="compatibility">Compatibility</h2>
+<ul>
+<li>Source: backward-compatible with V0.7 and V0.8 — every existing <code>.cov</code> file compiles unchanged.</li>
+<li>Bytecode: changes when <code>--target-chain</code> differs. Same source, different chain → different helper addresses → different deployed bytecode (correct behavior).</li>
+<li>ERCs: 8227, 8228, 8229, 8231 surfaces unchanged. V0.9 adds reference impls via the helper bridge.</li>
+</ul>
+<h2 id="next">Next</h2>
+<ul>
+<li><a href="/docs/migration/between-versions/v08-to-v09">V0.8 → V0.9 migration guide</a></li>
+<li><a href="/docs/security/audit-report">Audit history</a></li>
+<li><a href="/manifesto#section-05">V1.0 trajectory</a></li>
+</ul>  <nav class="doc-nav" aria-label="Page navigation" data-astro-cid-mw7aashj> <span data-astro-cid-mw7aashj></span> <a href="/docs/examples/01-hello-contract" class="doc-nav-link next" data-astro-cid-mw7aashj><span data-astro-cid-mw7aashj>Next</span>01 — Hello Contract</a> </nav> <aside class="doc-feedback" aria-label="Feedback" data-astro-cid-mw7aashj> <p data-astro-cid-mw7aashj>Found an issue with this page? <a href="https://github.com/covenant-lang/covenant/issues/new?title=Docs%20feedback%3A%20V0.9.0%20Changelog&body=Page%3A%20https%3A%2F%2Fcovenant-lang.org%2Fdocs%2Fexamples%2F00-changelog-v09%0A%0A**What%20could%20be%20clearer%3F**%0A%0A%0A**Suggestion%3A**%0A&labels=docs" target="_blank" rel="noopener noreferrer" data-astro-cid-mw7aashj>Open a docs issue on GitHub &rarr;</a></p> </aside> </article> </main> </div> <footer id="site-footer"> <div class="footer-inner"> <div class="footer-brand"> <div class="footer-brand-row"> <svg width="24" height="24" viewBox="0 0 96 96" aria-hidden="true"> <path d="M 32 20 L 20 20 L 20 76 L 32 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <path d="M 64 20 L 76 20 L 76 76 L 64 76" stroke="#1a1a1a" stroke-width="4" fill="none" stroke-linecap="square"></path> <rect x="40" y="40" width="16" height="16" fill="#7C3AED"></rect> </svg> <span class="footer-brand-name">Covenant</span> </div> <p class="footer-by">by Kairos Lab</p> <p class="footer-tagline">where cryptographic guarantees become language primitives</p> </div> <div> <span class="footer-col-title">Contact</span> <a href="mailto:covenant@kairos-lab.org" class="footer-link">covenant@kairos-lab.org</a> <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link">@Covenant_Lang on X</a> <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea on X</a> </div> <div> <span class="footer-col-title">Repositories</span> <a href="https://github.com/Valisthea/covenant" target="_blank" rel="noopener" class="footer-link-mono">covenant <span style="opacity:0.5;">· compiler</span></a> <a href="https://github.com/Valisthea/covenant-playground" target="_blank" rel="noopener" class="footer-link-mono">covenant-playground</a> <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">covenant-lang <span style="opacity:0.5;">· this site</span></a> <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener" class="footer-link-mono">covenant-audits</a> <a href="https://covenant-lang.org/manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a> <a href="https://playground.covenant-lang.org" target="_blank" rel="noopener" class="footer-link">Playground &uarr;</a> <a href="/" class="footer-link">Docs home</a> </div> </div> <div class="footer-bottom"> <p class="footer-closing">V0.9 GA &mdash; production-real on Sepolia. Helper bridge live. Mainnet at V1.0 post-external-audit.</p> <span class="footer-license">Specs: CC0-1.0 &middot; Compiler: Apache-2.0 &middot; Site: MIT + CC-BY</span> </div> </footer> 
