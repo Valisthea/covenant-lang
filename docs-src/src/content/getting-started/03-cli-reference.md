@@ -1,12 +1,28 @@
 ---
 title: "CLI Reference"
-description: "Complete reference for the covenant command-line interface."
+description: "Complete reference for the covenant command-line interface (V0.9 — Foundry-class with test, fmt, doctor, lint, init, explain)."
 order: 3
 ---
 
 # CLI Reference
 
 The `covenant` CLI is the primary interface to the Covenant toolchain. All commands follow the pattern `covenant <command> [options] [args]`.
+
+## What's new in V0.9
+
+V0.9 brings Foundry-class developer ergonomics. Seven commands round out the CLI:
+
+| Command | Purpose |
+|---|---|
+| `covenant test --watch / --coverage` | Per-test isolation, watch mode, name-heuristic coverage |
+| `covenant fmt` | Canonical formatting, `--check` for CI gates |
+| `covenant doctor` | 9 environment probes (Rust toolchain, network, helper bridge, …) |
+| `covenant lint` | 6-rule linter for Solidity-isms (L001–L006) |
+| `covenant init` | Scaffold from template (token, ceremony, defi) |
+| `covenant explain <code>` | Long-form explanation of a diagnostic code |
+| `covenant build --target-chain` | Per-chain helper-address embedding (mockchain · sepolia · aster) |
+
+Install: `cargo install covenant-cli --version 0.9.0`
 
 ## Global flags
 
@@ -126,6 +142,56 @@ Generate a ZK proof off-chain.
 ```bash
 covenant zk prove --circuit <circuit-id> --private <key=val...> --public <key=val...>
 ```
+
+## `covenant fmt` <span style="font-size:0.75em;color:#7C3AED;">V0.9</span>
+
+Canonical source formatter — opinionated, no configuration. Same role as `gofmt` / `cargo fmt`.
+
+```bash
+covenant fmt                # format all .cov files in src/
+covenant fmt --check        # CI gate — non-zero exit if reformat needed
+covenant fmt --diff         # show what would change without writing
+covenant fmt path/to/file   # single file
+```
+
+Idempotent: running `fmt` twice on the same input produces identical output.
+
+## `covenant doctor` <span style="font-size:0.75em;color:#7C3AED;">V0.9</span>
+
+Diagnose your environment. Runs 9 probes covering Rust toolchain, Cargo registry, Foundry availability, helper-bridge connectivity, RPC endpoints, and more.
+
+```bash
+covenant doctor          # human-readable summary
+covenant doctor --json   # machine-readable
+covenant doctor --strict # exit non-zero on any warning (CI use)
+```
+
+Each probe reports `OK` / `WARN` / `FAIL` with a remediation hint. Useful as a first step when something breaks unexpectedly.
+
+## `covenant init` <span style="font-size:0.75em;color:#7C3AED;">V0.9</span>
+
+Scaffold a new project from a template. Replaces the older `covenant new` (which still works as an alias).
+
+```bash
+covenant init my-token                    # default: blank record contract
+covenant init --template token my-token   # ERC-20 starter
+covenant init --template ceremony my-cer  # amnesia ceremony starter
+covenant init --template defi my-amm      # DeFi protocol scaffold
+```
+
+The scaffold creates `covenant.toml`, `src/`, `tests/`, a sample contract, and a CI workflow.
+
+## `covenant explain` <span style="font-size:0.75em;color:#7C3AED;">V0.9</span>
+
+Show the long-form explanation of any diagnostic code (E0xxx for compiler errors, W0xxx for warnings, L00x for linter, C100+ for security findings).
+
+```bash
+covenant explain E0421
+covenant explain L003
+covenant explain C100
+```
+
+Output includes: what the diagnostic means, why it fires, common causes, and how to fix or suppress it.
 
 ## `covenant.toml` reference
 

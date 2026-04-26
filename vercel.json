@@ -1,16 +1,25 @@
 {
   "version": 2,
+  "redirects": [
+    { "source": "/examples/01-hello-contract",         "destination": "/docs/examples/01-hello-contract", "permanent": true },
+    { "source": "/examples/02-fields-and-storage",     "destination": "/docs/examples/02-fields-and-storage", "permanent": true },
+    { "source": "/examples/03-actions-events-errors",  "destination": "/docs/examples/03-actions-events-errors", "permanent": true },
+    { "source": "/examples/04-guards",                 "destination": "/docs/examples/04-guards", "permanent": true },
+    { "source": "/examples/05-external-calls",         "destination": "/docs/examples/18-external-call", "permanent": true },
+    { "source": "/examples/06-erc20-token",            "destination": "/docs/examples/06-erc20-token", "permanent": true },
+    { "source": "/examples/07-fhe-basics",             "destination": "/docs/examples/07-fhe-basics", "permanent": true },
+    { "source": "/examples/08-encrypted-token",        "destination": "/docs/examples/08-encrypted-token", "permanent": true },
+    { "source": "/examples/09-post-quantum-signatures","destination": "/docs/examples/09-post-quantum-signatures", "permanent": true },
+    { "source": "/examples/10-zero-knowledge-proofs",  "destination": "/docs/examples/10-zero-knowledge-proofs", "permanent": true },
+    { "source": "/examples/11-cryptographic-amnesia",  "destination": "/docs/examples/11-cryptographic-amnesia", "permanent": true },
+    { "source": "/examples/12-uups-upgradeable",       "destination": "/docs/examples/12-uups-upgradeable", "permanent": true },
+    { "source": "/examples/13-beacon-proxy",           "destination": "/docs/examples/13-beacon-proxy", "permanent": true },
+    { "source": "/examples/14-oracle-integration",     "destination": "/docs/examples/14-oracle-integration", "permanent": true },
+    { "source": "/examples/15-deploy-to-sepolia",      "destination": "/docs/examples/15-deploy-to-sepolia", "permanent": true },
+    { "source": "/examples",                           "destination": "/docs/examples/01-hello-contract", "permanent": true },
+    { "source": "/examples/",                          "destination": "/docs/examples/01-hello-contract", "permanent": true }
+  ],
   "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "examples.covenant-lang.org" }],
-      "destination": "/examples/index"
-    },
-    {
-      "source": "/:path+",
-      "has": [{ "type": "host", "value": "examples.covenant-lang.org" }],
-      "destination": "/examples/:path"
-    },
     {
       "source": "/",
       "has": [{ "type": "host", "value": "docs.covenant-lang.org" }],

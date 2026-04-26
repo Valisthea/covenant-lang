@@ -6,7 +6,7 @@
 <script>if(location.hostname==='examples.covenant-lang.org')location.replace('https://covenant-lang.org/examples/');if(location.hostname==='docs.covenant-lang.org')location.replace('https://covenant-lang.org/docs/');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Covenant — Cryptographic guarantees as language primitives</title>
-<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.8 GA — WebAssembly target, cross-chain bridges, complete cryptographic amnesia, 15–30 % pGas reduction on FHE-heavy contracts.">
+<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK proofs, and cryptographic amnesia. V0.9 GA — production-real cryptographic primitives on Sepolia, ERC-721 NFTs in 5 lines, ERC-8231 PQ key registry, Foundry-class CLI.">
 <meta name="author" content="Kairos Lab">
 <link rel="canonical" href="https://covenant-lang.org/">
 <!-- Favicons -->
@@ -22,7 +22,7 @@
 <meta property="og:url" content="https://covenant-lang.org/">
 <meta property="og:site_name" content="Covenant">
 <meta property="og:title" content="Covenant — Cryptographic guarantees as language primitives">
-<meta property="og:description" content="A smart contract language with native FHE, post-quantum signatures, ZK selective disclosure, and cryptographic amnesia. V0.8 GA — WebAssembly target, cross-chain bridges, complete cryptographic amnesia.">
+<meta property="og:description" content="A smart contract language with cryptographic primitives built in. V0.9 GA — first ceremony destruction verified on Etherscan. 17 constructs, testnet-ready.">
 <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -244,6 +244,42 @@ h1#hero-title {
   color: var(--ink);
   margin-bottom: 24px;
 }
+
+/* V0.9 announcement badge — above the title */
+.hero-v9-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding: 6px 14px;
+  background: var(--paper-pure);
+  border: 1px solid var(--rule);
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards 1.0s;
+}
+.hero-v9-badge .v9-pill {
+  background: var(--accent);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.hero-v9-badge .v9-label {
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.hero-v9-badge .v9-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.hero-v9-badge .v9-link:hover { text-decoration: underline; }
 
 h1#hero-title .letter {
   display: inline-block;
@@ -757,6 +793,172 @@ pre.compare-code {
 }
 
 /* ─────────────────────────────────────────────
+   V0.9 FEATURE GRID — "What's new"
+   ───────────────────────────────────────────── */
+.v9-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: 32px;
+}
+
+.v9-card {
+  padding: 28px 26px;
+  background: var(--paper-pure);
+  display: flex;
+  flex-direction: column;
+}
+
+.v9-card-icon {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18pt;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.v9-card-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 16pt; font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.v9-card-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 10pt; color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.v9-card code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(124, 58, 237, 0.08);
+  color: var(--ink);
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-size: 9pt;
+}
+
+.v9-card-code {
+  background: #1a1a1a;
+  color: #e8e8e8;
+  padding: 12px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  line-height: 1.55;
+  overflow-x: auto;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+.v9-card-code code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+.v9-card-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  text-decoration: none;
+  margin-top: auto;
+}
+.v9-card-link:hover { text-decoration: underline; }
+
+.testnet-banner {
+  margin-top: 32px;
+  padding: 16px 20px;
+  background: rgba(234, 179, 8, 0.06);
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  border-left: 3px solid #ca8a04;
+  font-family: 'Inter', sans-serif;
+  font-size: 10pt;
+  color: var(--ink);
+  line-height: 1.55;
+}
+.testnet-banner strong {
+  color: #92400e;
+  font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────
+   MILESTONES — M0 + M1 on Sepolia
+   ───────────────────────────────────────────── */
+.milestone-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+@media (max-width: 720px) {
+  .milestone-row { grid-template-columns: 1fr; }
+}
+
+.milestone-card {
+  position: relative;
+  padding: 24px 28px;
+  background: var(--paper-pure);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+}
+
+.milestone-card--gold {
+  border-left-color: #d4a017;
+  background: linear-gradient(to bottom, rgba(212, 160, 23, 0.04), var(--paper-pure));
+}
+
+.milestone-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  background: var(--accent);
+  color: white;
+  margin-bottom: 12px;
+}
+.milestone-badge--gold {
+  background: #d4a017;
+  color: #1a1a1a;
+}
+
+.milestone-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 14pt;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.milestone-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 9.5pt;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+.milestone-desc code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(124, 58, 237, 0.08);
+  padding: 1px 5px;
+  font-size: 8.5pt;
+}
+
+.milestone-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.milestone-link:hover { text-decoration: underline; }
+
+/* ─────────────────────────────────────────────
    MANIFESTO BRIDGE
    ───────────────────────────────────────────── */
 .manifesto-bridge {
@@ -1111,7 +1313,7 @@ a:focus-visible, button:focus-visible {
       </svg>
     </div>
     <span class="header-brand-name">Covenant</span>
-    <span class="header-badge">V0.8 GA</span>
+    <span class="header-badge">V0.9 GA</span>
   </a>
 
   <div class="header-spacer"></div>
@@ -1151,6 +1353,12 @@ a:focus-visible, button:focus-visible {
       <span class="hero-logo-label">Covenant</span>
     </div>
 
+    <div class="hero-v9-badge" role="status">
+      <span class="v9-pill">V0.9.0</span>
+      <span class="v9-label">Production-real on Sepolia</span>
+      <a href="https://github.com/Valisthea/covenant/releases/tag/v0.9.0" class="v9-link" target="_blank" rel="noopener">View release →</a>
+    </div>
+
     <h1 id="hero-title" aria-label="Covenant"></h1>
 
     <p class="hero-subtitle">where cryptographic guarantees become language primitives</p>
@@ -1158,9 +1366,9 @@ a:focus-visible, button:focus-visible {
     <div class="hero-bar" id="hero-bar" aria-hidden="true"></div>
 
     <div class="hero-actions">
-      <a href="#install" class="btn-primary">Install now →</a>
-      <a href="https://playground.covenant-lang.org" class="btn-secondary">Try in Playground →</a>
-      <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary">Read the audit →</a>
+      <a href="https://playground.covenant-lang.org" class="btn-primary">Try in Playground →</a>
+      <a href="https://github.com/Valisthea/covenant" target="_blank" rel="noopener" class="btn-secondary">View on GitHub →</a>
+      <a href="https://github.com/Valisthea/covenant/blob/main/OMEGA_V5_AUDIT_REPORT.md" target="_blank" rel="noopener" class="btn-secondary">Read OMEGA V5 →</a>
       <a href="manifesto.html" class="btn-secondary" style="border-color:transparent;color:var(--ink-mute);">Read the Manifesto</a>
     </div>
 
@@ -1257,7 +1465,7 @@ a:focus-visible, button:focus-visible {
   <div class="section-header">
     <span class="section-num">02 — Audited</span>
     <h2 class="section-title" id="audited-title">OMEGA V4 — full audit, all findings resolved</h2>
-    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 security audit — 41 findings across all severity levels. Every finding is resolved. All OMEGA V4 findings remain resolved in V0.8, which introduces no new critical or high findings. The audit report and full writeup are public.</p>
+    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 security audit — 41 findings across all severity levels. All findings remain resolved through V0.9. V0.8 added 9 OMEGA V4 verifications (8 verified + 1 mitigated, fully resolved in V0.9). V0.9 cleared OMEGA V5 — 10-point self-audit, all GO, 1206 tests, 0 clippy warnings. External third-party audit is the gate for V1.0 mainnet.</p>
   </div>
 
   <div class="audit-stats reveal">
@@ -1307,7 +1515,7 @@ a:focus-visible, button:focus-visible {
   <div class="audit-actions reveal">
     <a href="/audit" class="btn-primary">Read the full audit writeup →</a>
     <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener" class="btn-secondary" style="margin-left:1rem;">PoCs on GitHub →</a>
-    <a href="#install" class="btn-secondary" style="margin-left:1rem;">Install V0.8 →</a>
+    <a href="#install" class="btn-secondary" style="margin-left:1rem;">Install V0.9 →</a>
   </div>
 </section>
 </div>
@@ -1399,7 +1607,7 @@ a:focus-visible, button:focus-visible {
   <div class="section-header">
     <span class="section-num">04 — Install</span>
     <h2 class="section-title" id="install-title">Get the audited compiler</h2>
-    <p class="body-text">Covenant V0.8 GA ships a full toolchain: compiler, CLI, LSP, VS Code extension, and a gas-regression benchmark. Three targets (EVM, Aster Chain, WebAssembly). One command to start.</p>
+    <p class="body-text">Covenant V0.9 GA ships a full toolchain: compiler, Foundry-class CLI (test, fmt, doctor, lint, init), LSP, VS Code extension, and a gas-regression benchmark. Three targets (EVM, Aster Chain, WebAssembly). One command to start.</p>
   </div>
 
   <div class="install-cmd-wrap reveal">
@@ -1459,48 +1667,77 @@ kairos-lab.covenant-lang</pre>
 </div>
 
 <!-- ═══════════════════════════════════════════
-     WHAT'S NEW IN V0.8
+     WHAT'S NEW IN V0.9
      ═══════════════════════════════════════════ -->
 <div class="container">
 <section class="section" id="whats-new" aria-labelledby="whats-new-title">
   <div class="section-header">
     <span class="section-num">04b — What's new</span>
-    <h2 class="section-title" id="whats-new-title">What's new in V0.8</h2>
-    <p class="body-text">V0.8 rolls up V0.7.1 (WASM + Amnesia) and V0.7.2 (Bridge + Optimizations) into a single GA milestone. Fully backward compatible at the source level — existing V0.7 <code>.cov</code> files compile unchanged.</p>
+    <h2 class="section-title" id="whats-new-title">What's new in V0.9</h2>
+    <p class="body-text">V0.9 is the production-real release. Cryptographic primitives execute on Sepolia for the first time via the helper-contract bridge. Three new top-level constructs (<code>nft</code>, <code>registry</code>, <code>interface</code>) bring ERC-721 and ERC-8231 to 5-line declarations. Foundry-class CLI tooling, a 6-rule linter for Solidity-isms, OMEGA V5 audit cleared. Fully backward compatible — V0.8 <code>.cov</code> files compile unchanged.</p>
   </div>
 
-  <div class="ships-grid reveal" role="list" aria-label="V0.8 highlights">
+  <div class="v9-features-grid reveal" role="list" aria-label="V0.9 highlights">
 
-    <div class="ship-card" role="listitem">
-      <span class="ship-title">WebAssembly Backend</span>
-      <span class="ship-sub"><code>--target-chain wasm</code> · deterministic · <code>wasmparser</code>-clean</span>
-      <span class="ship-badge">NEW · V0.8</span>
+    <div class="v9-card" role="listitem">
+      <span class="v9-card-icon">⛓</span>
+      <h3 class="v9-card-title">Real on Sepolia</h3>
+      <p class="v9-card-desc">Ceremony destruction, FHE counters, PQ signatures, ZK proofs — all execute on Sepolia via the helper-contract bridge. No more mock-only.</p>
+      <a href="https://sepolia.etherscan.io/address/0x2FB87d54" class="v9-card-link" target="_blank" rel="noopener">M1 · First ceremony on Sepolia →</a>
     </div>
 
-    <div class="ship-card" role="listitem">
-      <span class="ship-title">Cross-Chain Bridges</span>
-      <span class="ship-sub">Per-pair nonce anti-replay · validator-set Merkle commitments · ECDSA attestations</span>
-      <span class="ship-badge">NEW · V0.8</span>
+    <div class="v9-card" role="listitem">
+      <span class="v9-card-icon">◇</span>
+      <h3 class="v9-card-title">NFTs in 5 lines</h3>
+      <p class="v9-card-desc">The <code>nft</code> construct auto-synthesizes the entire ERC-721 surface. Name, symbol, base_uri — that's all you write.</p>
+<pre class="v9-card-code"><code>nft CoolApes {
+    name: "Cool Apes"
+    symbol: "APE"
+    base_uri: "https://api.example.com/"
+}</code></pre>
     </div>
 
-    <div class="ship-card" role="listitem">
-      <span class="ship-title">Amnesia Ceremonies</span>
-      <span class="ship-sub">Wesolowski VDF + Shamir SSS + keccak-bound destruction proofs (precompiles <code>0x124–0x127</code>)</span>
-      <span class="ship-badge">NEW · V0.8</span>
+    <div class="v9-card" role="listitem">
+      <span class="v9-card-icon">◈</span>
+      <h3 class="v9-card-title">Post-Quantum Registry</h3>
+      <p class="v9-card-desc"><code>registry</code> ships ERC-8231 — Dilithium-5 key registration, update, revocation. The migration path from ECDSA to post-quantum.</p>
+      <a href="https://github.com/Valisthea/covenant/blob/main/crates/covenant-lexer/tests/fixtures/example_14_registry_minimal.cov" class="v9-card-link" target="_blank" rel="noopener">View the fixture →</a>
     </div>
 
-    <div class="ship-card" role="listitem">
-      <span class="ship-title">Advanced Optimizations</span>
-      <span class="ship-sub">FHE coalescing · compile-time hash precomputation · noise-budget warnings · 15–30 % pGas reduction</span>
-      <span class="ship-badge">NEW · V0.8</span>
+    <div class="v9-card" role="listitem">
+      <span class="v9-card-icon">⚡</span>
+      <h3 class="v9-card-title">Foundry-class CLI</h3>
+      <p class="v9-card-desc">Per-test isolation, watch mode, coverage, format gates, environment doctor — a complete developer toolchain.</p>
+<pre class="v9-card-code"><code>covenant test --coverage
+covenant fmt --check
+covenant doctor
+covenant init my-token</code></pre>
+    </div>
+
+    <div class="v9-card" role="listitem">
+      <span class="v9-card-icon">⊜</span>
+      <h3 class="v9-card-title">Smart Linter</h3>
+      <p class="v9-card-desc">6 rules catch Solidity-isms on paste. <code>mapping()</code> → <code>map&lt;&gt;</code>, <code>function</code> → <code>action</code>, <code>//</code> → <code>--</code>. One-click fix in Monaco + VSCode.</p>
+      <a href="https://github.com/Valisthea/covenant/tree/main/crates/covenant-lint" class="v9-card-link" target="_blank" rel="noopener">View detector list →</a>
+    </div>
+
+    <div class="v9-card" role="listitem">
+      <span class="v9-card-icon">⛨</span>
+      <h3 class="v9-card-title">OMEGA V5 Audit</h3>
+      <p class="v9-card-desc">10-point self-audit, all GO. 1206 tests passing, 0 clippy warnings, 9 audit fixtures compile end-to-end on both MockChain and Sepolia.</p>
+      <a href="https://github.com/Valisthea/covenant/blob/main/OMEGA_V5_AUDIT_REPORT.md" class="v9-card-link" target="_blank" rel="noopener">Read the audit report →</a>
     </div>
 
   </div>
 
-  <p class="body-text reveal" style="margin-top: 24px; font-style: italic;">
-    <a href="https://github.com/Valisthea/covenant-lang/blob/main/RELEASE_NOTES_v0.8.md" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; border-bottom: 1px solid transparent; transition: border-color 0.15s;" onmouseover="this.style.borderBottomColor='var(--accent)'" onmouseout="this.style.borderBottomColor='transparent'">Read the V0.8 release notes →</a>
+  <div class="testnet-banner reveal" role="note">
+    <strong>Testnet-only by design.</strong> V0.9 helper contracts are deployed on Sepolia. Mainnet deployment follows V1.0, gated on external audit by a third-party firm.
+  </div>
+
+  <p class="body-text reveal" style="margin-top: 28px; font-style: italic; text-align: center;">
+    <a href="https://github.com/Valisthea/covenant/releases/tag/v0.9.0" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none; border-bottom: 1px solid transparent;">Read the V0.9 release notes →</a>
     &nbsp;·&nbsp;
-    <a href="https://github.com/Valisthea/covenant-lang/blob/main/docs/migration-v0.7-to-v0.8.md" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">V0.7 → V0.8 migration guide →</a>
+    <a href="https://docs.covenant-lang.org/migration/from-v08-to-v09" style="color:var(--accent); text-decoration:none;">V0.8 → V0.9 migration guide →</a>
   </p>
 </section>
 </div>
@@ -1517,7 +1754,7 @@ kairos-lab.covenant-lang</pre>
     <!-- Bottom-left corner mark -->
     <div aria-hidden="true" style="position:absolute;bottom:12px;left:12px;width:20px;height:20px;border-bottom:1px solid var(--accent);border-left:1px solid var(--accent);opacity:0.6;"></div>
 
-    <span class="section-num" style="display:block;margin-bottom:1.5rem;">05 — Live on Ethereum</span>
+    <span class="section-num" style="display:block;margin-bottom:1.5rem;">05 — Verified on Sepolia</span>
 
     <div class="deployment-eyebrow">
       <div class="deploy-dot" aria-hidden="true"></div>
@@ -1525,29 +1762,41 @@ kairos-lab.covenant-lang</pre>
       <span class="deploy-network">· Sepolia Testnet · April 2026</span>
     </div>
 
-    <h2 class="deploy-title" id="deploy-title">The first Covenant contract.</h2>
-    <p class="deploy-subtitle">A proof of concept is not a proof. This is a deployment.</p>
+    <h2 class="deploy-title" id="deploy-title">Two milestones. Externally verifiable.</h2>
+    <p class="deploy-subtitle">A proof of concept is not a proof. These are deployments — real contracts, real transactions, on Etherscan.</p>
 
-    <div class="deploy-address-wrap">
-      <span class="deploy-address-label">Contract address</span>
-      <span class="deploy-address" id="deploy-address-el" role="text" aria-label="Contract address: 0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133"></span>
-      <a class="deploy-link" href="https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133" target="_blank" rel="noopener">
-        View on Sepolia Etherscan ↗
-      </a>
+    <div class="milestone-row">
+      <div class="milestone-card">
+        <span class="milestone-badge">M0</span>
+        <h3 class="milestone-title">First Covenant contract on Sepolia</h3>
+        <p class="milestone-desc">A <code>record Hello</code> — the simplest possible Covenant contract — deployed and interacted with on Sepolia. Compiler V0.9 → real EVM bytecode → deployed transaction.</p>
+        <a href="https://sepolia.etherscan.io/address/0xab083fc4" target="_blank" rel="noopener" class="milestone-link">
+          0xab083fc4… on Etherscan ↗
+        </a>
+      </div>
+
+      <div class="milestone-card milestone-card--gold">
+        <span class="milestone-badge milestone-badge--gold">M1</span>
+        <h3 class="milestone-title">First ceremony destruction on Sepolia</h3>
+        <p class="milestone-desc">Full <code>ceremony</code> lifecycle: setup → submit_share → finalize → <strong>destroy</strong>. Helper-contract bridge in production. Irrevocable. Verifiable by anyone.</p>
+        <a href="https://sepolia.etherscan.io/address/0x2FB87d54" target="_blank" rel="noopener" class="milestone-link">
+          0x2FB87d54… on Etherscan ↗
+        </a>
+      </div>
     </div>
 
-    <div class="deploy-meta-grid">
-      <div class="deploy-meta-col">
-        <span class="deploy-meta-label">Contract</span>
-        <span class="deploy-meta-value">Sepolia Coin</span>
-      </div>
+    <div class="deploy-meta-grid" style="margin-top:32px;">
       <div class="deploy-meta-col">
         <span class="deploy-meta-label">Compiler</span>
-        <span class="deploy-meta-value">Covenant V0.8</span>
+        <span class="deploy-meta-value">Covenant V0.9</span>
       </div>
       <div class="deploy-meta-col">
-        <span class="deploy-meta-label">Language</span>
-        <span class="deploy-meta-value">Rust · 22-crate workspace</span>
+        <span class="deploy-meta-label">Workspace</span>
+        <span class="deploy-meta-value">Rust · 22 crates · 1206 tests</span>
+      </div>
+      <div class="deploy-meta-col">
+        <span class="deploy-meta-label">Audit</span>
+        <span class="deploy-meta-value">OMEGA V5 · all GO</span>
       </div>
     </div>
 
@@ -1567,49 +1816,49 @@ kairos-lab.covenant-lang</pre>
 
     <div class="ship-card">
       <span class="ship-title">Compiler</span>
-      <span class="ship-sub">Rust · 22-crate workspace · EVM + Aster + WASM</span>
-      <span class="ship-badge">V0.8 · Shipped</span>
+      <span class="ship-sub">Rust · 22-crate workspace · 1206 tests · EVM + Aster + WASM</span>
+      <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
     <div class="ship-card">
-      <span class="ship-title">Codex</span>
-      <span class="ship-sub">20 working examples · 4 tiers</span>
-      <span class="ship-badge">V0.4 · Shipped</span>
+      <span class="ship-title">17 Top-level Constructs</span>
+      <span class="ship-sub">+ <code>nft</code>, <code>registry</code>, <code>interface</code> in V0.9 · ERC-721 + ERC-8231 auto-synthesis</span>
+      <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
     <div class="ship-card">
-      <span class="ship-title">CLI</span>
-      <span class="ship-sub">compile, check, deploy, test, bench · gas-regression baseline</span>
-      <span class="ship-badge">V0.8 · Shipped</span>
+      <span class="ship-title">Foundry-class CLI</span>
+      <span class="ship-sub">test, fmt, doctor, lint, init, explain · per-test isolation · watch mode</span>
+      <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
     <div class="ship-card">
       <span class="ship-title">LSP + Linter</span>
-      <span class="ship-sub">21+ security detectors · VS Code</span>
-      <span class="ship-badge">V0.6 · Shipped</span>
+      <span class="ship-sub">21+ security detectors + 6 Solidity-ism rules · VS Code 0.8.2</span>
+      <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
     <div class="ship-card">
-      <span class="ship-title">WebAssembly Backend</span>
-      <span class="ship-sub"><code>--target-chain wasm</code> · deterministic</span>
-      <span class="ship-badge">V0.8 · Shipped</span>
+      <span class="ship-title">Helper-Contract Bridge</span>
+      <span class="ship-sub">CeremonyHelper + FHE/PQ/ZK helpers · CREATE2 · Sepolia live</span>
+      <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
     <div class="ship-card">
-      <span class="ship-title">Cross-Chain Bridge</span>
-      <span class="ship-sub">Per-pair nonce anti-replay · one artifact per anchored chain</span>
-      <span class="ship-badge">V0.8 · Shipped</span>
+      <span class="ship-title">Playground</span>
+      <span class="ship-sub">In-browser compile + MockChain + Sepolia · 12+ verified examples · cross-tab sync</span>
+      <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
     <div class="ship-card">
       <span class="ship-title">Amnesia Ceremonies</span>
-      <span class="ship-sub">VDF + Shamir + externally-verifiable destruction proofs</span>
-      <span class="ship-badge">V0.8 · Shipped</span>
+      <span class="ship-sub">ERC-8228 · VDF + Shamir · destruction proof verified on Etherscan</span>
+      <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
     <div class="ship-card">
       <span class="ship-title">Audit</span>
-      <span class="ship-sub">OMEGA V4 · 41 findings · all resolved, valid in V0.8</span>
+      <span class="ship-sub">OMEGA V4 (V0.6 + V0.8) + OMEGA V5 (V0.9) · 60 findings · all GO</span>
       <span class="ship-badge">CLEARED</span>
     </div>
 
@@ -1662,18 +1911,22 @@ kairos-lab.covenant-lang</pre>
     </div>
 
     <div>
-      <span class="footer-col-title">Repository</span>
-      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/<wbr>covenant-lang</a>
+      <span class="footer-col-title">Repositories</span>
+      <a href="https://github.com/Valisthea/covenant" target="_blank" rel="noopener" class="footer-link-mono">covenant <span style="opacity:0.5;">· compiler</span></a>
+      <a href="https://github.com/Valisthea/covenant-playground" target="_blank" rel="noopener" class="footer-link-mono">covenant-playground</a>
+      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">covenant-lang <span style="opacity:0.5;">· this site</span></a>
+      <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener" class="footer-link-mono">covenant-audits</a>
       <a href="manifesto.html" class="footer-link" style="margin-top:12px;">Manifesto</a>
-      <a href="manifesto.html#architecture" class="footer-link">Architecture spec</a>
+      <a href="https://github.com/Valisthea/covenant/blob/main/SECURITY.md" target="_blank" rel="noopener" class="footer-link">Security disclosure</a>
     </div>
 
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-closing">V0.8 GA — stable for early-adopter production use. Roadmap: V0.8.x follow-ups (Loop opcode, aggregate surface syntax, real TFHE KSK, Dilithium validator sigs, full Aster SDK), V1.0 (full production, second external audit).</p>
-    <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0</span>
+    <p class="footer-closing">V0.9 GA — production-real cryptographic primitives on Sepolia. Testnet-only by design; mainnet at V1.0 post-external-audit. Roadmap: V0.9.x patches (LSP debounce, fuzz campaigns, Aster M2), V1.0 (real TFHE/Dilithium/Halo2, third-party audit, mainnet helpers).</p>
+    <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0 · Site: MIT + CC-BY · <span id="footer-year"></span> Kairos Lab</span>
   </div>
+  <script>document.getElementById('footer-year').textContent=new Date().getFullYear();</script>
 </footer>
 
 <!-- ═══════════════════════════════════════════

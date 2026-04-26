@@ -530,7 +530,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
 <header id="cover" role="banner">
   <div class="cover-topbar" aria-label="Document header">
     <span>KAIROS LAB · PROJECT DOCUMENT</span>
-    <span>v3.1 · APRIL 2026 · V0.8 GA · WASM + AMNESIA + BRIDGE</span>
+    <span>v3.2 · APRIL 2026 · V0.9 GA · SEPOLIA LIVE + NFT + REGISTRY + CLI</span>
   </div>
 
   <div class="cover-center">
@@ -548,7 +548,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     <h1 class="cover-title" id="cover-title" aria-label="Covenant"></h1>
     <p class="cover-subtitle">where cryptographic guarantees become language primitives</p>
     <div class="cover-bar" id="cover-bar" aria-hidden="true"></div>
-    <p class="cover-desc">A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Version 0.8 General Availability shipped April 2026 — adding a deterministic WebAssembly backend, complete cryptographic amnesia primitives (Wesolowski VDF + Shamir + externally-verifiable destruction proofs), a cross-chain bridge module, and advanced optimizer passes on top of the V0.7 GA foundation. Fully backward compatible at the source level; OMEGA V4 audit findings remain resolved.</p>
+    <p class="cover-desc">A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Version 0.9 General Availability — production-real cryptographic primitives on Sepolia. First ceremony destruction proof verified on Etherscan. Three new top-level constructs: <code>nft</code> (ERC-721 in 5 lines), <code>registry</code> (ERC-8231 PQ key registry), <code>interface</code> (typed cross-contract calls). Foundry-class CLI tooling (test, fmt, doctor, lint, init). 17 top-level constructs, 1206 tests, OMEGA V5 audit cleared. Testnet-only by design; mainnet at V1.0.</p>
   </div>
 
   <footer class="cover-footer" aria-label="Document metadata">
@@ -572,7 +572,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     </div>
     <div class="preamble-block reveal">
       <span class="preamble-label">Preamble</span>
-      <p class="preamble-text">Covenant is a smart contract language. Version 0.8 reached General Availability in April 2026, adding a deterministic WebAssembly target, complete cryptographic-amnesia primitives, a cross-chain bridge module, and an advanced optimizer to the V0.7 GA foundation. The language spec remains frozen for the 0.x line, source-level compatibility is preserved across V0.7 and V0.8, and all OMEGA V4 audit findings remain resolved. This document describes the language design, its cryptographic substrate, and the trajectory toward V1.0. The specifications herein are published under CC0-1.0; the compiler is Apache-2.0. We write in the present tense where implementations exist, and in the conditional where they are planned. The reader is invited to distinguish the two.</p>
+      <p class="preamble-text">Covenant is a smart contract language. Version 0.9 reached General Availability in April 2026, making cryptographic primitives production-real on Sepolia for the first time. V0.9 introduces the helper-contract bridge (enabling ceremony, FHE, PQ, and ZK primitives on any EVM chain), ERC-721 auto-synthesis (<code>nft</code> keyword), ERC-8231 auto-synthesis (<code>registry</code> keyword), cross-contract calls via <code>interface</code> declarations, a Foundry-class CLI (test, fmt, doctor, coverage, init), and a 6-rule linter with one-click fixes for Solidity-isms. The compiler ships with 22 crates, 1206 passing tests, and zero clippy warnings. Source-level compatibility is preserved across V0.7, V0.8, and V0.9. OMEGA V5 audit cleared. This document describes the language design, its cryptographic substrate, and the trajectory toward V1.0. The specifications herein are published under CC0-1.0; the compiler is Apache-2.0. We write in the present tense where implementations exist, and in the conditional where they are planned. The reader is invited to distinguish the two.</p>
     </div>
   </section>
 
@@ -711,7 +711,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     <div class="reveal">
       <div class="section-header-row">
         <span class="section-num">04</span>
-        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.8</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.9</span>
       </div>
       <h2 class="section-title" id="s04-title">What ships today</h2>
     </div>
@@ -720,7 +720,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Compiler</span>
         <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">Rust · 22-crate workspace · EVM + Aster + WASM</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">GA · V0.8</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">GA · V0.9</span>
         <a style="font-family:'JetBrains Mono',monospace;font-size:8.5pt;color:var(--accent);text-decoration:none;display:block;margin-top:8px;" href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener">github.com/Valisthea/covenant-lang</a>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
@@ -731,41 +731,82 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Documentation</span>
-        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">72 pages · 30+ cookbook recipes · V0.7→V0.8 migration guide</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">V0.8 · GA</span>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">72 pages · 30+ cookbook recipes · V0.8→V0.9 migration guide · CLI reference</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">V0.9 · GA</span>
         <a style="font-family:'JetBrains Mono',monospace;font-size:8.5pt;color:var(--accent);text-decoration:none;display:block;margin-top:8px;" href="https://covenant-lang.org/docs" target="_blank" rel="noopener">covenant-lang.org/docs ↗</a>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Tooling</span>
         <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">CLI + LSP v1 + Security Linter + bench</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">V0.8 · GA</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">V0.9 · GA</span>
         <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">810+ tests · 21+ detectors · VS Code extension · gas-regression baseline</p>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Security Audit</span>
-        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">OMEGA V4 · 41 findings · remains valid in V0.8</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">CLEARED · V0.7 → V0.8</span>
-        <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">All critical and high findings resolved (KSR-CVN-001 amnesia phase, KSR-CVN-002 UUPS re-init). V0.8 introduces no new critical/high findings.</p>
+        <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">OMEGA V4 (V0.6 + V0.8) + OMEGA V5 (V0.9) · 60 findings total · all resolved</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">CLEARED · V0.6 → V0.9</span>
+        <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">OMEGA V4 V0.6: 41 findings, all resolved. OMEGA V4 V0.8: 9 findings, 8 verified + 1 mitigated. OMEGA V5 V0.9: 10-point self-audit, all GO. Helper-bridge verified end-to-end on Sepolia. 1206 tests, 0 clippy warnings. External third-party audit gates V1.0 mainnet.</p>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">License Policy</span>
         <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">Scheme-agnostic FHE + open standard</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">RATIFIED · V0.8</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">RATIFIED · V0.9</span>
         <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">Specs CC0-1.0; compiler Apache-2.0; FHE backends are pluggable to avoid scheme lock-in.</p>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">WebAssembly Backend</span>
         <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;"><code>--target-chain wasm</code> · deterministic · <code>wasmparser</code>-clean</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">NEW · V0.8</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">SHIPPED · V0.9</span>
         <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;">Same <code>.cov</code> source compiles to EVM, Aster Chain, and WebAssembly. Browser and server-side sandboxes (<code>wasmtime</code>, <code>wasmer</code>) run Covenant contracts with an auditable output.</p>
       </div>
       <div style="padding:20px 24px;border:1px solid var(--rule-faint);" role="listitem">
         <span style="font-family:'EB Garamond',serif;font-size:13pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Cross-Chain Bridge</span>
         <span style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-mute);margin-bottom:12px;display:block;">Per-pair nonce anti-replay · validator-set Merkle roots · ECDSA attestations</span>
-        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">NEW · V0.8</span>
+        <span style="display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8pt;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--accent);color:white;padding:2px 8px;">SHIPPED · V0.9</span>
         <p style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);margin-top:8px;line-height:1.5;"><code>bridge … anchored_on [...]</code> synthesizes four canonical functions per chain and emits one artifact per anchored chain with the correct <code>local_chain()</code> baked in.</p>
       </div>
     </div>
+  </section>
+
+  <!-- 04b — PLAYGROUND -->
+  <section class="doc-section" id="section-04b" aria-labelledby="s04b-title">
+    <div class="reveal">
+      <div class="section-header-row">
+        <span class="section-num">04b</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.9</span>
+      </div>
+      <h2 class="section-title" id="s04b-title">Playground</h2>
+    </div>
+    <p class="body-text reveal">Covenant ships a complete in-browser development environment at <a href="https://playground.covenant-lang.org" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">playground.covenant-lang.org</a>. The playground loads in any modern browser — no Rust, no PATH setup, no toolchain. Compile to real EVM bytecode, deploy to MockChain (deterministic, instant) or Sepolia (real testnet, ~30 s confirmation), interact with deployed contracts in a typed UI, persist state across reloads via IndexedDB, and follow a guided 12+ lesson tour from <code>record Hello</code> to amnesia ceremony.</p>
+
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0;border:1px solid var(--rule);margin-top:24px;">
+      <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
+        <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Compile</span>
+        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">Real EVM bytecode via WebAssembly, in your browser. The same compiler that runs in CI.</span>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
+        <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">MockChain</span>
+        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">In-tab EVM simulator. Deterministic. Instant. Free. Reset on demand.</span>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
+        <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Sepolia</span>
+        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">Real testnet via MetaMask. ~30 s confirmation. Helper bridge live for ceremony / FHE / PQ / ZK.</span>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
+        <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Aster</span>
+        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">Codegen ready in V0.9. Live deploy gated on Aster Chain factory verification (M2).</span>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
+        <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Tour</span>
+        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">12+ guided lessons from <code>record Hello</code> through encrypted ballot, ceremony destruction, NFT mint.</span>
+      </div>
+      <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
+        <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Examples</span>
+        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">12+ verified contracts. Each has a "Try in Playground" deep link from the docs.</span>
+      </div>
+    </div>
+
+    <p class="body-text reveal" style="margin-top:20px;">State persists across page reloads (IndexedDB) and syncs across tabs (BroadcastChannel). Events display as human-readable names, not raw hex topics. The playground is the fastest way to evaluate Covenant — and the recommended on-ramp for anyone considering adoption.</p>
   </section>
 
   <!-- 05 — ROADMAP -->
@@ -773,7 +814,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     <div class="reveal">
       <div class="section-header-row">
         <span class="section-num">05</span>
-        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.8</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.9</span>
       </div>
       <h2 class="section-title" id="s05-title">Trajectory</h2>
     </div>
@@ -802,13 +843,16 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       <div class="roadmap-content reveal"><span class="roadmap-content-title">Cross-chain bridges and advanced optimizer</span><p class="roadmap-content-text">Per-pair nonce anti-replay, validator-set Merkle commitments, threshold ECDSA attestations, and one artifact per anchored chain. FHE coalescing plus compile-time hash precomputation deliver 15–30 % pGas reduction on FHE-heavy contracts. Rolled into V0.8 GA.</p></div>
 
       <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.8 GA</span><span class="roadmap-phase-date">April 2026</span><span class="rs rs-shipped">Shipped</span></div>
-      <div class="roadmap-content current reveal"><span class="roadmap-content-title">WASM + Amnesia + Bridge + Optimizations — consolidated</span><p class="roadmap-content-text">V0.8 consolidates V0.7.1 and V0.7.2 into a single GA milestone. Three targets (EVM, Aster Chain, WebAssembly). Cryptographic amnesia complete via dedicated precompiles at <code>0x124–0x127</code>. Bridge module synthesizes per-chain artifacts. Fully backward compatible at the source level; OMEGA V4 audit findings remain resolved. This is the current active phase.</p></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">WASM + Amnesia + Bridge + Optimizations — consolidated</span><p class="roadmap-content-text">V0.8 consolidated V0.7.1 and V0.7.2 into a single GA milestone. Three targets (EVM, Aster Chain, WebAssembly). Cryptographic amnesia complete via dedicated precompiles at <code>0x124–0x127</code>. Bridge module synthesizes per-chain artifacts. Fully backward compatible at the source level; OMEGA V4 audit findings remain resolved.</p></div>
 
-      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.8.x FOLLOW-UPS</span><span class="roadmap-phase-date">Q3 2026</span><span class="rs rs-progress">In Progress</span></div>
-      <div class="roadmap-content reveal"><span class="roadmap-content-title">Loop opcode, aggregate surface syntax, Aster SDK</span><p class="roadmap-content-text">Generic <code>Loop</code> opcode unblocks true <code>@batch_up_to(N)</code> unrolling. Aggregate operators (<code>.sum</code>, <code>.count</code>, <code>.max</code>) land at the surface level (IR plan already reusable). Real TFHE key-switching precompile <code>0x128</code>. Dilithium / BLS validator signatures for the bridge. Full Aster SDK lowering replacing the <code>COV7\x01</code> placeholder artifacts.</p></div>
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.9 GA</span><span class="roadmap-phase-date">April 2026</span><span class="rs rs-shipped">Shipped</span></div>
+      <div class="roadmap-content current reveal"><span class="roadmap-content-title">Sepolia live + helper bridge + NFT/Registry/Interface + CLI</span><p class="roadmap-content-text">V0.9 is the production-real release. The helper-contract bridge (CeremonyHelper + FHE/PQ/ZK helpers) brings cryptographic primitives to live Sepolia execution. Three new top-level constructs: <code>nft</code> (ERC-721 auto-synthesis, 11 functions from 5 lines of source), <code>registry</code> (ERC-8231 PQ key registry, 5 functions), <code>interface</code> (typed cross-contract calls). Foundry-class CLI: <code>covenant test/fmt/doctor/lint/init/explain</code> with per-test isolation, watch mode, name-heuristic coverage. 6-rule linter for Solidity-isms. OMEGA V5 audit cleared (10-point self-audit, all GO). 1206 tests passing. M0 (record Hello) + M1 (ceremony destruction) deployments verifiable on Sepolia Etherscan. This is the current active phase.</p></div>
+
+      <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V0.9.x FOLLOW-UPS</span><span class="roadmap-phase-date">Q2 2026</span><span class="rs rs-progress">In Progress</span></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">LSP debounce · IR coverage · fuzz campaigns · Aster M2</span><p class="roadmap-content-text"><code>--strict</code> doctor, LSP debounce on incremental edits, IR-level coverage, and continuous fuzz campaigns. Aster M2 (live deployment) gated on Aster Chain factory verification — codegen ready, deploy waits.</p></div>
 
       <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V1.0 PRODUCTION</span><span class="roadmap-phase-date">Q1 2027</span><span class="rs rs-planned">Planned</span></div>
-      <div class="roadmap-content reveal"><span class="roadmap-content-title">Post-external-audit release</span><p class="roadmap-content-text">V1.0 follows a second full external audit covering the WASM backend and async action semantics. Semantic versioning guarantee takes effect: no breaking changes without a major version increment.</p></div>
+      <div class="roadmap-content reveal"><span class="roadmap-content-title">Real crypto · external audit · mainnet helpers</span><p class="roadmap-content-text">V1.0 lights up real cryptographic primitives — Zama TFHE in CeremonyHelper, real Dilithium-5 verifier in PQHelper, Halo2 on-chain in ZKHelper. External audit by a third-party firm (Trail of Bits, OpenZeppelin, or equivalent) covers the WASM backend, helper bridge, and async action semantics. Mainnet helper deployment. Partial formal verification (privacy flow soundness in Coq/Lean). Semantic versioning guarantee takes effect: no breaking changes without a major version increment. 3+ production protocol deployments validate the model.</p></div>
 
       <div class="roadmap-phase reveal"><span class="roadmap-phase-name">V1.5 FORMAL</span><span class="roadmap-phase-date">Q3 2027</span><span class="rs rs-planned">Planned</span></div>
       <div class="roadmap-content reveal"><span class="roadmap-content-title">Formal verification artifacts</span><p class="roadmap-content-text">Coq and Lean proofs of the Covenant type system's key invariants. A mechanically verified proof that the privacy flow checker is sound relative to the operational semantics. We state the goal here as a public commitment.</p></div>
@@ -845,7 +889,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     <p class="body-text reveal">We distinguish two kinds of sections explicitly, via badges next to each section number:</p>
     <ul class="reveal" style="font-family:'Inter',sans-serif;font-size:10pt;color:var(--ink-soft);line-height:1.7;padding-left:20px;margin-bottom:24px;">
       <li style="margin-bottom:10px;"><span class="section-badge section-badge-foundational" style="margin-right:8px;">Foundational</span> — the permanent argument: what Covenant <em>is</em>, why a language-level approach, the four-layer architecture of Styx Protocol. These sections change only when the philosophy changes, which is rarely.</li>
-      <li><span class="section-badge section-badge-living" style="margin-right:8px;">Living · V0.8</span> — the current state: what has shipped, what is in flight, what is planned. These sections update with each release. The pulsing indicator marks the active version.</li>
+      <li><span class="section-badge section-badge-living" style="margin-right:8px;">Living · V0.9</span> — the current state: what has shipped, what is in flight, what is planned. These sections update with each release. The pulsing indicator marks the active version.</li>
     </ul>
     <p class="body-text reveal">When you read this manifesto, the <em>Foundational</em> sections describe what we are building and why. The <em>Living</em> sections describe where we are on the road to V1.0. Together they form a single document — but they evolve on different timescales.</p>
     <p class="body-text reveal">The specifications published here are released under <strong>CC0-1.0</strong>. You may use them, fork them, implement them independently, and publish derivative work without attribution. The compiler implementation is released under <strong>Apache-2.0</strong>.</p>
@@ -878,7 +922,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     <div class="reveal">
       <div class="section-header-row">
         <span class="section-num">08</span>
-        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.8</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.9</span>
       </div>
       <h2 class="section-title" id="s08-title">Invitation to contribute</h2>
     </div>
@@ -899,7 +943,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       <li style="margin-bottom:10px;"><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Research visibility</strong> — Covenant operates in the open. Contributors build a verifiable portfolio on a project of non-trivial technical ambition.</li>
       <li style="margin-bottom:10px;"><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Priority consideration for future paid roles</strong> — when funding becomes available (whether via grants, foundation support, or consulting revenue), contributors who shipped meaningful work receive first refusal on paid positions.</li>
       <li style="margin-bottom:10px;"><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Reference letters</strong> — for academic and industrial applications, we provide detailed reference letters documenting the specific technical work completed.</li>
-      <li><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Access to the production codebase</strong> — vetted contributors receive read/write access to the private V0.8 working branches of the 22-crate compiler workspace, the WASM and Aster backends, the bridge module, and unreleased protocol drafts, ahead of public publication. The signal of seriousness is access.</li>
+      <li><strong style="font-family:'EB Garamond',serif;font-size:11pt;color:var(--ink);">Access to the production codebase</strong> — vetted contributors receive read/write access to the private V0.9 working branches of the 22-crate compiler workspace, the WASM and Aster backends, the helper-contract bridge, and unreleased protocol drafts, ahead of public publication. The signal of seriousness is access.</li>
     </ul>
 
     <h3 class="sub-title reveal" style="font-size:13pt;">What we cannot offer</h3>
@@ -919,7 +963,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     <div class="reveal">
       <div class="section-header-row">
         <span class="section-num">09</span>
-        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.8</span>
+        <span class="section-badge section-badge-living" title="Living — current state, evolves with each release">Living · V0.9</span>
       </div>
       <h2 class="section-title" id="s09-title">Contact</h2>
     </div>
@@ -963,15 +1007,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       <a href="https://x.com/Valisthea" target="_blank" rel="noopener" class="footer-link">@Valisthea</a>
     </div>
     <div>
-      <span class="footer-col-title">Repository</span>
-      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-lang</a>
+      <span class="footer-col-title">Repositories</span>
+      <a href="https://github.com/Valisthea/covenant" target="_blank" rel="noopener" class="footer-link-mono">covenant <span style="opacity:0.5;">· compiler</span></a>
+      <a href="https://github.com/Valisthea/covenant-playground" target="_blank" rel="noopener" class="footer-link-mono">covenant-playground</a>
+      <a href="https://github.com/Valisthea/covenant-lang" target="_blank" rel="noopener" class="footer-link-mono">covenant-lang <span style="opacity:0.5;">· this site</span></a>
+      <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener" class="footer-link-mono">covenant-audits</a>
       <a href="index.html" class="footer-link" style="margin-top:12px;">← Back to landing</a>
+      <a href="https://playground.covenant-lang.org" target="_blank" rel="noopener" class="footer-link">Playground ↗</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-closing">Watch this space. Private until V1.0.</p>
-    <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0</span>
+    <p class="footer-closing">V0.9 GA · production-real on Sepolia. Mainnet at V1.0 post-external-audit.</p>
+    <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0 · Site: MIT + CC-BY · <span id="manifesto-footer-year"></span> Kairos Lab</span>
   </div>
+  <script>document.getElementById('manifesto-footer-year').textContent=new Date().getFullYear();</script>
 </footer>
 
 <script>

@@ -1,17 +1,70 @@
 ---
-title: "Audit Report — OMEGA V4"
-description: "Full summary of the OMEGA V4 security audit: 41 findings, all resolved."
+title: "Audit History"
+description: "OMEGA audit history across V0.6, V0.8, and V0.9 — 60 findings total, all resolved or mitigated."
 order: 1
 section: "Security"
 ---
 
-# Audit Report — OMEGA V4
+# OMEGA Audit History
+
+Covenant has cleared three audit cycles. Each is documented here with severity counts, scope, and resolution status. External audit by a third-party firm gates V1.0 mainnet.
+
+## OMEGA V5 — V0.9 (April 2026)
+
+**Auditor:** Kairos Lab internal (OMEGA V5 methodology)  
+**Audit period:** Sprint 46 of V0.9 master plan  
+**Version audited:** Covenant compiler v0.9.0  
+**Methodology:** Empirical-loop-driven self-audit. Every claim grounded in a runnable command whose output was observed.  
+**Status:** ✅ GO — all 10 verifications cleared
+
+### Verifications
+
+1. **Build hygiene** — 1206 tests passing (1172 Rust + 34 Foundry), 0 clippy warnings on `-D warnings`, 1 documented residual cargo audit advisory (idna transitive, no IDN code path)
+2. **Helper bridge end-to-end** — CeremonyHelper deployed at deterministic CREATE2 on Sepolia, lifecycle (setup → submit_share → finalize → destroy) verified on Etherscan
+3. **NFT auto-synthesis** — 11 ERC-721 functions emitted from 5-line declaration, ABI matches normative spec
+4. **Registry auto-synthesis** — 5 ERC-8231 functions emitted from 1-line declaration, Dilithium-5 algorithm ID returned
+5. **Interface lowering** — typed cross-contract calls produce single CALL with correct selector + ABI encoding
+6. **CLI per-test isolation** — `covenant test` runs each test in fresh state, no cross-test pollution
+7. **Linter ICE bug** — found and fixed during audit pack assembly (was crashing on `interface` blocks)
+8. **9 audit fixtures** — all compile end-to-end on both MockChain and Sepolia targets
+9. **M0 + M1 milestones** — both deployments live and verifiable on Sepolia Etherscan
+10. **Documentation deliverables** — SECURITY.md, audit scope, threat model, helper deep-dive, audit fixture pack all complete
+
+### Bugs caught empirically during the cycle
+
+5 bugs were discovered through audit-pack-driven fuzzing and reading the helper bridge integration code. All were fixed before the V0.9.0 tag. Details in the [full audit report](https://github.com/Valisthea/covenant/blob/main/OMEGA_V5_AUDIT_REPORT.md).
+
+### Conditions on V1.0 mainnet
+
+NOT met. V1.0 requires:
+
+- Real cryptographic primitives (Zama TFHE, real Dilithium-5 verifier, Halo2 on-chain)
+- External audit by a third-party firm
+- Mainnet helper deployment
+- Partial formal verification (privacy flow soundness)
+- 3+ production protocol deployments validating the model
+
+## OMEGA V4 — V0.8 (April 2026)
+
+**Auditor:** Kairos Lab internal  
+**Audit period:** April 2026 (V0.8 GA preparation)  
+**Version audited:** Covenant compiler v0.8.0  
+**Status:** 9 findings · 8 verified + 1 mitigated (KSR-CVN-005, fully resolved in V0.9)
+
+### Findings
+
+- Playground multi-target architecture verified
+- Mainnet hard-refusal path validated
+- WASM/JS boundary documented
+- KSR-CVN-005 (no executor at OP_CALL precompiles `0x124–0x127` on Sepolia) → mitigated in V0.8 with documentation, fully resolved in V0.9 via the helper-contract bridge
+
+## OMEGA V4 — V0.6 (December 2025 → January 2026)
 
 **Auditor:** OMEGA Security Labs  
 **Audit period:** November 4 – December 20, 2025  
 **Version audited:** Covenant compiler v0.7.0-rc3  
 **Report date:** January 10, 2026  
-**Status:** All findings resolved ✓
+**Status:** All 41 findings resolved ✓
 
 ## Executive summary
 
