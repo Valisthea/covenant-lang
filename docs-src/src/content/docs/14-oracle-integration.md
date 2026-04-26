@@ -5,6 +5,12 @@ order: 14
 section: "Advanced"
 ---
 
+<div style="border-left:4px solid #f59e0b;background:#fffbeb;padding:12px 16px;margin-bottom:24px;font-size:0.95em;color:#3d3d3d;">
+  <strong style="color:#b45309;">⚠ This example is being rewritten against the verified V0.8 syntax.</strong>
+  The code shown may use a pre-V0.8 sketch that will not compile as-is. For the canonical, compiler-verified V0.8 examples — every one of them derived from a compiler test fixture — see the <a href="https://playground.covenant-lang.org/examples" style="color:#7C3AED;">Playground Examples gallery</a>. The 4 reference examples already updated on this site: <a href="/docs/examples/01-hello-contract" style="color:#7C3AED;">Hello</a>, <a href="/docs/examples/06-erc20-token" style="color:#7C3AED;">ERC-20 Token</a>, <a href="/docs/examples/07-fhe-basics" style="color:#7C3AED;">FHE Basics</a>, <a href="/docs/examples/11-cryptographic-amnesia" style="color:#7C3AED;">Cryptographic Amnesia</a>. The remaining ones land in Sprint 29.
+</div>
+
+
 # 14 — Oracle Integration
 
 Oracles bridge off-chain data (prices, randomness, weather, etc.) into your contracts. Covenant provides built-in interfaces for the most common oracle patterns.

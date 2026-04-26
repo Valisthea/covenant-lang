@@ -1,0 +1,61 @@
+---
+// PlaygroundButton — opens the Covenant Playground with a specific example
+// pre-loaded. Uses the playground's `?example=<id>` query-param contract
+// (defined in covenant-playground/src/App.tsx). IDs are the canonical
+// gallery codes: A1, A2, A3, B1, B2, B3, C1, C2, C3, C4.
+//
+// Why ?example= over ?code=<lz-string>:
+//   - the playground already owns the source-of-truth .cov file
+//   - shorter URL, no compression library required at docs build time
+//   - keeps the doc page and the playground in lockstep when the .cov
+//     gets updated (e.g. fixture re-derivation in Sprint 29+)
+//
+// Props:
+//   - exampleId: required — the canonical ID, e.g. "A1"
+//   - label: optional override (default: "Try in Playground →")
+//   - target: optional chain target (default: "mockchain")
+
+interface Props {
+  exampleId: string;
+  label?: string;
+  target?: 'mockchain' | 'sepolia' | 'aster';
+}
+
+const { exampleId, label = 'Try in Playground →', target = 'mockchain' } = Astro.props;
+const url = `https://playground.covenant-lang.org/?example=${encodeURIComponent(exampleId)}&target=${target}`;
+---
+
+<a
+  href={url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="playground-cta"
+>
+  {label}
+</a>
+
+<style>
+  .playground-cta {
+    display: inline-block;
+    margin: 1.25rem 0;
+    padding: 0.7rem 1.4rem;
+    background: #7C3AED;
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: background 120ms ease, transform 120ms ease;
+  }
+
+  .playground-cta:hover {
+    background: #6829c9;
+    transform: translateY(-1px);
+  }
+
+  .playground-cta:active {
+    transform: translateY(0);
+  }
+</style>

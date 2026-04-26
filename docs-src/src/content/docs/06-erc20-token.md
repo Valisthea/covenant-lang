@@ -1,101 +1,91 @@
 ---
 title: "06 — ERC-20 Token"
-description: "A complete ERC-20 implementation in Covenant."
+description: "Build a complete ERC-20 fungible token with the `token` keyword. Verified against the V0.8 compiler."
 order: 6
 section: "Standards"
 ---
 
 # 06 — ERC-20 Token
 
-A full ERC-20 compliant token in Covenant — about 60 lines of readable code.
+The `token` keyword auto-synthesizes the entire ERC-20 surface from a metadata declaration. You write the name, symbol, decimals, and supply — the compiler generates every field, action, view, and event the standard requires.
 
 ```covenant
-contract ERC20Token {
-  field name:        String
-  field symbol:      String
-  field decimals:    u8    = 18
-  field total_supply: u256
+-- Coin.cov · a standard ERC-20-conformant token.
+-- The `token` keyword generates:
+--   - fields: supply, balances, allowances, name, symbol, decimals
+--   - actions: transfer, approve, transfer_from
+--   - views:   balance_of, allowance
+--   - events:  Transfer, Approval
+-- The developer writes only the metadata and any custom logic.
 
-  field balances:   Map<Address, u256>
-  field allowances: Map<Address, Map<Address, u256>>
-
-  event Transfer(from: indexed Address, to: indexed Address, value: u256)
-  event Approval(owner: indexed Address, spender: indexed Address, value: u256)
-
-  error InsufficientBalance(available: u256, requested: u256)
-  error InsufficientAllowance(available: u256, requested: u256)
-
-  // Constructor-equivalent: init block runs once at deployment
-  init(name: String, symbol: String, initial_supply: u256) {
-    self.name   = name;
-    self.symbol = symbol;
-    self.total_supply = initial_supply;
-    self.balances[msg.sender] = initial_supply;
-    emit Transfer(from: Address(0), to: msg.sender, value: initial_supply);
-  }
-
-  @view action name()         -> String { return self.name; }
-  @view action symbol()       -> String { return self.symbol; }
-  @view action decimals()     -> u8     { return self.decimals; }
-  @view action totalSupply()  -> u256   { return self.total_supply; }
-
-  @view
-  action balanceOf(account: Address) -> u256 {
-    return self.balances[account];
-  }
-
-  action transfer(to: Address, amount: u256) -> Bool {
-    _transfer(msg.sender, to, amount);
-    return true;
-  }
-
-  action approve(spender: Address, amount: u256) -> Bool {
-    self.allowances[msg.sender][spender] = amount;
-    emit Approval(owner: msg.sender, spender: spender, value: amount);
-    return true;
-  }
-
-  @view
-  action allowance(owner: Address, spender: Address) -> u256 {
-    return self.allowances[owner][spender];
-  }
-
-  action transferFrom(from: Address, to: Address, amount: u256) -> Bool {
-    let allowed = self.allowances[from][msg.sender];
-    require(allowed >= amount, InsufficientAllowance(allowed, amount));
-    self.allowances[from][msg.sender] -= amount;
-    _transfer(from, to, amount);
-    return true;
-  }
-
-  // Internal helper — not exposed in ABI
-  internal action _transfer(from: Address, to: Address, amount: u256) {
-    let bal = self.balances[from];
-    require(bal >= amount, InsufficientBalance(bal, amount));
-    self.balances[from] -= amount;
-    self.balances[to]   += amount;
-    emit Transfer(from: from, to: to, value: amount);
-  }
+token Coin {
+    symbol: "COIN"
+    name: "Covenant Coin"
+    decimals: 18
+    supply: 1_000_000 to deployer
 }
 ```
 
-## Minting & burning extension
+## What just happened?
 
-Add to the contract body:
+| Concept | Explanation |
+|---------|-------------|
+| `token` | A specialized top-level keyword for ERC-20 fungible tokens |
+| `symbol`, `name`, `decimals` | Plaintext metadata. `symbol`/`name` are `text`; `decimals` is `amount` |
+| `supply: 1_000_000 to deployer` | Genesis mint declaration. The integer literal supports `_` thousand separators. `to deployer` says the entire supply is minted to the contract creator at deploy time |
+| (no body needed) | Everything else is auto-synthesized: `balances` map, `allowances` map, `transfer`/`approve`/`transfer_from` actions, `Transfer`/`Approval` events. The ABI is byte-compatible with OpenZeppelin's ERC-20 |
+
+## What gets generated, in detail
+
+The compiler synthesizes the following surface (you can see it all in the playground's Inspector → ABI tab):
+
+- **Fields:** `total_supply: amount`, `balances: map<address, amount>`, `allowances: map<hash, amount>`
+- **Actions:** `transfer(to, value)`, `approve(spender, value)`, `transfer_from(from, to, value)`
+- **Views:** `balance_of(who) returns amount`, `allowance(owner, spender) returns amount`, `total_supply returns amount`, `decimals returns amount`, `symbol returns text`, `name returns text`
+- **Events:** `Transfer(from indexed, to indexed, value)`, `Approval(owner indexed, spender indexed, value)`
+
+## Add custom logic
+
+You can add your own actions and views inside the `token` block. They compose with the auto-synthesized ones:
 
 ```covenant
-action mint(to: Address, amount: u256) {
-  only(owner);
-  self.total_supply     += amount;
-  self.balances[to]     += amount;
-  emit Transfer(from: Address(0), to: to, value: amount);
-}
+token MintableCoin {
+    symbol: "MCOIN"
+    name: "Mintable Coin"
+    decimals: 18
+    supply: 0 to deployer
 
-action burn(amount: u256) {
-  let bal = self.balances[msg.sender];
-  require(bal >= amount, InsufficientBalance(bal, amount));
-  self.balances[msg.sender] -= amount;
-  self.total_supply         -= amount;
-  emit Transfer(from: msg.sender, to: Address(0), value: amount);
+    action mint(to: address, value: amount) only deployer {
+        balances[to] += value
+        total_supply += value
+        emit Transfer(zero_address, to, value)
+    }
 }
 ```
+
+The `only deployer` guard restricts `mint` to the contract creator. See [04 — Guards](/docs/examples/04-guards) for the full guard catalog.
+
+## Try it now
+
+<a href="https://playground.covenant-lang.org/?example=A2&target=mockchain"
+   target="_blank"
+   rel="noopener noreferrer"
+   style="display:inline-block;margin:1.25rem 0;padding:0.7rem 1.4rem;background:#7C3AED;color:#fff;text-decoration:none;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.9rem;font-weight:600;letter-spacing:0.02em;">
+  Try in Playground →
+</a>
+
+In the playground:
+
+1. **Compile** — note in the Inspector → ABI tab that you get all 7+ generated functions
+2. **Deploy** to MockChain
+3. Call `balance_of(deployer)` — returns `1000000000000000000000000` (1M with 18 decimals)
+4. Call `transfer(<your wallet>, 100_000000000000000000)` — sends 100 tokens
+5. Call `balance_of` on the recipient to verify
+
+## ERC-20 vs Confidential Token
+
+Curious about a privacy-preserving variant? See [**08 — Encrypted Token**](/docs/examples/08-encrypted-token) — same metadata-only declaration, but balances are TFHE ciphertexts (ERC-8227).
+
+## Continue
+
+Move on to [**07 — FHE Basics**](/docs/examples/07-fhe-basics) to learn how Covenant treats homomorphic encryption as a first-class language feature.

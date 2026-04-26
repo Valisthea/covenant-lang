@@ -1,29 +1,29 @@
 ---
 title: "01 — Hello Contract"
-description: "Write and deploy your first Covenant contract."
+description: "Write your first Covenant contract. Verified against the V0.8 compiler — every line in this page compiles in playground.covenant-lang.org."
 order: 1
 section: "Fundamentals"
 ---
 
 # 01 — Hello Contract
 
-The simplest possible Covenant contract — a greeting stored on-chain and exposed as a read action.
+The minimal viable Covenant file: a `record` with one field, one setter action, and one read view. This is the canonical starting point.
 
 ```covenant
-contract HelloWorld {
-  /// Greeting stored on chain.
-  field greeting: String = "hello, world"
+-- Hello.cov · the minimal viable Covenant file.
+-- A `record` is a key-value store on chain: fields + actions + views,
+-- nothing else. The simplest building block in the language.
 
-  /// Read the greeting.
-  action greet() -> String {
-    return self.greeting;
-  }
+record Hello {
+    greeting: text
 
-  /// Update the greeting (owner only).
-  action set_greeting(msg: String) {
-    only(owner);
-    self.greeting = msg;
-  }
+    action update(new_text: text) {
+        greeting = new_text
+    }
+
+    view read returns text {
+        greeting
+    }
 }
 ```
 
@@ -31,26 +31,41 @@ contract HelloWorld {
 
 | Concept | Explanation |
 |---------|-------------|
-| `contract` | Top-level declaration; compiles to a single EVM account |
-| `field` | Persistent storage slot — initialised with the literal after `=` |
-| `action` | Public entry point, maps to an ABI function |
-| `only(owner)` | Built-in guard: reverts unless `msg.sender == owner()` |
+| `--` | Single-line comment (Covenant uses Haskell-style, **not** `//`) |
+| `record` | Top-level keyword: a key-value store on chain |
+| `greeting: text` | Field declaration; `text` is the UTF-8 string type. Inside `record` the `field` keyword is implicit |
+| `action update(...)` | State-mutating function. Default visibility is external — no `public`/`external` modifier needed |
+| `view read returns text` | Read-only query. **Zero-arg views drop the parentheses** — write `view read returns text`, not `view read() returns text` |
+| (no `return` keyword in body) | Single-expression view bodies are expression-bodied: the last expression is the return value |
 
-## Build it
+## Try it now — no install required
+
+<a href="https://playground.covenant-lang.org/?example=A1&target=mockchain"
+   target="_blank"
+   rel="noopener noreferrer"
+   style="display:inline-block;margin:1.25rem 0;padding:0.7rem 1.4rem;background:#7C3AED;color:#fff;text-decoration:none;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.9rem;font-weight:600;letter-spacing:0.02em;">
+  Try in Playground →
+</a>
+
+The button opens the [Covenant Playground](https://playground.covenant-lang.org) with this contract pre-loaded. From there:
+
+1. **Compile** — the Inspector panel shows real EVM bytecode + ABI
+2. **Deploy** (target: MockChain) — the contract gets a deterministic address in ~50ms
+3. In Interaction Panel, find `update`, type a string, click **Call**
+4. Find `read`, click **Query** — returns what you just set
+
+Switch the **Chain Target** to **Sepolia** to deploy to a real testnet via MetaMask (~30s with confirmation).
+
+## Build it locally (CLI)
 
 ```bash
 covenant new hello-world
 cd hello-world
-# Replace src/main.cov with the snippet above
+# replace src/main.cov with the snippet above
 covenant build      # emits hello-world.abi + hello-world.bin
 covenant test       # runs the snapshot test suite
 ```
 
-## Deploy to a local devnet
+## Continue
 
-```bash
-covenant devnet &           # starts Anvil-compatible devnet
-covenant deploy --dev       # deploys to 0x0…01 with test key
-```
-
-The CLI prints the deployed address. Continue to **02 — Fields & Storage** to learn about all storage types.
+Move on to [**02 — Fields & Storage**](/docs/examples/02-fields-and-storage) to see how to declare more complex state.
