@@ -1293,11 +1293,88 @@ a:focus-visible, button:focus-visible {
   .install-card:last-child { border-bottom: none; }
   .install-cmd { font-size: 9.5pt; }
 }
+
+/* ─────────────────────────────────────────────
+   SECTION RAIL (left-side floating pills)
+   On-page anchors: Architecture · Audit · Install
+   ───────────────────────────────────────────── */
+#section-rail {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none; /* let children opt-in */
+}
+.section-pill {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-decoration: none;
+  padding: 7px 12px 7px 9px;
+  background: rgba(252, 251, 248, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--rule-faint);
+  border-radius: 999px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.section-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  transition: background 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+.section-pill:hover {
+  color: var(--ink);
+  border-color: var(--rule);
+}
+.section-pill:hover::before { background: var(--accent); }
+.section-pill.is-active {
+  color: var(--ink);
+  border-color: var(--accent);
+  background: rgba(124, 58, 237, 0.06);
+}
+.section-pill.is-active::before {
+  background: var(--accent);
+  transform: scale(1.4);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+/* Hide rail on small screens — header still has cross-page nav */
+@media (max-width: 1100px) {
+  #section-rail { display: none; }
+}
 </style>
 </head>
 <body>
 
 <div id="progress" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION RAIL — left-side floating pills
+     On-page anchors (Architecture · Audit · Install).
+     Cross-page nav stays in #site-header.
+     ═══════════════════════════════════════════ -->
+<aside id="section-rail" aria-label="On-page sections">
+  <a id="pill-architecture" href="#architecture" class="section-pill">Architecture</a>
+  <a id="pill-audited"      href="#audited"      class="section-pill">Audit</a>
+  <a id="pill-install"      href="#install"      class="section-pill">Install</a>
+</aside>
 
 <!-- ═══════════════════════════════════════════
      HEADER
@@ -1320,9 +1397,6 @@ a:focus-visible, button:focus-visible {
 
   <nav class="header-nav" aria-label="Primary navigation">
     <a href="manifesto.html" class="nav-link">Manifesto</a>
-    <a href="#architecture" class="nav-link">Architecture</a>
-    <a href="#audited" class="nav-link">Audit</a>
-    <a href="#install" class="nav-link">Install</a>
     <a href="https://playground.covenant-lang.org" class="nav-link">Playground</a>
     <a href="/examples" class="nav-link">Examples</a>
     <a href="https://docs.covenant-lang.org" class="nav-link">Docs</a>
@@ -2061,29 +2135,42 @@ covenant init my-token</code></pre>
     ccObs.observe(ccGrid);
   }
 
-  /* — Header logo square: context-reactive color based on scroll section — */
+  /* — Header logo square + section rail: context-reactive scroll-spy — */
   const hsq = document.getElementById('header-square');
   const sections = [
-    { id: 'architecture', color: '#0891b2' },   /* FORTRESS → cyan */
-    { id: 'audited',      color: '#dc2626' },   /* audit → red */
-    { id: 'comparison',   color: '#2563eb' },   /* VEIL → blue */
-    { id: 'install',      color: '#059669' },   /* install → green */
-    { id: 'deployment',   color: '#059669' },   /* PRISM → green (live) */
-    { id: 'ships',        color: '#7C3AED' },   /* default */
+    { id: 'architecture', color: '#0891b2', pillId: 'pill-architecture' }, /* FORTRESS → cyan */
+    { id: 'audited',      color: '#dc2626', pillId: 'pill-audited'      }, /* audit → red */
+    { id: 'comparison',   color: '#2563eb', pillId: null                }, /* VEIL → blue */
+    { id: 'install',      color: '#059669', pillId: 'pill-install'      }, /* install → green */
+    { id: 'deployment',   color: '#059669', pillId: null                }, /* PRISM → green (live) */
+    { id: 'ships',        color: '#7C3AED', pillId: null                }, /* default */
   ];
-  if (hsq) {
-    window.addEventListener('scroll', function() {
-      let active = '#7C3AED';
-      sections.forEach(function(sec) {
-        const el = document.getElementById(sec.id);
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.5 && rect.bottom > 0) active = sec.color;
-      });
+  const pillIds = sections.map(function(s) { return s.pillId; }).filter(Boolean);
+
+  function syncScroll() {
+    let activeColor = '#7C3AED';
+    let activePillId = null;
+    sections.forEach(function(sec) {
+      const el = document.getElementById(sec.id);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5 && rect.bottom > 0) {
+        activeColor = sec.color;
+        if (sec.pillId) activePillId = sec.pillId;
+      }
+    });
+    if (hsq) {
       hsq.style.transition = 'fill 0.6s ease';
-      hsq.setAttribute('fill', active);
-    }, { passive: true });
+      hsq.setAttribute('fill', activeColor);
+    }
+    pillIds.forEach(function(id) {
+      const p = document.getElementById(id);
+      if (!p) return;
+      p.classList.toggle('is-active', id === activePillId);
+    });
   }
+  window.addEventListener('scroll', syncScroll, { passive: true });
+  syncScroll();
 })();
 </script>
 </body>
