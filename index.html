@@ -901,6 +901,92 @@ pre.compare-code {
   .milestone-row { grid-template-columns: 1fr; }
 }
 
+/* ─────────────────────────────────────────────
+   LIVE TOOLS — Showcases + /contract dApp
+   ───────────────────────────────────────────── */
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+@media (max-width: 880px) {
+  .tools-grid { grid-template-columns: 1fr; }
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 28px 24px;
+  background: var(--paper-pure);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.tool-card:hover {
+  border-left-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.tool-card--primary {
+  border-left-color: var(--accent);
+  background: linear-gradient(to bottom, var(--accent-faint), var(--paper-pure));
+}
+
+.tool-card-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.tool-card-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 15pt;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.tool-card-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 10pt;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  flex: 1;
+  margin-bottom: 18px;
+}
+
+.tool-card-desc code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9pt;
+  background: var(--paper);
+  border: 1px solid var(--rule-faint);
+  padding: 1px 5px;
+  color: var(--ink);
+}
+
+.tool-card-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  align-self: flex-start;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.tool-card:hover .tool-card-cta { border-bottom-color: var(--accent); }
+
 .milestone-card {
   position: relative;
   padding: 24px 28px;
@@ -1788,7 +1874,7 @@ kairos-lab.covenant-lang</pre>
     <div class="v9-card" role="listitem">
       <span class="v9-card-icon">⚡</span>
       <h3 class="v9-card-title">Foundry-class CLI</h3>
-      <p class="v9-card-desc">Per-test isolation, watch mode, coverage, format gates, environment doctor — a complete developer toolchain.</p>
+      <p class="v9-card-desc">Per-test isolation, name-heuristic coverage, format gates, environment doctor — a complete developer toolchain (watch mode + IR-instrumented coverage in V0.9.x).</p>
 <pre class="v9-card-code"><code>covenant test --coverage
 covenant fmt --check
 covenant doctor
@@ -1895,6 +1981,41 @@ covenant init my-token</code></pre>
 </div>
 
 <!-- ═══════════════════════════════════════════
+     LIVE TOOLS — Showcases + /contract dApp
+     ═══════════════════════════════════════════ -->
+<div class="container">
+<section class="section" id="tools" aria-labelledby="tools-title">
+  <div class="section-header">
+    <span class="section-num">05b — Live tools</span>
+    <h2 class="section-title" id="tools-title">Interact in your browser, no install.</h2>
+    <p class="body-text">Every Covenant deployment listed above can be opened in two purpose-built dApps on <code>playground.covenant-lang.org</code>. Etherscan&apos;s Read/Write tabs require Solidity/Vyper/Yul source verification — Covenant source isn&apos;t supported there yet. These tools are the gap-filler : Covenant-native UIs that read state, send transactions, decode custom errors, and connect any wallet on any EVM chain.</p>
+  </div>
+
+  <div class="tools-grid reveal">
+
+    <a href="https://playground.covenant-lang.org/showcases/m2-nft" target="_blank" rel="noopener" class="tool-card">
+      <span class="tool-card-eyebrow">Curated showcase</span>
+      <h3 class="tool-card-title">M2 — Audit NFT (live on Sepolia)</h3>
+      <p class="tool-card-desc">Side-by-side panel : the 4 lines of <code>nft AuditNFT { ... }</code> source on the left, live read/write interface on the right. Mint a token, transfer it, observe the empirical-finding banner that documents the V0.9.0 permissive <code>transferFrom</code> behavior. The vitrine for what auto-synth produces from minimal source.</p>
+      <span class="tool-card-cta">Open showcase →</span>
+    </a>
+
+    <a href="https://playground.covenant-lang.org/contract" target="_blank" rel="noopener" class="tool-card tool-card--primary">
+      <span class="tool-card-eyebrow">Generic dApp · for your contracts</span>
+      <h3 class="tool-card-title">My Contract — Read/Write any deployed Covenant</h3>
+      <p class="tool-card-desc">Paste your contract address, pick the network (Sepolia · BSC · Polygon · Arbitrum · Optimism · Base · Aster), then either paste your <code>.cov</code> source (in-browser WASM compiler extracts the ABI) or paste raw ABI JSON. Get auto-generated Read panels (every view function, instant), Write panels (every action, MetaMask-gated), and live custom error decoding on revert. Same UX Etherscan would give Solidity contracts — but for Covenant.</p>
+      <span class="tool-card-cta">Open the dApp →</span>
+    </a>
+
+  </div>
+
+  <p class="body-text reveal" style="margin-top:24px; font-style: italic; color: var(--ink-mute);">
+    Recommended flow when deploying a Covenant contract : <code>covenant build … --target-chain=sepolia</code> → <code>cast send --create $BYTECODE</code> → open <code>/contract</code>, paste address + source. Zero frontend code required. Same path works for any EVM chain where the helper contracts are deployed (BSC, Polygon, etc. for non-cryptographic constructs work today; cryptographic constructs require deploying the 4 helper contracts on the target chain — ~5 min via the Foundry script in <code>covenant-src/helpers/</code>).
+  </p>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════
      WHAT SHIPS
      ═══════════════════════════════════════════ -->
 <div class="container">
@@ -1918,13 +2039,13 @@ covenant init my-token</code></pre>
 
     <div class="ship-card">
       <span class="ship-title">Foundry-class CLI</span>
-      <span class="ship-sub">test, fmt, doctor, lint, init, explain · per-test isolation · watch mode</span>
+      <span class="ship-sub">test, fmt, doctor, lint, init, explain · per-test isolation · name-heuristic coverage</span>
       <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
     <div class="ship-card">
       <span class="ship-title">LSP + Linter</span>
-      <span class="ship-sub">21+ security detectors + 6 Solidity-ism rules · VS Code 0.8.2</span>
+      <span class="ship-sub">21+ security detectors + 6 Solidity-ism rules · VS Code extension 0.8.2 (V0.9 source compatible; bump to 0.9.x in V0.9.x patch line)</span>
       <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
