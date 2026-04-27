@@ -22,7 +22,7 @@
 <meta property="og:url" content="https://covenant-lang.org/">
 <meta property="og:site_name" content="Covenant">
 <meta property="og:title" content="Covenant — Cryptographic guarantees as language primitives">
-<meta property="og:description" content="A smart contract language with cryptographic primitives built in. V0.9 GA — first ceremony destruction commitment + first auto-synth ERC-721 NFT live on Sepolia. 17 constructs, testnet-ready.">
+<meta property="og:description" content="A smart contract language with cryptographic primitives built in. V0.9 GA — first ceremony destruction commitment + first auto-synth ERC-721 NFT live on Sepolia. 13 top-level constructs, testnet-ready.">
 <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -2057,7 +2057,7 @@ covenant init my-token</code></pre>
 
     <div class="ship-card">
       <span class="ship-title">Playground</span>
-      <span class="ship-sub">In-browser compile + MockChain + Sepolia · 12+ verified examples · cross-tab sync</span>
+      <span class="ship-sub">In-browser compile + MockChain + Sepolia · 16 verified examples · cross-tab sync</span>
       <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
@@ -2190,47 +2190,18 @@ covenant init my-token</code></pre>
     setTimeout(function() { heroBar.style.width = '64px'; }, 720);
   }
 
-  /* — Contract address cipher reveal — */
-  const ADDR = '0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133';
-  const addrEl = document.getElementById('deploy-address-el');
-  if (addrEl) {
-    // Build char spans (hidden)
-    ADDR.split('').forEach(function(ch) {
-      const s = document.createElement('span');
-      s.className = 'addr-char';
-      s.textContent = ch;
-      s.style.opacity = '0';
-      addrEl.appendChild(s);
-    });
-    // Trigger when deployment panel enters view
-    const deployPanel = document.getElementById('deploy-panel');
-    const addrObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (!e.isIntersecting) return;
-        addrObserver.unobserve(e.target);
-        const chars = addrEl.querySelectorAll('.addr-char');
-        const CSET = '0123456789ABCDEFabcdef';
-        chars.forEach(function(span, i) {
-          if (reduced) { span.style.opacity = '1'; return; }
-          setTimeout(function() {
-            span.style.opacity = '1';
-            let step = 0, max = 3;
-            const fin = span.textContent;
-            const iv = setInterval(function() {
-              if (step < max) {
-                span.textContent = CSET[Math.floor(Math.random() * CSET.length)];
-                step++;
-              } else {
-                span.textContent = fin;
-                clearInterval(iv);
-              }
-            }, 18);
-          }, 300 + i * 20);
-        });
-      });
-    }, { threshold: 0.5 });
-    if (deployPanel) addrObserver.observe(deployPanel);
-  }
+  /* — Contract address cipher reveal — DISABLED (no #deploy-address-el in DOM)
+   *
+   * Pre-V0.9 the deployment panel had a single animated address slot
+   * (#deploy-address-el) for the V0.1 first-deploy demo at
+   * 0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133. Since the V0.9 GA
+   * milestone redesign there are three milestone-cards (M0, M1, M2)
+   * each rendering its own address — no single slot, no cipher
+   * animation needed. Code path removed to avoid stale-address
+   * confusion. If we re-introduce the animation later, target the
+   * canonical M0 address (0xab083fc4922d34a799ca0f8f70711e1454018671)
+   * or whichever is featured.
+   */
 
   /* — Reveal on scroll — */
   const revEls = document.querySelectorAll('.reveal');

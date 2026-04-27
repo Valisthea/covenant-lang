@@ -548,7 +548,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
     <h1 class="cover-title" id="cover-title" aria-label="Covenant"></h1>
     <p class="cover-subtitle">where cryptographic guarantees become language primitives</p>
     <div class="cover-bar" id="cover-bar" aria-hidden="true"></div>
-    <p class="cover-desc">A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Version 0.9 General Availability — helper-contract bridge live on Sepolia with real ceremony state machines and auto-synthesized ERC-721 / PQ-registry surfaces. First ceremony destruction commitment + first auto-synth NFT (M0, M1, M2) verified on Etherscan. Three new top-level constructs: <code>nft</code> (ERC-721 in 5 lines), <code>registry</code> (PQ key registry), <code>interface</code> (typed cross-contract calls). Foundry-class CLI tooling (test, fmt, doctor, lint, init). 17 top-level constructs, 1206 tests, OMEGA V5 self-audit cleared. Cryptographic primitives mocked in V0.9; real TFHE / Dilithium / Halo2 / Wesolowski VDF land in V1.0 with the external audit and mainnet helpers. Testnet-only by design.</p>
+    <p class="cover-desc">A smart contract language designed for cryptographic agility, with Styx Protocol as its native standard library. Version 0.9 General Availability — helper-contract bridge live on Sepolia with real ceremony state machines and auto-synthesized ERC-721 / PQ-registry surfaces. First ceremony destruction commitment + first auto-synth NFT (M0, M1, M2) verified on Etherscan. Three new top-level constructs: <code>nft</code> (ERC-721 in 5 lines), <code>registry</code> (PQ key registry), <code>interface</code> (typed cross-contract calls). Foundry-class CLI tooling (test, fmt, doctor, lint, init). 13 top-level constructs (record · token · ballot · counter · board · market · vault · registry · bridge · ceremony · nft · module · test), 1206 tests, OMEGA V5 self-audit cleared. Cryptographic primitives mocked in V0.9; real TFHE / Dilithium / Halo2 / Wesolowski VDF land in V1.0 with the external audit and mainnet helpers. Testnet-only by design.</p>
   </div>
 
   <footer class="cover-footer" aria-label="Document metadata">
@@ -778,7 +778,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       </div>
       <h2 class="section-title" id="s04b-title">Playground</h2>
     </div>
-    <p class="body-text reveal">Covenant ships a complete in-browser development environment at <a href="https://playground.covenant-lang.org" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">playground.covenant-lang.org</a>. The playground loads in any modern browser — no Rust, no PATH setup, no toolchain. Compile to real EVM bytecode, deploy to MockChain (deterministic, instant) or Sepolia (real testnet, ~30 s confirmation), interact with deployed contracts in a typed UI, persist state across reloads via IndexedDB, and follow a guided 12+ lesson tour from <code>record Hello</code> to amnesia ceremony.</p>
+    <p class="body-text reveal">Covenant ships a complete in-browser development environment at <a href="https://playground.covenant-lang.org" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">playground.covenant-lang.org</a>. The playground loads in any modern browser — no Rust, no PATH setup, no toolchain. Compile to real EVM bytecode, deploy to MockChain (deterministic, instant) or Sepolia (real testnet, ~12–24 s block confirmation), interact with deployed contracts in a typed UI, persist state across reloads via IndexedDB, and follow a guided 20-lesson tour (4 modules: basics, privacy, advanced, V0.9 features) from <code>record Hello</code> to amnesia ceremony, NFT auto-synthesis, and Sepolia deploy.</p>
 
     <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0;border:1px solid var(--rule);margin-top:24px;">
       <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
@@ -791,7 +791,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       </div>
       <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
         <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Sepolia</span>
-        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">Real testnet via MetaMask. ~30 s confirmation. Helper bridge live for ceremony / FHE / PQ / ZK.</span>
+        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">Real testnet via MetaMask. ~12–24 s block confirmation. Helper bridge live for ceremony state machine; FHE / PQ / ZK helpers ship deterministic stubs in V0.9 (real cryptography in V1.0).</span>
       </div>
       <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
         <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Aster</span>
@@ -803,7 +803,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline
       </div>
       <div style="padding:18px 22px;border:1px solid var(--rule-faint);">
         <span style="font-family:'EB Garamond',serif;font-size:12.5pt;font-weight:600;color:var(--ink);display:block;margin-bottom:4px;">Examples</span>
-        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">12+ verified contracts. Each has a "Try in Playground" deep link from the docs.</span>
+        <span style="font-family:'Inter',sans-serif;font-size:9.5pt;color:var(--ink-mute);line-height:1.5;">16 verified contracts. Each has a "Try in Playground" deep link from the docs.</span>
       </div>
     </div>
 
