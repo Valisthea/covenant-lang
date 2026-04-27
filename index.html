@@ -6,7 +6,7 @@
 <script>if(location.hostname==='examples.covenant-lang.org')location.replace('https://covenant-lang.org/examples/');if(location.hostname==='docs.covenant-lang.org')location.replace('https://covenant-lang.org/docs/');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Covenant — Cryptographic guarantees as language primitives</title>
-<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK proofs, and cryptographic amnesia. V0.9 GA — production-real cryptographic primitives on Sepolia, ERC-721 NFTs in 5 lines, ERC-8231 PQ key registry, Foundry-class CLI.">
+<meta name="description" content="Covenant: a smart contract language with native FHE, post-quantum signatures, ZK proofs, and cryptographic amnesia. V0.9 GA — helper-contract bridge live on Sepolia (real state machines, mocked cryptographic primitives until V1.0), ERC-721 NFTs in 5 lines, PQ key registry, Foundry-class CLI.">
 <meta name="author" content="Kairos Lab">
 <link rel="canonical" href="https://covenant-lang.org/">
 <!-- Favicons -->
@@ -22,7 +22,7 @@
 <meta property="og:url" content="https://covenant-lang.org/">
 <meta property="og:site_name" content="Covenant">
 <meta property="og:title" content="Covenant — Cryptographic guarantees as language primitives">
-<meta property="og:description" content="A smart contract language with cryptographic primitives built in. V0.9 GA — first ceremony destruction verified on Etherscan. 17 constructs, testnet-ready.">
+<meta property="og:description" content="A smart contract language with cryptographic primitives built in. V0.9 GA — first ceremony destruction commitment + first auto-synth ERC-721 NFT live on Sepolia. 17 constructs, testnet-ready.">
 <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -886,13 +886,16 @@ pre.compare-code {
 }
 
 /* ─────────────────────────────────────────────
-   MILESTONES — M0 + M1 on Sepolia
+   MILESTONES — M0 + M1 + M2 on Sepolia
    ───────────────────────────────────────────── */
 .milestone-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-top: 28px;
+}
+@media (max-width: 1024px) {
+  .milestone-row { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 720px) {
   .milestone-row { grid-template-columns: 1fr; }
@@ -1520,8 +1523,8 @@ a:focus-visible, button:focus-visible {
       </div>
       <span class="layer-name" style="color:#dc2626;">Oblivion</span>
       <span class="layer-italic">Cryptographic amnesia</span>
-      <p class="layer-desc">Shamir SSS + Wesolowski VDF + ZK destruction proofs.</p>
-      <span class="layer-tag layer-tag-oblivion">AMNESIA · ERC-8228</span>
+      <p class="layer-desc">Shamir SSS + Wesolowski VDF + ZK destruction proofs (commitment placeholder in V0.9; real primitives in V1.0).</p>
+      <span class="layer-tag layer-tag-oblivion">AMNESIA · Covenant ceremony</span>
     </div>
 
   </div>
@@ -1534,14 +1537,14 @@ a:focus-visible, button:focus-visible {
 </div>
 
 <!-- ═══════════════════════════════════════════
-     AUDITED — OMEGA V4
+     AUDITED — OMEGA V4 + V5
      ═══════════════════════════════════════════ -->
 <div class="container">
 <section class="section" id="audited" aria-labelledby="audited-title">
   <div class="section-header">
     <span class="section-num">02 — Audited</span>
-    <h2 class="section-title" id="audited-title">OMEGA V4 — full audit, all findings resolved</h2>
-    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 security audit — 41 findings across all severity levels. All findings remain resolved through V0.9. V0.8 added 9 OMEGA V4 verifications (8 verified + 1 mitigated, fully resolved in V0.9). V0.9 cleared OMEGA V5 — 10-point self-audit, all GO, 1206 tests, 0 clippy warnings. External third-party audit is the gate for V1.0 mainnet.</p>
+    <h2 class="section-title" id="audited-title">OMEGA V4 + V5 — two self-audits, all findings resolved</h2>
+    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 self-audit — 41 findings across all severity levels. All findings remain resolved through V0.9. V0.8 added 9 OMEGA V4 verifications (8 verified + 1 mitigated, fully resolved in V0.9). V0.9 cleared OMEGA V5 — 10-point self-audit, all GO, 1206 tests, 0 clippy warnings. Both audits are internal to Kairos Lab; an independent third-party audit is the gate for V1.0 mainnet.</p>
   </div>
 
   <div class="audit-stats reveal">
@@ -1696,34 +1699,35 @@ git clone https://github.com/Valisthea/covenant-lang &amp;&amp; cd covenant-lang
     <div class="install-card">
       <span class="install-card-eyebrow">Compiler + CLI</span>
       <span class="install-card-title">Cargo</span>
-      <span class="install-card-note">Rust 1.75+ · 22-crate workspace · OMEGA V4 audited</span>
+      <span class="install-card-note">Rust stable (1.81+) · 22-crate workspace · OMEGA V5 cleared</span>
       <pre class="install-code"><span class="cm"># build</span>
 cargo build --release --bin covenant
 
 <span class="cm"># verify</span>
 ./target/release/covenant --version
-<span class="cm"># covenant 0.8.0</span>
+<span class="cm"># covenant 0.9.0</span>
 
-<span class="cm"># compile for EVM (default)</span>
+<span class="cm"># compile for EVM (default MockChain target)</span>
 covenant build contract.cov
 
-<span class="cm"># compile to WebAssembly</span>
+<span class="cm"># compile for live Sepolia helper-contract bridge</span>
 covenant build contract.cov \
-  --target-chain wasm
+  --target-chain sepolia
 
-<span class="cm"># gas-regression benchmark</span>
-covenant bench \
-  --baseline gas_baselines.json \
-  contract.cov</pre>
+<span class="cm"># diagnose your local toolchain</span>
+covenant doctor
+
+<span class="cm"># run the test runner with action coverage</span>
+covenant test --coverage</pre>
     </div>
 
     <div class="install-card">
       <span class="install-card-eyebrow">Editor</span>
       <span class="install-card-title">VS Code Extension</span>
       <span class="install-card-note">Syntax · LSP · 21+ security detectors</span>
-      <pre class="install-code"><span class="cm"># VSIX attached to the GitHub release</span>
+      <pre class="install-code"><span class="cm"># VSIX attached to the GitHub release (extension at 0.8.2; V0.9 source compatible)</span>
 code --install-extension \
-  covenant-lang-0.8.0.vsix
+  covenant-lang-0.8.2.vsix
 
 <span class="cm"># or via marketplace (post V1.0 GA)</span>
 kairos-lab.covenant-lang</pre>
@@ -1737,7 +1741,8 @@ kairos-lab.covenant-lang</pre>
 
   <div class="install-actions reveal">
     <a href="https://github.com/Valisthea/covenant-lang/blob/main/INSTALL.md" target="_blank" rel="noopener" class="btn-secondary">Full install docs →</a>
-    <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary">Audit report →</a>
+    <a href="https://github.com/Valisthea/covenant/blob/main/OMEGA_V5_AUDIT_REPORT.md" target="_blank" rel="noopener" class="btn-secondary">OMEGA V5 (V0.9) →</a>
+    <a href="https://github.com/Valisthea/covenant-audits/tree/main/public/OMEGA-v4-covenant-v0.6" target="_blank" rel="noopener" class="btn-secondary">OMEGA V4 (V0.6) →</a>
   </div>
 </section>
 </div>
@@ -1750,15 +1755,15 @@ kairos-lab.covenant-lang</pre>
   <div class="section-header">
     <span class="section-num">04b — What's new</span>
     <h2 class="section-title" id="whats-new-title">What's new in V0.9</h2>
-    <p class="body-text">V0.9 is the production-real release. Cryptographic primitives execute on Sepolia for the first time via the helper-contract bridge. Three new top-level constructs (<code>nft</code>, <code>registry</code>, <code>interface</code>) bring ERC-721 and ERC-8231 to 5-line declarations. Foundry-class CLI tooling, a 6-rule linter for Solidity-isms, OMEGA V5 audit cleared. Fully backward compatible — V0.8 <code>.cov</code> files compile unchanged.</p>
+    <p class="body-text">V0.9 is the helper-bridge release. Covenant contracts now reach Sepolia via the helper-contract bridge: a real ceremony state machine + auto-synthesized ERC-721 / ERC-8231 surfaces, with cryptographic primitives stubbed by mocked helpers (real TFHE / Dilithium / Halo2 / Wesolowski VDF land in V1.0 alongside the third-party audit and mainnet helpers). Three new top-level constructs (<code>nft</code>, <code>registry</code>, <code>interface</code>) bring ERC-721 and the PQ key registry to 5-line declarations. Foundry-class CLI tooling, a 6-rule linter for Solidity-isms, OMEGA V5 self-audit cleared. Fully backward compatible — V0.8 <code>.cov</code> files compile unchanged.</p>
   </div>
 
   <div class="v9-features-grid reveal" role="list" aria-label="V0.9 highlights">
 
     <div class="v9-card" role="listitem">
       <span class="v9-card-icon">⛓</span>
-      <h3 class="v9-card-title">Real on Sepolia</h3>
-      <p class="v9-card-desc">Ceremony destruction, FHE counters, PQ signatures, ZK proofs — all execute on Sepolia via the helper-contract bridge. No more mock-only.</p>
+      <h3 class="v9-card-title">Live on Sepolia</h3>
+      <p class="v9-card-desc">Ceremony state machine + auto-synth ERC-721 deployed and exercised on Sepolia via the helper-contract bridge. Cryptographic primitives (FHE, PQ, ZK, VDF, Shamir) stubbed by mocked helpers in V0.9 — real implementations in V1.0.</p>
       <a href="https://sepolia.etherscan.io/address/0x2FB87d54D66c5fAEc1257a1A834497572fCe916D" class="v9-card-link" target="_blank" rel="noopener">M1 · First ceremony on Sepolia →</a>
     </div>
 
@@ -1838,7 +1843,7 @@ covenant init my-token</code></pre>
       <span class="deploy-network">· Sepolia Testnet · April 2026</span>
     </div>
 
-    <h2 class="deploy-title" id="deploy-title">Two milestones. Externally verifiable.</h2>
+    <h2 class="deploy-title" id="deploy-title">Three milestones. Externally verifiable.</h2>
     <p class="deploy-subtitle">A proof of concept is not a proof. These are deployments — real contracts, real transactions, on Etherscan.</p>
 
     <div class="milestone-row">
@@ -1853,10 +1858,19 @@ covenant init my-token</code></pre>
 
       <div class="milestone-card milestone-card--gold">
         <span class="milestone-badge milestone-badge--gold">M1</span>
-        <h3 class="milestone-title">First ceremony destruction on Sepolia</h3>
-        <p class="milestone-desc">Full <code>ceremony</code> lifecycle: setup → submit_share → finalize → <strong>destroy</strong>. Helper-contract bridge in production. Irrevocable. Verifiable by anyone.</p>
+        <h3 class="milestone-title">First ceremony lifecycle on Sepolia</h3>
+        <p class="milestone-desc">Full <code>ceremony</code> lifecycle: setup → submit_share → finalize → <strong>destroy</strong>. Helper-contract bridge in production. Destruction commitment irrevocable. Verifiable by anyone.</p>
         <a href="https://sepolia.etherscan.io/address/0x2FB87d54D66c5fAEc1257a1A834497572fCe916D" target="_blank" rel="noopener" class="milestone-link">
           0x2FB87d54…e916D on Etherscan ↗
+        </a>
+      </div>
+
+      <div class="milestone-card">
+        <span class="milestone-badge">M2</span>
+        <h3 class="milestone-title">First auto-synth ERC-721 NFT on Sepolia</h3>
+        <p class="milestone-desc">A 4-line <code>nft AuditNFT { ... }</code> source compiled by Covenant V0.9 → 1235-byte ERC-721 bytecode → deployed and exercised on Sepolia (mint #1, mint #2, transfer, burn-via-zero). Indistinguishable from Solidity-authored ERC-721 to wallets, OpenSea, and indexers.</p>
+        <a href="https://sepolia.etherscan.io/address/0xf8d9895cc265886d958841af8d9a6469be94bc25" target="_blank" rel="noopener" class="milestone-link">
+          0xf8d9895c…4bc25 on Etherscan ↗
         </a>
       </div>
     </div>
@@ -1928,7 +1942,7 @@ covenant init my-token</code></pre>
 
     <div class="ship-card">
       <span class="ship-title">Amnesia Ceremonies</span>
-      <span class="ship-sub">ERC-8228 · VDF + Shamir · destruction proof verified on Etherscan</span>
+      <span class="ship-sub">Real state machine on Sepolia · destruction commitment verified on Etherscan · real VDF + Shamir in V1.0</span>
       <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
@@ -1999,7 +2013,7 @@ covenant init my-token</code></pre>
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-closing">V0.9 GA — production-real cryptographic primitives on Sepolia. Testnet-only by design; mainnet at V1.0 post-external-audit. Roadmap: V0.9.x patches (LSP debounce, fuzz campaigns, Aster M2), V1.0 (real TFHE/Dilithium/Halo2, third-party audit, mainnet helpers).</p>
+    <p class="footer-closing">V0.9 GA — helper-contract bridge live on Sepolia (real ceremony state machine + auto-synth ERC-721; cryptographic primitives mocked until V1.0). Testnet-only by design; mainnet at V1.0 post-external-audit. Roadmap: V0.9.x patches (LSP debounce, IR-instrumented coverage, fuzz campaigns, Aster M2 deploy), V1.0 (real TFHE/Dilithium/Halo2/Wesolowski VDF, third-party audit, mainnet helpers).</p>
     <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0 · Site: MIT + CC-BY · <span id="footer-year"></span> Kairos Lab</span>
   </div>
   <script>document.getElementById('footer-year').textContent=new Date().getFullYear();</script>
