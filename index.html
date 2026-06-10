@@ -1519,9 +1519,9 @@ a:focus-visible, button:focus-visible {
     </div>
 
     <div class="hero-v9-badge" role="status">
-      <span class="v9-pill">V0.9.0</span>
+      <span class="v9-pill">V0.9.2</span>
       <span class="v9-label">Production-real on Sepolia</span>
-      <a href="https://github.com/Valisthea/covenant/releases/tag/v0.9.0" class="v9-link" target="_blank" rel="noopener">View release →</a>
+      <a href="https://github.com/Valisthea/covenant/releases/tag/v0.9.2" class="v9-link" target="_blank" rel="noopener">View release →</a>
     </div>
 
     <h1 id="hero-title" aria-label="Covenant"></h1>
@@ -1629,8 +1629,8 @@ a:focus-visible, button:focus-visible {
 <section class="section" id="audited" aria-labelledby="audited-title">
   <div class="section-header">
     <span class="section-num">02 — Audited</span>
-    <h2 class="section-title" id="audited-title">OMEGA V4 + V5 — two self-audits, all findings resolved</h2>
-    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 self-audit — 41 findings across all severity levels. All findings remain resolved through V0.9. V0.8 added 9 OMEGA V4 verifications (8 verified + 1 mitigated, fully resolved in V0.9). V0.9 cleared OMEGA V5 — 10-point self-audit, all GO, 1206 tests, 0 clippy warnings. Both audits are internal to Kairos Lab; an independent third-party audit is the gate for V1.0 mainnet.</p>
+    <h2 class="section-title" id="audited-title">Continuously self-audited — OMEGA V4 + V5, and a V0.9.2 adversarial sweep</h2>
+    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 self-audit — 41 findings across all severity levels. All findings remain resolved through V0.9. V0.8 added 9 OMEGA V4 verifications (8 verified + 1 mitigated, fully resolved in V0.9). V0.9 cleared OMEGA V5 — 10-point self-audit, all GO, 1206 tests, 0 clippy warnings. <strong>V0.9.2 went further: a full multi-agent adversarial audit of the compiler (7 dimensions, every finding re-verified against source) caught — and fixed — a Critical ERC-721 authorization gap plus High-severity codegen defects (a map storage-slot collision, wrapping checked-arithmetic, and dropped external-call return values) that had shipped in V0.9.0–V0.9.1; the remaining hardening is scoped to V0.9.3.</strong> Full detail in the <a href="https://github.com/Valisthea/covenant/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG</a>. All audits to date are internal to Kairos Lab; an independent third-party audit is the gate for V1.0 mainnet.</p>
   </div>
 
   <div class="audit-stats reveal">
@@ -1791,7 +1791,7 @@ cargo build --release --bin covenant
 
 <span class="cm"># verify</span>
 ./target/release/covenant --version
-<span class="cm"># covenant 0.9.0</span>
+<span class="cm"># covenant 0.9.2</span>
 
 <span class="cm"># compile for EVM (default MockChain target)</span>
 covenant build contract.cov
