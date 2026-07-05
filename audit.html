@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Audit — OMEGA V4 · Covenant</title>
-<meta name="description" content="Complete OMEGA V4 security audit of the Covenant compiler. 41 findings across 5 severity levels — all resolved before V0.7 GA. PoCs, methodology, and remediation commits are public.">
+<title>Audit — OMEGA V4 → V6 · Covenant</title>
+<meta name="description" content="Continuous adversarial security audits of the Covenant compiler: OMEGA V4 (41 findings before V0.7 GA) through OMEGA V6 (6 Critical + 6 High + 5 Medium, fixed the same day, V0.9.3). PoCs, methodology, and remediation commits are public.">
 <meta name="author" content="Kairos Lab">
 <link rel="canonical" href="https://covenant-lang.org/audit">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -15,13 +15,13 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://covenant-lang.org/audit">
 <meta property="og:site_name" content="Covenant">
-<meta property="og:title" content="OMEGA V4 Audit — 41 findings, all resolved · Covenant">
-<meta property="og:description" content="Full adversarial audit of the Covenant compiler before V0.7 GA. 5 Critical, 8 High, 8 Medium, 6 Low, 9 Informational. Every finding documented with PoC and remediation commit.">
+<meta property="og:title" content="OMEGA V4 → V6 Audits — 74 findings, all Critical/High/Medium resolved · Covenant">
+<meta property="og:description" content="Continuous adversarial audits of the Covenant compiler. Latest: OMEGA V6 (5 July 2026) — 6 Critical, 6 High, 5 Medium, fixed the same day. Every finding documented with PoC and remediation commit.">
 <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@Valisthea">
-<meta name="twitter:title" content="OMEGA V4 Audit — 41 findings, all resolved · Covenant">
-<meta name="twitter:description" content="Full adversarial audit of the Covenant compiler. 5 Critical (IrGuard not codegenned, proxy hijack, precompile bypass, ceremony bypass). All resolved before V0.7 GA.">
+<meta name="twitter:title" content="OMEGA V4 → V6 Audits — 74 findings, all Critical/High/Medium resolved · Covenant">
+<meta name="twitter:description" content="Continuous adversarial audits of the Covenant compiler. Latest OMEGA V6 cycle: 6 Critical, 6 High, 5 Medium — including a stack-overflow DoS and a for-each loop that never actually iterated. All fixed the same day.">
 <meta name="twitter:image" content="https://covenant-lang.org/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -505,7 +505,7 @@ footer#site-footer {
       </svg>
     </div>
     <span class="header-brand-name">Covenant</span>
-    <span class="header-badge">V0.7 GA</span>
+    <span class="header-badge">V0.9.3</span>
   </a>
   <div class="header-spacer"></div>
   <nav class="header-nav" aria-label="Primary navigation">
@@ -554,6 +554,197 @@ footer#site-footer {
       </div>
     </div>
   </div>
+</div>
+
+<!-- ══════════════════ OMEGA V6 (LATEST) ══════════════════ -->
+<div class="container">
+<section class="section" id="omega-v6" aria-labelledby="omega-v6-title">
+  <span class="section-eyebrow">00 — Latest audit · 5 July 2026</span>
+  <h2 class="section-title" id="omega-v6-title">OMEGA V6: 17 more findings, fixed the same day</h2>
+  <p class="body-text">Everything below this section documents the original OMEGA V4 audit before V0.7 GA — still accurate, still worth reading. But it is no longer the whole story. On 5 July 2026, a fresh breadth-first adversarial sweep across the compiler, stdlib, and produced-contract surfaces (the same "assume every guarantee is a lie" methodology described in <a href="#methodology" style="color:var(--accent);">Section 01</a>) found 6 Critical, 6 High, and 5 Medium severity defects in the V0.9.2 compiler — the largest single-cycle count since the V0.6 launch audit. Every finding was empirically reproduced against source and compiled bytecode before being reported, and every fix shipped the same day with a new regression test. Full write-up: <a href="https://github.com/Valisthea/covenant-audits/tree/main/audits/2026-07-05-omega-v6-covenant-v0.9.2" target="_blank" rel="noopener">covenant-audits/audits/2026-07-05-omega-v6-covenant-v0.9.2</a>.</p>
+
+  <div class="page-hero-stats reveal" style="margin-top:24px;justify-content:flex-start;gap:32px;">
+    <div class="page-hero-stat">
+      <span class="page-hero-stat-val" style="color:var(--red)">6</span>
+      <span class="page-hero-stat-label">Critical — resolved</span>
+    </div>
+    <div class="page-hero-stat">
+      <span class="page-hero-stat-val" style="color:var(--orange)">6</span>
+      <span class="page-hero-stat-label">High — resolved</span>
+    </div>
+    <div class="page-hero-stat">
+      <span class="page-hero-stat-val" style="color:#92400e">5</span>
+      <span class="page-hero-stat-label">Medium — resolved</span>
+    </div>
+    <div class="page-hero-stat">
+      <span class="page-hero-stat-val">0</span>
+      <span class="page-hero-stat-label">Open</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title" style="margin-top:40px;margin-bottom:16px;">Critical — two of the most basic constructs in the language</h3>
+
+  <div class="finding-card critical reveal" id="CRT-002">
+    <div class="finding-header">
+      <div class="finding-id-block">
+        <span class="finding-id">CRT-002</span>
+        <div class="finding-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+      </div>
+      <div><h3 class="finding-title"><code>if</code> without <code>else</code> silently deleted the success path</h3></div>
+    </div>
+    <div class="finding-body">
+      <p>The dead-code eliminator treated a then-only <code>if</code>'s implicit merge block as unreachable and deleted every statement after it — including the success path of the shipped <code>07_revert_paths.cov</code> fixture. Source looked correct, the fixture had shipped, and nothing failed until this cycle inspected the emitted bytecode directly.</p>
+      <p><strong>Fix:</strong> removed the <code>Terminator::Unreachable</code> guard causing the false-reachability classification in <code>covenant-ir/src/builder.rs</code>. Two new regression tests assert trailing statements after a then-only <code>if</code> survive DCE.</p>
+    </div>
+  </div>
+
+  <div class="finding-card critical reveal" id="CRT-003">
+    <div class="finding-header">
+      <div class="finding-id-block">
+        <span class="finding-id">CRT-003</span>
+        <div class="finding-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+      </div>
+      <div><h3 class="finding-title"><code>for each</code> executed its body exactly once — it never actually iterated</h3></div>
+    </div>
+    <div class="finding-body">
+      <p>The loop compiled to a header block that ran the body once and fell straight through to the merge block — no comparison, no back-edge, no bound loop variable. A ballot with 100 votes tallied exactly one of them, silently, with no diagnostic anywhere in the pipeline.</p>
+      <p><strong>Fix:</strong> rewritten as a real block-parameter loop (header → body → merge, with a genuine comparison and back-edge jump). Landing this required implementing real <code>list&lt;Struct&gt;</code> storage end-to-end — <code>append</code> and <code>list[idx].field</code> read/write were also no-ops, now backed by keccak-derived dynamic-array slots (the Solidity convention). New end-to-end test: append three votes, sum with <code>for each</code>, verify each addressed slot independently.</p>
+    </div>
+  </div>
+
+  <div class="finding-card critical reveal" id="CRT-004">
+    <div class="finding-header">
+      <div class="finding-id-block">
+        <span class="finding-id">CRT-004</span>
+        <div class="finding-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+      </div>
+      <div><h3 class="finding-title"><code>only &lt;builtin_predicate&gt;</code> guards compiled to unconditional <code>true</code></h3></div>
+    </div>
+    <div class="finding-body">
+      <p>Every <code>BuiltinPredicate</code> variant beyond <code>owner</code>/<code>admin</code>/<code>deployer</code>/an explicit address — around 16 variants, including <code>first_time_caller</code> and <code>registered_key</code> — codegenned to a bare <code>PUSH1 0x01</code>. Any contract gating an action behind one of these predicates silently authorized every caller.</p>
+      <div class="code-diff">
+        <div class="code-diff-col before">
+          <div class="code-diff-header">Before — emitted bytecode</div>
+          <pre><span style="color:var(--red)">; only registered_key — NO CHECK</span>
+PUSH1 0x01   ; "Placeholder: return true"
+; guard "passes" for every caller</pre>
+        </div>
+        <div class="code-diff-col after">
+          <div class="code-diff-header">After — hard compile error</div>
+          <pre><span style="color:var(--green)">error[E518]: `only registered_key`
+has no real EVM authorization
+check in this release — refusing
+to compile a defeated guard</span></pre>
+        </div>
+      </div>
+      <p><strong>Fix:</strong> every unimplemented predicate now raises <code>E518</code> and refuses to compile, matching the existing pattern for unlowered Shamir/VDF primitives (<code>E516</code>/<code>E517</code>) rather than shipping a guard that silently passes.</p>
+    </div>
+  </div>
+
+  <div class="finding-card critical reveal" id="CRT-005">
+    <div class="finding-header">
+      <div class="finding-id-block">
+        <span class="finding-id">CRT-005 + HGH-030</span>
+        <div class="finding-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+      </div>
+      <div><h3 class="finding-title">Amnesia ceremony had zero threshold enforcement</h3></div>
+    </div>
+    <div class="finding-body">
+      <p>A ceremony's entire purpose is threshold-of-N guardian consensus before destruction. <code>finalize()</code> trusted the (mocked) precompile's boolean with no on-chain corroboration that any guardian shares had actually been submitted — a ceremony could finalize with zero shares submitted. Separately, the ceremony synthesizer hardcoded a <code>(3, 2)</code> threshold regardless of the <code>guardians:</code>/<code>threshold:</code> values actually declared in the <code>.cov</code> source.</p>
+      <p><strong>Fix:</strong> <code>finalize()</code> now asserts a real count of distinct submitters against the threshold read from the module's own metadata before it will even ask the precompile; <code>submit_share</code> dedupes by caller so one address can't unilaterally fabricate consensus. Three new regression tests cover zero-shares, one-of-two-submitters, and same-caller-twice.</p>
+    </div>
+  </div>
+
+  <div class="finding-card critical reveal" id="CRT-006">
+    <div class="finding-header">
+      <div class="finding-id-block">
+        <span class="finding-id">CRT-006</span>
+        <div class="finding-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+      </div>
+      <div><h3 class="finding-title">Builtin identifiers silently shadowed same-named user fields</h3></div>
+    </div>
+    <div class="finding-body">
+      <p>A user field or parameter named <code>caller</code>, <code>now</code>, <code>block</code>, <code>msg</code>, or <code>current_block</code> silently won or lost against the language-provided binding depending on scope-seeding order, with zero diagnostic either way — a name collision that could redirect a security-relevant read to the wrong value without any indication in source or compiler output.</p>
+      <p><strong>Fix:</strong> the resolver now checks for an existing binding in the parent scope before seeding a builtin identifier, so a user declaration always wins deterministically and the collision is at least well-defined.</p>
+    </div>
+  </div>
+
+  <div class="finding-card critical reveal" id="CRT-007">
+    <div class="finding-header">
+      <div class="finding-id-block">
+        <span class="finding-id">CRT-007</span>
+        <div class="finding-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+      </div>
+      <div><h3 class="finding-title">ERC-8231 PQ-key registry: ABI says dynamic, bytecode reads static</h3></div>
+    </div>
+    <div class="finding-body">
+      <p><code>pq_key</code> (used by the auto-synthesized <code>registry</code> construct's <code>register(bytes)</code> / <code>key_of(...) returns bytes</code>) declares ABI type <code>bytes</code> — dynamic, offset + length + data. Codegen could only read or return it as a single 32-byte word. Any spec-compliant caller (ethers.js, viem, a wallet, Etherscan) ABI-encoding a <code>bytes</code> argument places a dynamic-data <em>offset</em> at that word, not the key itself — the contract would silently register the constant <code>32</code> as the caller's "key," with no error, no revert.</p>
+      <p><strong>Fix:</strong> the <code>registry</code> construct now hard-fails compilation with <code>E505</code> until real dynamic-<code>bytes</code> storage and ABI encoding land — refusing to compile is strictly safer than shipping a compiler-caused key-corruption bug.</p>
+    </div>
+  </div>
+
+  <h3 class="sub-title" style="margin-top:40px;margin-bottom:16px;">High — six issues, from a broken authorization surface to a process crash</h3>
+
+  <table class="findings-table reveal" style="margin-top:8px;">
+    <thead>
+      <tr><th>ID</th><th>Finding</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-id">HGH-026</td>
+        <td>A type-position identifier that resolves to something other than a struct/credential (a field, action, event…) silently lowered to <code>Ty::Unknown</code> with zero diagnostic. Now raises <code>E231</code> whenever the identifier resolves to something real but non-type-shaped.</td>
+      </tr>
+      <tr>
+        <td class="td-id">HGH-027</td>
+        <td>External-contract calls (<code>IFoo.at(addr).method(args)</code>) were never checked against the declared interface — wrong arity, wrong argument types, and typo'd method names all passed type-check silently. Now arity- and type-checked against the <code>external contract</code> block.</td>
+      </tr>
+      <tr>
+        <td class="td-id">HGH-028</td>
+        <td><code>emit_external_call</code>'s non-view CALL path pushed <code>addr</code> before <code>value</code> — but CALL's real pop order needs <code>value</code> first, so every non-view external call attempted to "send" a fabricated huge value and failed with insufficient balance. <strong>A textbook case of Lesson 2 below</strong> — an asymmetric-operand test would have caught this instantly; the existing tests only checked opcode presence, never stack-slot ordering.</td>
+      </tr>
+      <tr>
+        <td class="td-id">HGH-029</td>
+        <td>Every recursive-descent AST walker (parser, resolver, typechecker) recursed one native stack frame per nesting level with no depth counter. A few hundred bytes of nested parentheses, or a long chained arithmetic expression, overflowed the process stack — an uncatchable crash, not a normal compiler error — reachable from <code>check</code>, <code>build</code>, <code>lint</code>, <code>test</code>, and the LSP. Each stage now bounds its own recursion depth independently and raises a normal diagnostic instead.</td>
+      </tr>
+      <tr>
+        <td class="td-id">HGH-031</td>
+        <td>No compiler-surfaced warning when a build routes an FHE/PQ/ZK primitive to a <code>Mocked*.sol</code> helper on a real public testnet — the "PLACEHOLDER, not for production secrets" labeling lived only in Solidity source comments a CLI user never sees. <code>covenant build --target-chain=sepolia</code> now prints an explicit warning naming the primitive and helper contract.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub-title" style="margin-top:40px;margin-bottom:16px;">Medium</h3>
+
+  <div class="finding-card medium reveal" style="border-left:3px solid var(--orange);">
+    <div class="finding-body">
+      <p><strong>MED-001 — Privacy analyzer false positive:</strong> a legitimate <code>list&lt;Struct&gt;</code> write with a <code>ciphertext&lt;T&gt;</code> struct field was rejected as an E301 privacy violation, because the analyzer approximated the lvalue domain instead of resolving the precise field type. Now resolves the real field type recursively.</p>
+      <p><strong>MED-003 — Non-constant dynamic-type returns:</strong> a <code>view</code>/<code>reveal</code> returning any non-compile-time-constant <code>text</code>/<code>bytes</code>/list value — including the language's own "Hello World" example, <code>view read returns text { greeting }</code> — silently ABI-encoded as a single raw word, with zero diagnostic. Now raises a warning naming the exact problem, deliberately not a hard error: an earlier attempt to hard-fail this broke seven existing test fixtures, including Hello World itself.</p>
+      <p><strong>MED-004 — <code>ListLength</code> under-reporting:</strong> required no separate fix — resolved as a side effect of the CRT-003 real-storage rewrite above.</p>
+      <p><strong>MED-005 — Mock precompile more permissive than the deployed testnet helper:</strong> the in-repo test double's <code>ZK_VDF_VERIFY</code> always returned <code>true</code> with no fail-mode at all, unlike every other verify-shaped mock precompile — local tests could never exercise "VDF proof rejected." Now gates on the same failure flag as the sibling <code>ZK_VERIFY</code> precompile.</p>
+      <p><strong>MED-002 — Stale documentation:</strong> the project's own "known acceptable risks" ledger claimed no fuzz harness existed and that the parser had bounded recursion — neither was true before this cycle. A harness exists in-repo but has never been run; recursion is <em>now</em> genuinely bounded, thanks to HGH-029 above. Corrected in place.</p>
+    </div>
+  </div>
+
+  <p class="body-text" style="margin-top:32px;"><strong>Every fix in this section</strong> passed a full workspace rebuild, the full test suite (1050+ tests), and a clean clippy pass before moving to the next finding — and where a fix's first attempt caused new failures (HGH-027, MED-003), that correction is documented in the commit history, not hidden. All audits to date, OMEGA V4 through V6, are internal to Kairos Lab; an independent third-party audit remains the gate for V1.0 mainnet.</p>
+</section>
 </div>
 
 <!-- ══════════════════ METHODOLOGY ══════════════════ -->
@@ -862,7 +1053,7 @@ JUMPI
 <div class="container">
 <section class="section" id="limitations" aria-labelledby="limits-title">
   <span class="section-eyebrow">06 — Known limitations</span>
-  <h2 class="section-title" id="limits-title">What V0.7 does not yet support</h2>
+  <h2 class="section-title" id="limits-title">What V0.9 does not yet support</h2>
   <p class="body-text">Shipping broken stubs is worse than shipping nothing. These features are deliberately disabled until they can be implemented correctly.</p>
 
   <div style="margin-top:28px;" class="reveal">
@@ -890,8 +1081,8 @@ JUMPI
     <div class="limitation-card">
       <span class="limitation-icon">🔧</span>
       <div class="limitation-body">
-        <div class="limitation-title">External audits (V0.9 target)</div>
-        <div class="limitation-desc">OMEGA V4 was a self-audit. V0.9 will bring independent audits from two external firms. Self-audit is not a substitute for independent verification — this is the roadmap, not a guarantee.</div>
+        <div class="limitation-title">External audits (deferred to V1.0)</div>
+        <div class="limitation-desc">OMEGA V4, V5, and V6 are all Kairos Lab self-audits. Independent third-party audits are the gate for V1.0 mainnet — not yet scheduled. Self-audit is not a substitute for independent verification, and OMEGA V6 finding 6 more Critical-severity defects in a compiler that had already passed three prior self-audit cycles is itself evidence of that, not a reason to relax the bar.</div>
       </div>
     </div>
   </div>
@@ -903,11 +1094,11 @@ JUMPI
 <section class="section" id="report" aria-labelledby="report-title" style="border-bottom:none;">
   <span class="section-eyebrow">07 — Access the full report</span>
   <h2 class="section-title" id="report-title">Everything is public. PoCs included.</h2>
-  <p class="body-text">The full OMEGA V4 report is public at <code>github.com/Valisthea/covenant-audits</code>. Every finding has a finding ID, severity, description, annotated bytecode PoC, remediation commit, and regression test. If OMEGA V4 missed something, that's a welcome problem — the bounty program is in the same repo.</p>
+  <p class="body-text">Every audit cycle — OMEGA V4 through V6 — is public at <code>github.com/Valisthea/covenant-audits</code>. Every finding has a finding ID, severity, description, reproduction, remediation commit, and regression test. If OMEGA V6 missed something, that's a welcome problem — the bounty program is in the same repo.</p>
 
   <div class="cta-row reveal">
     <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener" class="btn-primary">Read the full audit report →</a>
-    <a href="/#install" class="btn-secondary">Install Covenant V0.7 →</a>
+    <a href="/#install" class="btn-secondary">Install Covenant V0.9 →</a>
     <a href="https://github.com/Valisthea/covenant" target="_blank" rel="noopener" class="btn-secondary">Source on GitHub →</a>
   </div>
 
