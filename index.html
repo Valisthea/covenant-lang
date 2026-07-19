@@ -1772,7 +1772,7 @@ a:focus-visible, button:focus-visible {
   <div class="section-header">
     <span class="section-num">04 — Install</span>
     <h2 class="section-title" id="install-title">Get the audited compiler</h2>
-    <p class="body-text">Covenant V0.9 GA ships a full toolchain: compiler, Foundry-class CLI (test, fmt, doctor, lint, init), LSP, VS Code extension, and a gas-regression benchmark. Three targets (EVM, Aster Chain, WebAssembly). One command to start.</p>
+    <p class="body-text">Covenant V0.9 GA ships a full toolchain: compiler, Foundry-class CLI (test, fmt, doctor, lint, init), LSP, VS Code extension, and a gas-regression benchmark. Compiles to EVM bytecode — deployable on any EVM chain (Sepolia today, Robinhood Chain next) — and to WebAssembly. One command to start.</p>
   </div>
 
   <div class="install-cmd-wrap reveal">
@@ -2003,7 +2003,7 @@ covenant init my-token</code></pre>
     <a href="https://playground.covenant-lang.org/contract" target="_blank" rel="noopener" class="tool-card tool-card--primary">
       <span class="tool-card-eyebrow">Generic dApp · for your contracts</span>
       <h3 class="tool-card-title">My Contract — Read/Write any deployed Covenant</h3>
-      <p class="tool-card-desc">Paste your contract address, pick the network (Sepolia · BSC · Polygon · Arbitrum · Optimism · Base · Aster), then either paste your <code>.cov</code> source (in-browser WASM compiler extracts the ABI) or paste raw ABI JSON. Get auto-generated Read panels (every view function, instant), Write panels (every action, MetaMask-gated), and live custom error decoding on revert. Same UX Etherscan would give Solidity contracts — but for Covenant.</p>
+      <p class="tool-card-desc">Paste your contract address, pick the network (Sepolia · BSC · Polygon · Arbitrum · Optimism · Base · Robinhood), then either paste your <code>.cov</code> source (in-browser WASM compiler extracts the ABI) or paste raw ABI JSON. Get auto-generated Read panels (every view function, instant), Write panels (every action, MetaMask-gated), and live custom error decoding on revert. Same UX Etherscan would give Solidity contracts — but for Covenant.</p>
       <span class="tool-card-cta">Open the dApp →</span>
     </a>
 
@@ -2027,7 +2027,7 @@ covenant init my-token</code></pre>
 
     <div class="ship-card">
       <span class="ship-title">Compiler</span>
-      <span class="ship-sub">Rust · 22-crate workspace · 1206 tests · EVM + Aster + WASM</span>
+      <span class="ship-sub">Rust · 22-crate workspace · 1206 tests · EVM + WASM</span>
       <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 
@@ -2134,7 +2134,7 @@ covenant init my-token</code></pre>
   </div>
 
   <div class="footer-bottom">
-    <p class="footer-closing">V0.9 GA — helper-contract bridge live on Sepolia (real ceremony state machine + auto-synth ERC-721; cryptographic primitives mocked until V1.0). Testnet-only by design; mainnet at V1.0 post-external-audit. Roadmap: V0.9.x patches (LSP debounce, IR-instrumented coverage, fuzz campaigns, Aster M2 deploy), V1.0 (real TFHE/Dilithium/Halo2/Wesolowski VDF, third-party audit, mainnet helpers).</p>
+    <p class="footer-closing">V0.9 GA — helper-contract bridge live on Sepolia (real ceremony state machine + auto-synth ERC-721; cryptographic primitives mocked until V1.0). Testnet-only by design; mainnet at V1.0 post-external-audit. Roadmap: V0.9.x patches (LSP debounce, IR-instrumented coverage, fuzz campaigns, Robinhood Chain testnet deploy), V1.0 (real TFHE/Dilithium/Halo2/Wesolowski VDF, third-party audit, mainnet helpers).</p>
     <span class="footer-license">Specs: CC0-1.0 · Compiler: Apache-2.0 · Site: MIT + CC-BY · <span id="footer-year"></span> Kairos Lab</span>
   </div>
   <script>document.getElementById('footer-year').textContent=new Date().getFullYear();</script>
