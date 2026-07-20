@@ -15,12 +15,12 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://covenant-lang.org/audit">
 <meta property="og:site_name" content="Covenant">
-<meta property="og:title" content="OMEGA V4 → V6 Audits — 74 findings, all Critical/High/Medium resolved · Covenant">
+<meta property="og:title" content="OMEGA V4 → V6 Audits — four adversarial cycles, all Critical/High/Medium resolved · Covenant">
 <meta property="og:description" content="Continuous adversarial audits of the Covenant compiler. Latest: OMEGA V6 (5 July 2026) — 6 Critical, 6 High, 5 Medium, fixed the same day. Every finding documented with PoC and remediation commit.">
 <meta property="og:image" content="https://covenant-lang.org/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@Valisthea">
-<meta name="twitter:title" content="OMEGA V4 → V6 Audits — 74 findings, all Critical/High/Medium resolved · Covenant">
+<meta name="twitter:title" content="OMEGA V4 → V6 Audits — four adversarial cycles, all Critical/High/Medium resolved · Covenant">
 <meta name="twitter:description" content="Continuous adversarial audits of the Covenant compiler. Latest OMEGA V6 cycle: 6 Critical, 6 High, 5 Medium — including a stack-overflow DoS and a for-each loop that never actually iterated. All fixed the same day.">
 <meta name="twitter:image" content="https://covenant-lang.org/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -744,6 +744,82 @@ to compile a defeated guard</span></pre>
   </div>
 
   <p class="body-text" style="margin-top:32px;"><strong>Every fix in this section</strong> passed a full workspace rebuild, the full test suite (1050+ tests), and a clean clippy pass before moving to the next finding — and where a fix's first attempt caused new failures (HGH-027, MED-003), that correction is documented in the commit history, not hidden. All audits to date, OMEGA V4 through V6, are internal to Kairos Lab; an independent third-party audit remains the gate for V1.0 mainnet.</p>
+</section>
+</div>
+
+<!-- ══════════════════ V0.9.2 CYCLE ══════════════════ -->
+<div class="container">
+<section class="section" id="v092-cycle" aria-labelledby="v092-title">
+  <span class="section-eyebrow">00b — Previous cycle · 9 June 2026</span>
+  <h2 class="section-title" id="v092-title">V0.9.2: the cycle that found every NFT was takeable</h2>
+  <p class="body-text">One month before OMEGA V6, a 37-agent adversarial sweep ran across seven dimensions of the compiler — every finding re-verified against source, then reproduced with an end-to-end test before being accepted. It confirmed 29 flaws and shipped fixes for the exploitable and silently-wrong subset in V0.9.2: one <strong>Critical</strong> and four <strong>High</strong>. The remainder was scoped forward — and much of it is what OMEGA V6 picked up above. Full detail: <a href="https://github.com/Valisthea/covenant/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG — V0.9.2</a>.</p>
+
+  <div class="page-hero-stats reveal" style="margin-top:24px;justify-content:flex-start;gap:32px;">
+    <div class="page-hero-stat">
+      <span class="page-hero-stat-val" style="color:var(--red)">1</span>
+      <span class="page-hero-stat-label">Critical — resolved</span>
+    </div>
+    <div class="page-hero-stat">
+      <span class="page-hero-stat-val" style="color:var(--orange)">4</span>
+      <span class="page-hero-stat-label">High — resolved</span>
+    </div>
+    <div class="page-hero-stat">
+      <span class="page-hero-stat-val">29</span>
+      <span class="page-hero-stat-label">Confirmed in sweep</span>
+    </div>
+    <div class="page-hero-stat">
+      <span class="page-hero-stat-val">0</span>
+      <span class="page-hero-stat-label">Open</span>
+    </div>
+  </div>
+
+  <h3 class="sub-title" style="margin-top:40px;margin-bottom:16px;">Critical — every auto-synthesized NFT could be taken by anyone</h3>
+
+  <div class="finding-card critical reveal" id="KSR-CVN-ERC721">
+    <div class="finding-header">
+      <div class="finding-id-block">
+        <span class="finding-id">ERC-721 AUTH</span>
+        <div class="finding-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+      </div>
+      <div><h3 class="finding-title"><code>transferFrom</code> performed no caller authorization</h3></div>
+    </div>
+    <div class="finding-body">
+      <p>The auto-synthesized <code>transferFrom</code> checked only <code>ownerOf(token_id) == from</code> — where <code>from</code> is an <em>attacker-chosen parameter</em>. It never loaded <code>msg.sender</code> at all. Any account could call <code>transferFrom(victim, attacker, id)</code> against any token the victim owned and seize it. Every NFT minted by a contract compiled with V0.9.0 or V0.9.1 was takeable by anyone who read the ABI. The audit fixture in the repo even <em>documented</em> the gate that was, in fact, absent from the emitted bytecode.</p>
+      <p><strong>Fix:</strong> enforce OpenZeppelin <code>_isAuthorized</code> semantics — the caller must be the token owner, the per-token approved address, or an approved operator, else <code>NotApprovedOrOwner</code>. A shared <code>emit_is_authorized</code> helper also gates the newly synthesized <code>burn</code>. <code>transferFrom</code> now additionally reverts on <code>to == address(0)</code> (<code>InvalidReceiver</code>) and refuses a free-mint via <code>from == address(0)</code>. (<code>covenant-stdlib/src/erc721.rs</code>.)</p>
+      <p><strong>Honest scope:</strong> bytecode already deployed under V0.9.0/V0.9.1 is immutable — only new compiles get the gate. The M2 demonstration NFT on Sepolia therefore still carries the original permissive <code>transferFrom</code>, and is labelled as such on its showcase page.</p>
+    </div>
+  </div>
+
+  <h3 class="sub-title" style="margin-top:40px;margin-bottom:16px;">High — four codegen defects that produced silently wrong contracts</h3>
+
+  <table class="findings-table reveal" style="margin-top:8px;">
+    <thead>
+      <tr><th>ID</th><th>Finding</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-id">KSR-CVN-029</td>
+        <td><strong>Storage-slot collision — every map hashed <code>keccak(key ‖ 0)</code>.</strong> Keyed map slots used the map's metadata-slot <em>value</em> (always <code>0</code> for a fresh map) instead of the slot <em>number</em>, so any two maps accessed with the same key aliased the same storage slot. In ERC-721, <code>approve(spender, id)</code> silently overwrote <code>owners[id]</code>; in the ERC-8231 registry, <code>keys[caller]</code> and <code>registered[caller]</code> clobbered each other. <code>MapGet</code>/<code>MapSet</code>/<code>MapDelete</code> now trace the base operand back to the field's slot number and hash <code>keccak(key ‖ slot_number)</code>.</td>
+      </tr>
+      <tr>
+        <td class="td-id">KSR-CVN-031</td>
+        <td><strong>Checked arithmetic silently wrapped instead of reverting.</strong> <code>AddChecked</code>/<code>SubChecked</code>/<code>MulChecked</code> — the lowering of Covenant's <code>+</code>, <code>-</code>, <code>*</code> — emitted bare wrapping EVM <code>ADD</code>/<code>SUB</code>/<code>MUL</code>. So <code>balance = balance - amount</code> wrapped to ~<code>type(uint256).max</code> on underflow rather than reverting: the classic pre-0.8 Solidity balance exploit, reintroduced by codegen under a language that promised checked arithmetic. Now emits the overflow/underflow check and reverts.</td>
+      </tr>
+      <tr>
+        <td class="td-id">KSR-CVN-030</td>
+        <td><strong>Every external-contract call returned 0/default.</strong> After the <code>STATICCALL</code>/<code>CALL</code>, codegen zeroed <code>mem[0x00]</code> <em>before</em> reading it — wiping the return word the call had just written to <code>retOffset=0</code>. Every <code>IFoo.at(addr).method()</code> view silently returned zero. The post-call wipe is removed and the return word is guarded by <code>RETURNDATASIZE</code>, so an empty return still yields 0. Completes the M3 cross-contract milestone for statically-typed returns.</td>
+      </tr>
+      <tr>
+        <td class="td-id">KSR-CVN-042</td>
+        <td><strong><code>@slot(N)</code> could silently alias reserved compiler slots.</strong> A user-specified <code>@slot</code> landing on <code>DEPLOYER_SLOT</code> (which backs <code>only deployer</code>) or <code>REENTRANT_LOCK_SLOT</code> (which backs <code>@non_reentrant</code>) hijacked the auth check or disabled the reentrancy guard, with no diagnostic. Now reported through the <code>E423</code> slot-conflict path.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="body-text" style="margin-top:32px;">The pattern across all five is the one this page keeps returning to: <strong>the source was correct, the tests passed, and the bytecode did something else.</strong> Three of the four High findings were invisible to a test suite that asserted on opcode presence rather than on runtime values — the same blind spot Lesson 2 below describes, and the reason the V0.9.3 cycle above went looking in the emitted bytecode first.</p>
 </section>
 </div>
 
