@@ -1929,8 +1929,8 @@ covenant init my-token</code></pre>
       <span class="deploy-network">· Sepolia Testnet · April 2026</span>
     </div>
 
-    <h2 class="deploy-title" id="deploy-title">Three milestones. Externally verifiable.</h2>
-    <p class="deploy-subtitle">A proof of concept is not a proof. These are deployments — real contracts, real transactions, on Etherscan.</p>
+    <h2 class="deploy-title" id="deploy-title">Four milestones. Externally verifiable.</h2>
+    <p class="deploy-subtitle">A proof of concept is not a proof. These are deployments — real contracts, real transactions, on two independent public chains.</p>
 
     <div class="milestone-row">
       <div class="milestone-card">
@@ -1957,6 +1957,15 @@ covenant init my-token</code></pre>
         <p class="milestone-desc">A 4-line <code>nft AuditNFT { ... }</code> source compiled by Covenant V0.9 → 1235-byte ERC-721 bytecode → deployed and exercised on Sepolia (mint #1, mint #2, transfer, burn-via-zero). Indistinguishable from Solidity-authored ERC-721 to wallets, OpenSea, and indexers.</p>
         <a href="https://sepolia.etherscan.io/address/0xf8d9895cc265886d958841af8d9a6469be94bc25" target="_blank" rel="noopener" class="milestone-link">
           0xf8d9895c…4bc25 on Etherscan ↗
+        </a>
+      </div>
+
+      <div class="milestone-card milestone-card--gold">
+        <span class="milestone-badge milestone-badge--gold">M6</span>
+        <h3 class="milestone-title">First Covenant contract beyond Sepolia — on Robinhood Chain</h3>
+        <p class="milestone-desc">A <code>token KairosCoin</code> with a <code>burn</code> sink and an opt-in transfer fee, compiled by Covenant V0.9.3 and deployed to <strong>Robinhood Chain testnet</strong> (Arbitrum Orbit, chainId 46630). Burn cut supply 1,000,000 → 999,000; the fee split emits <strong>two canonical ERC-20 <code>Transfer</code> events</strong>; a 501 bps fee attempt reverted against the on-chain 5 % cap. The in-source <code>test</code> block caught a real compiler bug before deploy. Testnet — no monetary value.</p>
+        <a href="https://explorer.testnet.chain.robinhood.com/address/0x40254d0b63a9AbdB38671dC7DC41f3BaE5B65025" target="_blank" rel="noopener" class="milestone-link">
+          0x40254d0b…65025 on Blockscout ↗
         </a>
       </div>
     </div>
