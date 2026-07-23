@@ -11,17 +11,21 @@
 | **Compiler source + specs** | github.com/Valisthea/covenant-language *(private until V1.0)* | Apache-2.0 (code) + CC0-1.0 (specs) |
 | **Live manifesto** | [covenant-lang.org](https://covenant-lang.org) | — |
 
-## Current state — V0.1 Basics (April 2026)
+## Current state — V0.9.4 The Fail-Loud Pass (July 2026)
 
-Covenant's first public release is live.
+Covenant's latest release closes a class of silent-miscompile bugs — the compiler now errors loudly instead of emitting wrong bytecode.
 
-- **5 reference contracts compile end-to-end** via the Rust compiler : Hello, Coin, OpenBallot, ShieldedCounter, QuantumBoard
-- **First deployment on Ethereum Sepolia** : [0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133](https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133)
-- **ERC-20 synthesis validated** : recognized automatically by Etherscan's Token Tracker ; ABI decoded by ethers.js without modification ; transferable via Metamask
-- **508+ tests passing** across 18 Rust crates
-- **Compiler tagged** `v0.1.0-basics`
+- **min/max/abs/pow/sqrt no longer miscompile to `a+b`** (E424)
+- **`x / 0` with a literal `0` is a compile error**; non-literal divisors get a runtime guard (E519)
+- **Text constants over 32 bytes now error** instead of truncating silently (E521)
+- **Test-only actions are stripped** from on-chain output
+- **Non-zero constant field defaults are now written** to storage
+- **The LSP surfaces these diagnostics live** as you type
+- **Deployed on Ethereum Sepolia** (milestones M0–M5) and **Robinhood testnet** (M6 — first Covenant token on Robinhood: KairosCoin at `0x3E80F8c7911240e6092D523af79B13c046bd2FdE`)
+- **1082 tests passing** across a 21-crate workspace
+- **Compiler tagged** `v0.9.4`
 
-**Disclaimer** : V0.1 is a research release. Unaudited, experimental, intended for demonstration of the language's semantics. Not for deployment with production value.
+**Disclaimer** : Covenant is **testnet-only**. The cryptography is **mocked** — FHE, post-quantum, ZK, VDF and Shamir primitives are deterministic stubs with **zero confidentiality and zero security** ("encrypted" values are readable from chain state; the PQ/ZK verifiers accept forged proofs). Real cryptography is a separate, later release (V2.0). Not for deployment with production value.
 
 ## The three principles
 
@@ -45,13 +49,11 @@ Covenant compiles against four Ethereum ERCs that form its native stdlib :
 | Phase | When | Status |
 |---|---|---|
 | Design | 2025 – early 2026 | **Complete** — 8 normative docs, Styx ERCs drafted |
-| V0.1 Basics | April 2026 | **Shipped** — 5 examples compile, first Sepolia deploy |
-| V0.2 Intermediate | 2026 – 2027 | Planned — PrivateDAO, SealedAuction, SecretCoin, TimeVault, MPCEscrow |
-| V0.3 Advanced | 2027 | Cryptographic amnesia, bridges, selective disclosure, reputation |
-| V1.0 GA | 2028 | Feature completeness, external audit (Phase C), CLI + LSP |
-| V1.5 Formal | 2028 – 2029 | Formal verification artifacts (Coq/Lean), CL5 conformance |
+| V0.9.4 Fail-Loud Pass | July 2026 | **Shipped (testnet-only)** — silent-miscompile class closed; Sepolia (M0–M5) + Robinhood testnet (M6) deploys |
+| V1.0 GA | Next | External third-party audit of the compiler; still testnet-only, mocked crypto |
+| V2.0 Real Crypto | Later (12–24 months) | Real FHE / PQ / ZK / VDF / Shamir replacing the deterministic stubs |
 
-Dates are reference milestones, contingent on team formation and funding.
+Dates are reference milestones, contingent on team formation and funding. Audits to date are internal Kairos Lab self-audits (OMEGA V4/V5/V6), never third-party.
 
 ## Get involved
 
@@ -88,7 +90,7 @@ No VC, no token, no private raise. Funding comes from three channels :
 ## Related
 
 - [Styx Protocol](https://styx-website.vercel.app) — the four ERCs that form Covenant's stdlib
-- [Aster Chain](https://asterdex.com) — primary deployment target with native encrypted execution
+- **Robinhood Chain** — primary testnet deploy target (Arbitrum Orbit L2, chainId 46630 / 0xB626)
 - [Kairos Lab](https://kairos-lab.org) — the organization building Covenant
 - [First deployment](https://sepolia.etherscan.io/address/0x6C7986a3d79E1AFECfE242f92f2A0DFeC3397133) — Sepolia Coin (COIN) on Ethereum Sepolia
 

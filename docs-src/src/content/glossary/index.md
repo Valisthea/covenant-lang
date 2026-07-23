@@ -174,7 +174,7 @@ description: "100+ terms: Covenant keywords, types, FHE primitives, ZK concepts,
 
 **oracle_price** — Built-in on Aster Chain: stake-weighted median price from validator committee.
 
-**OMEGA V4** — Security audit by OMEGA Security Labs on Covenant v0.7.0-rc3. 41 findings, all resolved.
+**OMEGA V4** — Security audit by Kairos Lab (internal OMEGA self-audit) on Covenant v0.7.0-rc3. 41 findings, all resolved.
 
 ## P
 

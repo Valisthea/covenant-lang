@@ -1369,7 +1369,7 @@ section: "Security"
 
 # Audit Report — OMEGA V4
 
-**Auditor:** OMEGA Security Labs  
+**Auditor:** Kairos Lab (internal OMEGA self-audit)  
 **Audit period:** November 4 – December 20, 2025  
 **Version audited:** Covenant compiler v0.7.0-rc3  
 **Report date:** January 10, 2026  
@@ -1377,7 +1377,7 @@ section: "Security"
 
 ## Executive summary
 
-OMEGA Security Labs conducted a comprehensive audit of the Covenant compiler, runtime library, and standard contract library. The audit covered:
+Kairos Lab (internal OMEGA self-audit) conducted a comprehensive internal self-audit of the Covenant compiler, runtime library, and standard contract library. The audit covered:
 
 - Covenant compiler (Rust codebase, ~48,000 LOC)
 - EVM code generation backend
@@ -1955,7 +1955,7 @@ GLOSSARY_PART2 = """
 
 **oracle_price** — Built-in on Aster Chain: stake-weighted median price from validator committee.
 
-**OMEGA V4** — Security audit by OMEGA Security Labs on Covenant v0.7.0-rc3. 41 findings, all resolved.
+**OMEGA V4** — Security audit by Kairos Lab (internal OMEGA self-audit) on Covenant v0.7.0-rc3. 41 findings, all resolved.
 
 ## P
 

@@ -60,7 +60,7 @@ NOT met. V1.0 requires:
 
 ## OMEGA V4 — V0.6 (December 2025 → January 2026)
 
-**Auditor:** OMEGA Security Labs  
+**Auditor:** Kairos Lab (internal OMEGA self-audit)  
 **Audit period:** November 4 – December 20, 2025  
 **Version audited:** Covenant compiler v0.7.0-rc3  
 **Report date:** January 10, 2026  
@@ -68,7 +68,7 @@ NOT met. V1.0 requires:
 
 ## Executive summary
 
-OMEGA Security Labs conducted a comprehensive audit of the Covenant compiler, runtime library, and standard contract library. The audit covered:
+Kairos Lab (internal OMEGA self-audit) conducted a comprehensive internal self-audit of the Covenant compiler, runtime library, and standard contract library. The audit covered:
 
 - Covenant compiler (Rust codebase, ~48,000 LOC)
 - EVM code generation backend

@@ -1,5 +1,8 @@
 # Covenant Manifesto — Changes v2.0 → v2.1
 
+> **Historical note:** This file is a historical snapshot of the v2.1 *manifesto* document. It does not describe the current state of the project. The compiler is currently at **v0.9.4** (see README / manifesto for the live status).
+
+
 ## Date
 April 2026
 

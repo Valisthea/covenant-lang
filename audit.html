@@ -505,7 +505,7 @@ footer#site-footer {
       </svg>
     </div>
     <span class="header-brand-name">Covenant</span>
-    <span class="header-badge">V0.9.3</span>
+    <span class="header-badge">V0.9.4</span>
   </a>
   <div class="header-spacer"></div>
   <nav class="header-nav" aria-label="Primary navigation">
@@ -526,7 +526,7 @@ footer#site-footer {
   <div class="page-hero-inner">
     <p class="page-hero-eyebrow">OMEGA V4 Security Audit · V0.7 GA</p>
     <h1 class="page-hero-title">41 findings.<br>All resolved.</h1>
-    <p class="page-hero-sub">Full adversarial audit of the Covenant compiler before V0.7 public launch. Every finding is documented, reproducible, and public.</p>
+    <p class="page-hero-sub">Full adversarial audit of the Covenant compiler before V0.7 public launch. Every finding is documented and reproducible.</p>
     <div class="page-hero-stats">
       <div class="page-hero-stat">
         <span class="page-hero-stat-val" style="color:var(--red)">5</span>
@@ -561,7 +561,7 @@ footer#site-footer {
 <section class="section" id="omega-v6" aria-labelledby="omega-v6-title">
   <span class="section-eyebrow">00 — Latest audit · 5 July 2026</span>
   <h2 class="section-title" id="omega-v6-title">OMEGA V6: 17 more findings, fixed the same day</h2>
-  <p class="body-text">Everything below this section documents the original OMEGA V4 audit before V0.7 GA — still accurate, still worth reading. But it is no longer the whole story. On 5 July 2026, a fresh breadth-first adversarial sweep across the compiler, stdlib, and produced-contract surfaces (the same "assume every guarantee is a lie" methodology described in <a href="#methodology" style="color:var(--accent);">Section 01</a>) found 6 Critical, 6 High, and 5 Medium severity defects in the V0.9.2 compiler — the largest single-cycle count since the V0.6 launch audit. Every finding was empirically reproduced against source and compiled bytecode before being reported, and every fix shipped the same day with a new regression test. Full write-up: <a href="https://github.com/Valisthea/covenant-audits/tree/main/audits/2026-07-05-omega-v6-covenant-v0.9.2" target="_blank" rel="noopener">covenant-audits/audits/2026-07-05-omega-v6-covenant-v0.9.2</a>.</p>
+  <p class="body-text">Everything below this section documents the original OMEGA V4 audit before V0.7 GA — still accurate, still worth reading. But it is no longer the whole story. On 5 July 2026, a fresh breadth-first adversarial sweep across the compiler, stdlib, and produced-contract surfaces (the same "assume every guarantee is a lie" methodology described in <a href="#methodology" style="color:var(--accent);">Section 01</a>) found 6 Critical, 6 High, and 5 Medium severity defects in the V0.9.2 compiler — the largest single-cycle count since the V0.6 launch audit. Every finding was empirically reproduced against source and compiled bytecode before being reported, and every fix shipped the same day with a new regression test. Full write-up: covenant-audits/audits/2026-07-05-omega-v6-covenant-v0.9.2 (coming soon).</p>
 
   <div class="page-hero-stats reveal" style="margin-top:24px;justify-content:flex-start;gap:32px;">
     <div class="page-hero-stat">
@@ -1080,7 +1080,7 @@ JUMPI
       <p><strong>KSR-CVN-022, 023 — Shamir / VDF hard-fail:</strong> Shamir Secret Sharing and Wesolowski VDF opcodes emitted broken stubs that silently succeeded without performing any cryptographic work. Rather than emit silent fiction, the compiler now hard-fails with <code>E516</code>/<code>E517</code> for these opcodes until V0.8 chain support ships. "Deploy no code" beats "deploy broken code."</p>
       <p><strong>KSR-CVN-024, 025 — P4/P5 invariant detectors:</strong> Privacy invariants P4 (nonce reuse) and P5 (monotonicity) had no lint detectors in the security pass. Detectors added.</p>
       <p><strong>KSR-CVN-026 — FheBootstrap eliminated by DCE:</strong> Dead Code Elimination was removing <code>FheBootstrap</code> calls (which refresh FHE ciphertext noise budget) because they appeared to have no side effects. DCE now marks FHE refresh ops as side-effecting.</p>
-      <p><strong>Storage / supply chain:</strong> <code>@slot(N)</code> collision detection wired (<code>E423</code>), annotation validation, <code>PRECOMPILE_ABI_VERSION</code> marker in bytecode, Cargo.lock pinning, per-chain version binding. Full list in <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener">covenant-audits</a>.</p>
+      <p><strong>Storage / supply chain:</strong> <code>@slot(N)</code> collision detection wired (<code>E423</code>), annotation validation, <code>PRECOMPILE_ABI_VERSION</code> marker in bytecode, Cargo.lock pinning, per-chain version binding. Full list in covenant-audits (coming soon).</p>
     </div>
   </div>
 </section>
@@ -1137,21 +1137,21 @@ JUMPI
       <span class="limitation-icon">⛔</span>
       <div class="limitation-body">
         <div class="limitation-title">Shamir Secret Sharing (<code>E516</code>)</div>
-        <div class="limitation-desc">Contracts using <code>shamir_split</code>, <code>shamir_recover</code>, or <code>@shamir_threshold</code> will not compile. Full implementation requires Aster Chain support (V0.8).</div>
+        <div class="limitation-desc">Contracts using <code>shamir_split</code>, <code>shamir_recover</code>, or <code>@shamir_threshold</code> will not compile. Full implementation is deferred; Aster Chain is deprecated, and the EVM/Robinhood deploy path is the target.</div>
       </div>
     </div>
     <div class="limitation-card">
       <span class="limitation-icon">⛔</span>
       <div class="limitation-body">
         <div class="limitation-title">Wesolowski VDF (<code>E517</code>)</div>
-        <div class="limitation-desc">Contracts using <code>vdf_eval</code> or <code>@vdf_locked</code> will not compile. Same dependency on Aster SDK for chain-native VDF verification.</div>
+        <div class="limitation-desc">Contracts using <code>vdf_eval</code> or <code>@vdf_locked</code> will not compile. Deferred; Aster Chain is deprecated, so chain-native VDF verification targets the EVM/Robinhood path.</div>
       </div>
     </div>
     <div class="limitation-card">
       <span class="limitation-icon">🔧</span>
       <div class="limitation-body">
-        <div class="limitation-title">Aster Chain bytecode emission (V0.7 foundation only)</div>
-        <div class="limitation-desc"><code>--target-chain aster</code> compiles to a placeholder artifact (<code>COV7\x01</code> magic + metadata). Full bytecode emission requires Aster SDK GA. V0.7 artifacts are not deployable on-chain.</div>
+        <div class="limitation-title">Legacy Aster Chain bytecode emission (deprecated)</div>
+        <div class="limitation-desc"><code>--target-chain aster</code> compiled to a placeholder artifact (<code>COV7\x01</code> magic + metadata) and those artifacts are not deployable on-chain. Aster Chain is deprecated; the EVM/Robinhood path is the deploy target.</div>
       </div>
     </div>
     <div class="limitation-card">
@@ -1169,11 +1169,11 @@ JUMPI
 <div class="container">
 <section class="section" id="report" aria-labelledby="report-title" style="border-bottom:none;">
   <span class="section-eyebrow">07 — Access the full report</span>
-  <h2 class="section-title" id="report-title">Everything is public. PoCs included.</h2>
-  <p class="body-text">Every audit cycle — OMEGA V4 through V6 — is public at <code>github.com/Valisthea/covenant-audits</code>. Every finding has a finding ID, severity, description, reproduction, remediation commit, and regression test. If OMEGA V6 missed something, that's a welcome problem — the bounty program is in the same repo.</p>
+  <h2 class="section-title" id="report-title">Full write-ups coming soon.</h2>
+  <p class="body-text">Every audit cycle — OMEGA V4 through V6 — will be published (coming soon) at <code>github.com/Valisthea/covenant-audits</code>. Every finding has a finding ID, severity, description, reproduction, remediation commit, and regression test. If OMEGA V6 missed something, that's a welcome problem — the bounty program is in the same repo.</p>
 
   <div class="cta-row reveal">
-    <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener" class="btn-primary">Read the full audit report →</a>
+    Read the full audit report → (coming soon)
     <a href="/#install" class="btn-secondary">Install Covenant V0.9 →</a>
     <a href="https://github.com/Valisthea/covenant-language" target="_blank" rel="noopener" class="btn-secondary">Source on GitHub →</a>
   </div>
@@ -1204,7 +1204,7 @@ JUMPI
     <div>
       <span class="footer-col-title">Resources</span>
       <a href="https://github.com/Valisthea/covenant-language" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-language</a>
-      <a href="https://github.com/Valisthea/covenant-audits" target="_blank" rel="noopener" class="footer-link-mono">github.com/Valisthea/covenant-audits</a>
+      github.com/Valisthea/covenant-audits (coming soon)
       <a href="https://x.com/Covenant_Lang" target="_blank" rel="noopener" class="footer-link-mono">x.com/Covenant_Lang</a>
     </div>
   </div>
