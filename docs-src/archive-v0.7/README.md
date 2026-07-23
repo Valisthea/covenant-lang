@@ -4,7 +4,7 @@ This directory is a frozen snapshot of the documentation content as of the V0.7 
 
 **This archive is not built by Astro.** It is purely a reference artifact. The authoritative archived V0.7 docs are the git tag:
 
-- Upstream tag: `v0.7.0` on the compiler repo (`github.com/Valisthea/covenant`, private until V1.0)
+- Upstream tag: `v0.7.0` on the compiler repo (`github.com/Valisthea/covenant-language`, private until V1.0)
 - This site: checkout tag `v0.7.0-site` to see the live V0.7 docs tree
 
 If you need to publish V0.7 docs on a subdomain in the future, promote this directory into an Astro content collection under `src/content/v0.7/` and add a sibling collection entry in `src/content.config.ts`.

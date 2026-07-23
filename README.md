@@ -1,6 +1,6 @@
 # Covenant — Website and Manifesto
 
-> The public-facing site and manifesto for [Covenant](https://github.com/Valisthea/covenant),
+> The public-facing site and manifesto for [Covenant](https://github.com/Valisthea/covenant-language),
 > a declarative smart contract language by [Kairos Lab](https://kairos-lab.org).
 
 ## Related repos
@@ -8,7 +8,7 @@
 | What | Where | License |
 |---|---|---|
 | **This repo** — Website, manifesto, visual assets | github.com/Valisthea/covenant-lang | CC-BY-4.0 (content) + MIT (code) |
-| **Compiler source + specs** | github.com/Valisthea/covenant *(private until V1.0)* | Apache-2.0 (code) + CC0-1.0 (specs) |
+| **Compiler source + specs** | github.com/Valisthea/covenant-language *(private until V1.0)* | Apache-2.0 (code) + CC0-1.0 (specs) |
 | **Live manifesto** | [covenant-lang.org](https://covenant-lang.org) | — |
 
 ## Current state — V0.1 Basics (April 2026)

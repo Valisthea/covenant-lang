@@ -10,7 +10,7 @@ level: reference
 
 The production-real release. Cryptographic primitives execute on Sepolia for the first time. Three new top-level constructs. Foundry-class CLI tooling. OMEGA V5 audit cleared.
 
-**Tag:** [v0.9.0](https://github.com/Valisthea/covenant/releases/tag/v0.9.0)  
+**Tag:** [v0.9.0](https://github.com/Valisthea/covenant-language/releases/tag/v0.9.0)  
 **Released:** April 2026  
 **Compatibility:** Fully backward-compatible with V0.8 source. No breaking changes.
 
@@ -79,7 +79,7 @@ See [CLI reference](/docs/getting-started/03-cli-reference).
 - 9 audit fixtures compile end-to-end on both MockChain and Sepolia
 - 5 bugs caught empirically during the audit cycle, all fixed before tag
 
-[Full report](https://github.com/Valisthea/covenant/blob/main/OMEGA_V5_AUDIT_REPORT.md)
+[Full report](https://github.com/Valisthea/covenant-language/blob/main/OMEGA_V5_AUDIT_REPORT.md)
 
 ## Milestones
 

@@ -32,7 +32,7 @@ Covenant has cleared three audit cycles. Each is documented here with severity c
 
 ### Bugs caught empirically during the cycle
 
-5 bugs were discovered through audit-pack-driven fuzzing and reading the helper bridge integration code. All were fixed before the V0.9.0 tag. Details in the [full audit report](https://github.com/Valisthea/covenant/blob/main/OMEGA_V5_AUDIT_REPORT.md).
+5 bugs were discovered through audit-pack-driven fuzzing and reading the helper bridge integration code. All were fixed before the V0.9.0 tag. Details in the [full audit report](https://github.com/Valisthea/covenant-language/blob/main/OMEGA_V5_AUDIT_REPORT.md).
 
 ### Conditions on V1.0 mainnet
 
