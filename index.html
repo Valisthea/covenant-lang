@@ -1479,7 +1479,7 @@ a:focus-visible, button:focus-visible {
       </svg>
     </div>
     <span class="header-brand-name">Covenant</span>
-    <span class="header-badge">V0.9 GA</span>
+    <span class="header-badge">V0.9.4</span>
   </a>
 
   <div class="header-spacer"></div>
@@ -1533,7 +1533,7 @@ a:focus-visible, button:focus-visible {
     <div class="hero-actions">
       <a href="https://playground.covenant-lang.org" class="btn-primary">Try in Playground →</a>
       <a href="https://github.com/Valisthea/covenant-language" target="_blank" rel="noopener" class="btn-secondary">View on GitHub →</a>
-      <a href="/audit" class="btn-secondary">Read OMEGA V5 →</a>
+      <a href="/audit" class="btn-secondary">Read the OMEGA audit →</a>
       <a href="manifesto.html" class="btn-secondary" style="border-color:transparent;color:var(--ink-mute);">Read the Manifesto</a>
     </div>
 
@@ -1553,7 +1553,7 @@ a:focus-visible, button:focus-visible {
   <div class="section-header">
     <span class="section-num">01 — Architecture</span>
     <h2 class="section-title" id="arch-title">Styx Protocol: four cryptographic layers</h2>
-    <p class="body-text">Styx is Covenant's native runtime, not a dependency. Four named layers — each responsible for a distinct class of cryptographic guarantee. The compiler verifies that compositions across layers are sound.</p>
+    <p class="body-text">Styx is Covenant's native runtime, not a dependency. Four named layers — each responsible for a distinct class of cryptographic guarantee. The compiler verifies that compositions across layers are sound. In V0.9.x every layer is a deterministic testnet stub — zero confidentiality, zero security; real cryptography arrives at V2.0.</p>
   </div>
 
   <div class="layers-grid reveal" role="list" aria-label="Styx Protocol layers">
@@ -1609,7 +1609,7 @@ a:focus-visible, button:focus-visible {
       </div>
       <span class="layer-name" style="color:#dc2626;">Oblivion</span>
       <span class="layer-italic">Cryptographic amnesia</span>
-      <p class="layer-desc">Shamir SSS + Wesolowski VDF + ZK destruction proofs (commitment placeholder in V0.9; real primitives in V1.0).</p>
+      <p class="layer-desc">Shamir SSS + Wesolowski VDF + ZK destruction proofs (commitment placeholder in V0.9; real primitives in V2.0).</p>
       <span class="layer-tag layer-tag-oblivion">AMNESIA · Covenant ceremony</span>
     </div>
 
@@ -1630,7 +1630,7 @@ a:focus-visible, button:focus-visible {
   <div class="section-header">
     <span class="section-num">02 — Audited</span>
     <h2 class="section-title" id="audited-title">Continuously self-audited — OMEGA V4 through V6</h2>
-    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 self-audit — 41 findings across all severity levels. All findings remain resolved through V0.9. V0.8 added 9 OMEGA V4 verifications (8 verified + 1 mitigated, fully resolved in V0.9). V0.9 cleared OMEGA V5 — 10-point self-audit, all GO, 1206 tests, 0 clippy warnings. V0.9.2 went further: a full multi-agent adversarial audit of the compiler (7 dimensions, every finding re-verified against source) caught — and fixed — a Critical ERC-721 authorization gap plus High-severity codegen defects (a map storage-slot collision, wrapping checked-arithmetic, and dropped external-call return values) that had shipped in V0.9.0–V0.9.1. <strong>V0.9.3 (OMEGA V6) is the largest single-cycle finding count since the V0.6 launch audit: a breadth-first adversarial sweep across the compiler, stdlib, and produced-contract surfaces found — and fixed the same day — 6 Critical, 6 High, and 5 Medium severity defects, including two of the language's most basic control-flow constructs (`if` without `else`, `for each`) silently misbehaving, three independent authorization-bypass bugs, and an unbounded-recursion crash reachable from any `.cov` file the compiler or LSP opens. Every finding was empirically reproduced against source before being reported, and every fix ships with a new regression test.</strong> Full detail in the <a href="https://github.com/Valisthea/covenant-language/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG</a> and the full OMEGA V6 audit writeup (coming soon). All audits to date are internal to Kairos Lab; an independent third-party audit is the gate for V1.0 mainnet.</p>
+    <p class="body-text">Before V0.7 GA shipped, the compiler and runtime underwent a complete OMEGA V4 self-audit — 41 findings across all severity levels. All findings remain resolved through V0.9. V0.8 added 9 OMEGA V4 verifications (8 verified + 1 mitigated, fully resolved in V0.9). V0.9 cleared OMEGA V5 — 10-point self-audit, all GO, 1082 tests, 0 clippy warnings. V0.9.2 went further: a full multi-agent adversarial audit of the compiler (7 dimensions, every finding re-verified against source) caught — and fixed — a Critical ERC-721 authorization gap plus High-severity codegen defects (a map storage-slot collision, wrapping checked-arithmetic, and dropped external-call return values) that had shipped in V0.9.0–V0.9.1. <strong>V0.9.3 (OMEGA V6) is the largest single-cycle finding count since the V0.6 launch audit: a breadth-first adversarial sweep across the compiler, stdlib, and produced-contract surfaces found — and fixed the same day — 6 Critical, 6 High, and 5 Medium severity defects, including two of the language's most basic control-flow constructs (`if` without `else`, `for each`) silently misbehaving, three independent authorization-bypass bugs, and an unbounded-recursion crash reachable from any `.cov` file the compiler or LSP opens. Every finding was empirically reproduced against source before being reported, and every fix ships with a new regression test.</strong> Full detail in the <a href="https://github.com/Valisthea/covenant-language/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG</a> and the full OMEGA V6 audit writeup (coming soon). All audits to date are internal to Kairos Lab; an independent third-party audit is the gate for V1.0 mainnet.</p>
   </div>
 
   <div class="audit-stats reveal">
@@ -1891,7 +1891,7 @@ covenant init my-token</code></pre>
     <div class="v9-card" role="listitem">
       <span class="v9-card-icon">⛨</span>
       <h3 class="v9-card-title">OMEGA V5 Audit</h3>
-      <p class="v9-card-desc">10-point self-audit, all GO. 1206 tests passing, 0 clippy warnings, 9 audit fixtures compile end-to-end on both MockChain and Sepolia.</p>
+      <p class="v9-card-desc">10-point self-audit, all GO. 1082 tests passing, 0 clippy warnings, 9 audit fixtures compile end-to-end on both MockChain and Sepolia.</p>
       <a href="/audit" class="v9-card-link">Read the audit report →</a>
     </div>
 
@@ -1977,7 +1977,7 @@ covenant init my-token</code></pre>
       </div>
       <div class="deploy-meta-col">
         <span class="deploy-meta-label">Workspace</span>
-        <span class="deploy-meta-value">Rust · 22 crates · 1206 tests</span>
+        <span class="deploy-meta-value">Rust · 22 crates · 1082 tests</span>
       </div>
       <div class="deploy-meta-col">
         <span class="deploy-meta-label">Audit</span>
@@ -2036,7 +2036,7 @@ covenant init my-token</code></pre>
 
     <div class="ship-card">
       <span class="ship-title">Compiler</span>
-      <span class="ship-sub">Rust · 22-crate workspace · 1206 tests · EVM + WASM</span>
+      <span class="ship-sub">Rust · 22-crate workspace · 1082 tests · EVM + WASM</span>
       <span class="ship-badge">V0.9 · Shipped</span>
     </div>
 

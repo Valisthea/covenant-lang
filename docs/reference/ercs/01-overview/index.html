@@ -116,8 +116,8 @@
 <span class="line"><span>encrypted&#x3C;uint256>             →  ERC-8227 §3.1         →  0x0f (fhe_encrypt)</span></span>
 <span class="line"><span>fhe_add(a, b)                  →  ERC-8227 §3.2         →  0x10 (fhe_add)</span></span>
 <span class="line"><span>reveal field to caller         →  ERC-8227 §3.4         →  0x13 (fhe_decrypt_auth)</span></span>
-<span class="line"><span>amnesia { destroy(secret) }    →  (no assigned ERC)     →  0x20 (amnesia_destroy)</span></span>
-<span class="line"><span>ceremony { ... }               →  (no assigned ERC)     →  0x21–0x24 (phase management)</span></span>
+<span class="line"><span>amnesia { destroy(secret) }    →  ERC-8228 §2           →  0x20 (amnesia_destroy)</span></span>
+<span class="line"><span>ceremony { ... }               →  ERC-8228 §4           →  0x21–0x24 (phase management)</span></span>
 <span class="line"><span>zk_verify(proof, signal)       →  ERC-8229 §2           →  0x30 (zk_verify)</span></span>
 <span class="line"><span>@prove_offchain                →  ERC-8229 §5           →  (off-chain WASM circuit)</span></span>
 <span class="line"><span>pq_key type                    →  ERC-8231 §2           →  0x40 (pq_register)</span></span>
